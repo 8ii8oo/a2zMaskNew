@@ -14,7 +14,6 @@ public class playerMove : MonoBehaviour
 
     void Start()
     {
-        speed = Time.deltaTime;
         rigid = GetComponent<Rigidbody2D>();
         maskRigid = mask.GetComponent<Rigidbody2D>();
     }
@@ -32,11 +31,11 @@ public class playerMove : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            this.transform.Translate(speed, 0, 0);
+            this.transform.Translate(speed * Time.deltaTime, 0, 0);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            this.transform.Translate(-speed, 0, 0);
+            this.transform.Translate(-speed * Time.deltaTime, 0, 0);
         }
         
 
