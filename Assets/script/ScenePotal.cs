@@ -2,22 +2,35 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UIElements;
-
+using Spine.Unity;
 
 public class ScenePotal : MonoBehaviour
 {
+    [SerializeField] public SkeletonAnimation spinePlayer;
     public string sceneName;
     public GameObject filter;
     private bool isTransitioning = false;
 
+    private bool isPlayerInPortal = false;
+    private GameObject playerObj;
+
     public Renderer filterRD;
     private string speedPropName = "_speed";
     private string scalePropName = "_scale";
+    
+    private Renderer portalRenderer; 
 
 
     void Start()
     {
+        portalRenderer = GetComponent<Renderer>();
+        
         DontDestroyOnLoad(gameObject);
+        
+        if (filter != null)
+        {
+            DontDestroyOnLoad(filter);
+        }
 
         SceneManager.sceneLoaded += OnSceneLoad;
 
@@ -25,10 +38,25 @@ public class ScenePotal : MonoBehaviour
         {
             filterRD.sharedMaterial.SetFloat(speedPropName, 0f);
             filterRD.material.SetFloat(scalePropName, 0f);
+            
+            filter.gameObject.SetActive(false); 
         }
+    }
 
-
-
+    void Update()
+    {
+        if (isPlayerInPortal && !isTransitioning)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                isTransitioning = true;
+                if (spinePlayer != null && spinePlayer.AnimationState != null)
+                {
+                    spinePlayer.AnimationState.SetAnimation(0, "idle", true);
+                }
+                StartCoroutine(LoadSceneDelay(playerObj));
+            }
+        }
     }
 
     void OnDestroy()
@@ -39,17 +67,29 @@ public class ScenePotal : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player") && !isTransitioning)
+        if (other.CompareTag("Player"))
         {
-            isTransitioning = true;
-            StartCoroutine(LoadSceneDelay(other.gameObject));
+            isPlayerInPortal = true;
+            playerObj = other.gameObject;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInPortal = false;
+            playerObj = null;
         }
     }
 
     IEnumerator LoadSceneDelay(GameObject PlayerToStop)
     {
+        if (filter != null)
+        {
+            filter.gameObject.SetActive(true);
+        }
 
-        filter.gameObject.SetActive(true);
 
         Rigidbody2D playerRigid = PlayerToStop.GetComponent<Rigidbody2D>();
         if (playerRigid != null)
@@ -69,6 +109,7 @@ public class ScenePotal : MonoBehaviour
         Debug.Log("점점커짐");
         float duration = 3f;
         float elapsedTime = 0f;
+
 
         float startSpeed = 0f;
         float targetSpeed = 3f;
@@ -110,6 +151,17 @@ public class ScenePotal : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
+        if (portalRenderer != null)
+        {
+            portalRenderer.enabled = false;
+        }
+        
+        Camera mainCam = Camera.main;
+        if (mainCam != null && filter != null)
+        {
+            filter.transform.position = new Vector3(mainCam.transform.position.x, mainCam.transform.position.y, mainCam.nearClipPlane + 0.1f);
+        }
 
         isTransitioning = false;
         StartCoroutine(RestoreEffect());
@@ -117,10 +169,9 @@ public class ScenePotal : MonoBehaviour
 
         IEnumerator RestoreEffect()
         {
-
-
-            if (filterRD == null) yield break;
-            filterRD.gameObject.SetActive(true);
+            if (filterRD == null || filter == null) yield break;
+            
+            filter.gameObject.SetActive(true);
 
             float duration = 3f;
             float elapsedTime = 0f;
@@ -146,11 +197,15 @@ public class ScenePotal : MonoBehaviour
                 yield return null;
 
             }
+            
 
             filterRD.sharedMaterial.SetFloat(speedPropName, targetSpeed); 
             filterRD.sharedMaterial.SetFloat(scalePropName, targetScale); 
+            
+            filter.gameObject.SetActive(false); 
 
+            SceneManager.sceneLoaded -= OnSceneLoad;
+            Destroy(gameObject); 
         }
     } 
 }
-

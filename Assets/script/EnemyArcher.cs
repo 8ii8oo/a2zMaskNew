@@ -208,4 +208,6 @@ public class EnemyArcher : MonoBehaviour
             currentAnim = animName;
         }
     }
+
+    
 }
