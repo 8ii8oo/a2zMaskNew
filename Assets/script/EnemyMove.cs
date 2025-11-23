@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Spine.Unity;
+using Spine;
 
 public class EnemyMove : MonoBehaviour
 {
