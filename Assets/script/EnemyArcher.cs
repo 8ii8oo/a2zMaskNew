@@ -20,11 +20,11 @@ public class EnemyArcher : MonoBehaviour
     public float detectRange = 6f;
     public float attackCooldown = 2f;
 
-    // ⭐ Y축 오프셋이 포함된 화살 설정
+    // Y축 포함된 화살 설정
     [Header("== Arrow Settings ==")]
     public GameObject arrowPrefab;
     public float arrowSpeed = 10f;
-    public float arrowOffsetY = 0.5f; // 유니티 인스펙터에서 이 값을 조정하여 높이를 맞춥니다.
+    public float arrowOffsetY = 0.5f;
 
     private Transform player;
     private bool isAttacking = false; 
@@ -61,7 +61,7 @@ public class EnemyArcher : MonoBehaviour
         float distX = Mathf.Abs(player.position.x - transform.position.x);
         float distY = Mathf.Abs(player.position.y - transform.position.y);
 
-        // Y축 거리 제한 체크 (Y축을 벗어났으면 배회 모드로 복귀)
+        // Y축 거리 제한 
         if (distY > 1.0f) 
         {
             isActiveAI = true; 
@@ -72,7 +72,7 @@ public class EnemyArcher : MonoBehaviour
 
         if (distX <= detectRange)
         {
-            // 추적 모드: 공격
+            //공격
             isActiveAI = false; 
             rigid.linearVelocity = Vector2.zero; 
 
@@ -81,7 +81,7 @@ public class EnemyArcher : MonoBehaviour
         }
         else
         {
-            // 평상시 이동 복귀
+            // 평상시 이동 
             isActiveAI = true;
             isStopping = false; 
 
@@ -91,7 +91,6 @@ public class EnemyArcher : MonoBehaviour
 
     void FixedUpdate()
     {
-        // 공격 중이거나 AI 비활성화 시 이동/배회 로직 중단
         if (isAttacking || !isActiveAI) return;
 
         if (!isStopping)
@@ -105,13 +104,13 @@ public class EnemyArcher : MonoBehaviour
             SetAnim("idle");
         }
 
-        // X축 반전 수정: nextMove와 반대 부호로 ScaleX 설정 (오른쪽 이동(1) -> 왼쪽 ScaleX(-1))
+        // X축 반전 
         if (nextMove != 0 && spinePlayer != null)
         {
             spinePlayer.skeleton.ScaleX = nextMove * -1; 
         }
 
-        // 낭떠러지 체크 로직
+        // 낭떠러지 체크
         Vector2 frontVec = new Vector2(rigid.position.x + nextMove * 0.3f, rigid.position.y);
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector2.down, 1f, LayerMask.GetMask("Ground"));
 
@@ -142,10 +141,10 @@ public class EnemyArcher : MonoBehaviour
     {
         float dir = player.position.x - transform.position.x;
 
-        // X축 반전 수정: 플레이어 방향과 반대 부호로 ScaleX 설정
+        // X축 반전 
         spinePlayer.skeleton.ScaleX = Mathf.Sign(dir) * -1;
 
-        // nextMove는 Spine 방향과 반대로 저장 (걷는 방향)
+        // 방향과 반대로 저장 (걷는 방향)
         nextMove = (int)Mathf.Sign(dir);
     }
 
@@ -179,8 +178,6 @@ public class EnemyArcher : MonoBehaviour
         }
 
         float direction = spinePlayer.skeleton.ScaleX; 
-
-        // ⭐ 수정: 발사 위치에 Y축 오프셋 적용
         Vector3 firePosition = transform.position;
         firePosition.y += arrowOffsetY; 
 

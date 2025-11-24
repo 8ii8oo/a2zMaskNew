@@ -1,11 +1,9 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHp : MonoBehaviour
 {
-
     public float hp = 100f;
     public GameObject overUI;
     public Image fadeImage;
@@ -15,14 +13,19 @@ public class PlayerHp : MonoBehaviour
     
     void Start()
     {
-        overUI.SetActive(false);
+        // 초기화: 게임 오버 UI 비활성화
+        if(overUI != null) overUI.SetActive(false);
     }
 
-    void Hit()
+    // ⭐ 모든 공격(근접, 원거리)이 이 함수를 호출하여 데미지를 적용합니다.
+    public void TakeDamage(float damage)
     {
         if (isDead) return;
 
-        hp -= 50;
+        hp -= damage;
+        
+        // Debug.Log($"Player hit! Current HP: {hp}"); // HP 변화 확인용
+
         if(hp <= 0)
         {
             KillPlayer();
@@ -34,48 +37,37 @@ public class PlayerHp : MonoBehaviour
         if (isDead) return;
 
         isDead = true;
-        Time.timeScale = 0.2f;
-        overUI.SetActive(true);
+        Time.timeScale = 0.2f; 
+        
+        if(overUI != null) overUI.SetActive(true);
         
         StartCoroutine(FadeToBlack());
-
     }
     
     IEnumerator FadeToBlack()
     {
-
         yield return new WaitForSecondsRealtime(1.5f);
 
-        
         float fadeDuration = 1.5f;
         float timer = 0f;
 
-        Color startColor = new Color(255f, 255f, 255f, 0f);
-        Color endColor = new Color(255f, 255f, 255f, 1f);
+        // Color(R, G, B, A)는 0.0f ~ 1.0f 범위 사용
+        Color startColor = new Color(1f, 1f, 1f, 0f); 
+        Color endColor = new Color(1f, 1f, 1f, 1f);
 
-        fadeImage.color = startColor;
+        if(fadeImage != null) fadeImage.color = startColor;
 
         while (timer < fadeDuration)
         {
-            timer += Time.unscaledDeltaTime;
+            timer += Time.unscaledDeltaTime; 
 
             float progress = Mathf.Clamp01(timer / fadeDuration);
-            fadeImage.color = Color.Lerp(startColor, endColor, progress);
+            if(fadeImage != null) fadeImage.color = Color.Lerp(startColor, endColor, progress);
 
             yield return null;
         }
-        fadeImage.color = endColor;
+        
+        if(fadeImage != null) fadeImage.color = endColor;
         Time.timeScale = 0f;
-        //returnButton.SetActive(true);
-        //gmaeOverImage.SetActive(true);
-    }
-
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Hit();
-        }
     }
 }
