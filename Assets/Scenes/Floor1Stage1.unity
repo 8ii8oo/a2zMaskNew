@@ -1749,10 +1749,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae519667b8b89540b94a6d1f30b56d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topLimit: -0.35
+  topLimit: -1.4
   rightLimit: -4
   leftLimit: -15.2
-  bottomLimit: -3.05
+  bottomLimit: -4
   FollowSpeed: 5
   JumpFollowSpeed: 8
   YOffset: 0
