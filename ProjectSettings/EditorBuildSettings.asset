@@ -12,13 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/title.unity
     guid: a24b7b8dc1eb32b42ab89aa561376e35
   - enabled: 1
-    path: Assets/Scenes/Floor1Stage1.unity
+    path: Assets/Scenes/tutorial.unity
     guid: acde5e4f4de7c4c468e6a4f32aed42d4
   - enabled: 1
-    path: Assets/Scenes/Floor2Stage1.unity
+    path: Assets/Scenes/Floor1Stage2.unity
     guid: f21f5ca997fce614c9567cf74b07c9a5
   - enabled: 1
-    path: Assets/Scenes/Floor2Stage2.unity
+    path: Assets/Scenes/Floor1Stage1.unity
     guid: 9dac54dede5a2254ebae4b6e1ed4ad85
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

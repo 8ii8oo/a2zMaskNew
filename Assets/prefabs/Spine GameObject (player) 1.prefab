@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinePlayer: {fileID: 5692098458670133517}
   speed: 5
-  jumpPower: 12
+  jumpPower: 11
   currentJumpCount: 0
   isGround: 1
   dashPower: 24
