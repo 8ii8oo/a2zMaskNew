@@ -179,6 +179,8 @@ public class PlayerMove : MonoBehaviour
         {
             Flip();
         }
+
+        
     }
 
     void FixedUpdate()
