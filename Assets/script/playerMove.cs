@@ -1,14 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using Spine.Unity;
 using UnityEngine;
-using UnityEngine.UI;
+using Spine;
+using Spine.Unity;
 
 public class PlayerMove : MonoBehaviour
 {
-
-
     [SerializeField] private SkeletonAnimation spinePlayer;
 
     [Header("이동 및 점프")]
@@ -24,7 +20,7 @@ public class PlayerMove : MonoBehaviour
     public float dashingCooldown = 1f;
     bool canDash = true;
     bool dashing = false;
-    
+
     [Header("가면")]
     public GameObject ImNormal;
     public GameObject ImRed;
@@ -37,7 +33,6 @@ public class PlayerMove : MonoBehaviour
 
     bool isAttack;
 
-
     [Header("스킬")]
     public SkeletonAnimation skeletonAnimation;
 
@@ -48,27 +43,26 @@ public class PlayerMove : MonoBehaviour
     private float moveInput = 0f;
     private bool isFacingRight = true;
 
-
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         if (spinePlayer != null)
         {
-
-            SetAnimationState("idle"); 
+            SetAnimationState("idle");
         }
 
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-        skeletonAnimation.skeleton.SetSkin("normal");
-        skeletonAnimation.skeleton.SetupPoseSlots();
+        if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+        {
+            skeletonAnimation.skeleton.SetSkin("normal");
+            skeletonAnimation.skeleton.SetupPoseSlots();
+        }
 
-        ImNormal.SetActive(true);
+        if (ImNormal != null) ImNormal.SetActive(true);
     }
 
     void Update()
     {
-
-        
         moveInput = 0f;
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -78,7 +72,6 @@ public class PlayerMove : MonoBehaviour
         {
             moveInput = -1f;
         }
-
 
         if (isGround && !dashing && !isAttack)
         {
@@ -91,8 +84,6 @@ public class PlayerMove : MonoBehaviour
                 SetAnimationState("idle");
             }
         }
-
-
 
         if (Input.GetKeyDown(KeyCode.A) && !dashing && !isAttack && isGround)
         {
@@ -109,85 +100,124 @@ public class PlayerMove : MonoBehaviour
             };
         }
 
-
         if (Input.GetKeyDown(KeyCode.Space) && currentJumpCount < maxJumpCount)
         {
             Jump();
         }
-
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(Dash());
         }
 
-
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if(isNormal)
+            // 스킨/이미지 전환 로직
+            if (isNormal)
             {
                 isRed = true;
                 isNormal = false;
 
-                ImRed.SetActive(true);
-                ImNormal.SetActive(false);
+                if (ImRed != null) ImRed.SetActive(true);
+                if (ImNormal != null) ImNormal.SetActive(false);
 
-                skeletonAnimation = GetComponent<SkeletonAnimation>();
-                skeletonAnimation.skeleton.SetSkin("red");    
-                skeletonAnimation.skeleton.SetupPoseSlots();
+                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+                {
+                    skeletonAnimation.skeleton.SetSkin("red");
+                    skeletonAnimation.skeleton.SetupPoseSlots();
+                }
             }
-            else if(isRed)
+            else if (isRed)
             {
                 isBlue = true;
                 isRed = false;
-                
-                ImBlue.SetActive(true);
-                ImRed.SetActive(false);
 
-                skeletonAnimation = GetComponent<SkeletonAnimation>();
-                skeletonAnimation.skeleton.SetSkin("blue");
-                skeletonAnimation.skeleton.SetupPoseSlots();
+                if (ImBlue != null) ImBlue.SetActive(true);
+                if (ImRed != null) ImRed.SetActive(false);
+
+                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+                {
+                    skeletonAnimation.skeleton.SetSkin("blue");
+                    skeletonAnimation.skeleton.SetupPoseSlots();
+                }
             }
-            else if(isBlue)
+            else if (isBlue)
             {
                 isBlack = true;
                 isBlue = false;
 
-                ImBlack.SetActive(true);
-                ImBlue.SetActive(false);
+                if (ImBlack != null) ImBlack.SetActive(true);
+                if (ImBlue != null) ImBlue.SetActive(false);
 
-                skeletonAnimation = GetComponent<SkeletonAnimation>();
-                skeletonAnimation.skeleton.SetSkin("black");
-                skeletonAnimation.skeleton.SetupPoseSlots();
+                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+                {
+                    skeletonAnimation.skeleton.SetSkin("black");
+                    skeletonAnimation.skeleton.SetupPoseSlots();
+                }
             }
             else
             {
                 isNormal = true;
                 isBlack = false;
 
-                ImNormal.SetActive(true);
-                ImBlack.SetActive(false);
+                if (ImNormal != null) ImNormal.SetActive(true);
+                if (ImBlack != null) ImBlack.SetActive(false);
 
-                skeletonAnimation = GetComponent<SkeletonAnimation>();
-                skeletonAnimation.skeleton.SetSkin("normal");
-                skeletonAnimation.skeleton.SetupPoseSlots();
+                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+                {
+                    skeletonAnimation.skeleton.SetSkin("normal");
+                    skeletonAnimation.skeleton.SetupPoseSlots();
+                }
             }
         }
-
 
         if (!dashing)
         {
             Flip();
         }
 
-        
-    }
+        if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround)
+        {
+            isAttack = true;
+            Spine.TrackEntry track = null;
+
+            if (isNormal)
+            {
+                track = spinePlayer.AnimationState.SetAnimation(0, "skill_normal", false);
+            }
+            else if (isRed)
+            {
+                track = spinePlayer.AnimationState.SetAnimation(0, "skill_red", false);
+            }
+            else if (isBlue)
+            {
+                track = spinePlayer.AnimationState.SetAnimation(0, "skill_blue", false);
+            }
+            else
+            {
+                track = spinePlayer.AnimationState.SetAnimation(0, "skill_black", false);
+            }
+
+            if (track != null)
+            {
+                track.Complete += (trackEntry) =>
+                {
+                    isAttack = false;
+
+                    if (moveInput != 0)
+                        SetAnimationState("walk");
+                    else
+                        SetAnimationState("idle");
+                };
+            }
+        }
+    } // <-- Update 종료
 
     void FixedUpdate()
     {
         if (!dashing)
         {
-
+            // Rigidbody2D.velocity 사용
             rigid.linearVelocity = new Vector2(moveInput * speed, rigid.linearVelocity.y);
             GroundDheck();
         }
@@ -195,9 +225,8 @@ public class PlayerMove : MonoBehaviour
 
     void Jump()
     {
+        SetAnimationState("jump");
 
-        SetAnimationState("jump"); 
-        
         rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpPower);
         currentJumpCount++;
         isGround = false;
@@ -205,12 +234,11 @@ public class PlayerMove : MonoBehaviour
 
     void Flip()
     {
-
-        if (isFacingRight && moveInput < 0f || !isFacingRight && moveInput > 0f)
+        if ((isFacingRight && moveInput < 0f) || (!isFacingRight && moveInput > 0f))
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
-            localScale.x *= -1f; 
+            localScale.x *= -1f;
             transform.localScale = localScale;
         }
     }
@@ -224,10 +252,9 @@ public class PlayerMove : MonoBehaviour
             currentJumpCount = 0;
             isGround = true;
 
-
             if (!dashing)
             {
-                if(moveInput != 0f)
+                if (moveInput != 0f)
                 {
                     SetAnimationState("walk");
                 }
@@ -236,7 +263,6 @@ public class PlayerMove : MonoBehaviour
                     SetAnimationState("idle");
                 }
             }
-
         }
     }
 
@@ -250,7 +276,6 @@ public class PlayerMove : MonoBehaviour
         canDash = false;
         dashing = true;
 
-
         float originalGravity = rigid.gravityScale;
         rigid.gravityScale = 0f;
 
@@ -259,18 +284,17 @@ public class PlayerMove : MonoBehaviour
 
         yield return new WaitForSeconds(dashTime);
 
-    
         rigid.gravityScale = originalGravity;
-     
+
         if (moveInput == 0f)
         {
             rigid.linearVelocity = new Vector2(0f, rigid.linearVelocity.y);
-            SetAnimationState("idle"); 
-        } 
+            SetAnimationState("idle");
+        }
         else
         {
             rigid.linearVelocity = new Vector2(moveInput * speed, rigid.linearVelocity.y);
-            SetAnimationState("walk"); 
+            SetAnimationState("walk");
         }
 
         dashing = false;
@@ -281,10 +305,13 @@ public class PlayerMove : MonoBehaviour
 
     void SetAnimationState(string animName, bool loop = true)
     {
-        if (spinePlayer != null && spinePlayer.AnimationName != animName)
-        {
-            spinePlayer.AnimationState.SetAnimation(0, animName, loop);
-        }
+        if (spinePlayer == null) return;
+
+        // 현재 트랙의 애니메이션 이름을 안전하게 가져와 비교
+        string currentAnim = spinePlayer.AnimationState.GetCurrent(0)?.Animation?.Name;
+        if (currentAnim == animName) return;
+
+        spinePlayer.AnimationState.SetAnimation(0, animName, loop);
     }
 
     void GroundDheck()
@@ -294,27 +321,12 @@ public class PlayerMove : MonoBehaviour
 
         Vector2 origin = groundCheckCollider.bounds.center;
         Vector2 size = groundCheckCollider.bounds.size;
-        
+
         // 지면을 감지하는 작은 박스 크기 및 거리 설정
         float checkDistance = 0.1f; // 아래로 체크할 거리
-        
+
         RaycastHit2D hit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, checkDistance, whatIsGround);
 
-        // BoxCast를 통해 지면 레이어와 닿았는지 여부로 isGround 설정
-        if (hit.collider != null)
-        {
-            // 지면에 닿았고, 현재 점프 카운트가 최대치일 경우에만 초기화 (이중 점프 중 초기화 방지)
-            if (currentJumpCount != 0 && isGround == false) // 공중에서 착지하는 순간
-            {
-                spinePlayer.AnimationState.SetAnimation(0, "landing", false);
-                currentJumpCount = 0;
-            }
-            isGround = true;
-        }
-        else
-        {
-            isGround = false;
-        }
+        // BoxCast를 통해 지면 레이어와
     }
-
 }
