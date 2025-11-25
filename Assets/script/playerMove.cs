@@ -32,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     bool isBlack = false;
 
     bool isAttack;
+    public bool isDead = false;
 
     [Header("스킬")]
     public SkeletonAnimation skeletonAnimation;
@@ -63,6 +64,7 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
         moveInput = 0f;
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -305,6 +307,7 @@ public class PlayerMove : MonoBehaviour
 
     void SetAnimationState(string animName, bool loop = true)
     {
+        if (isDead && animName != "dead") return;
         if (spinePlayer == null) return;
 
         // 현재 트랙의 애니메이션 이름을 안전하게 가져와 비교
@@ -332,11 +335,17 @@ public class PlayerMove : MonoBehaviour
 
     public void PlatformDrop()
 {
-    // 내려가기 직전 landing 재생하고
+    
     SetAnimationState("landing", false);
 
-    // 점프 카운트 초기화 (원하면)
     isGround = false;
 }
+
+    public void KillAni()
+    {
+        
+        isDead = true;
+        SetAnimationState("dead");
+    }
 
 }

@@ -18,19 +18,20 @@ public class colliderAtcive : MonoBehaviour
         playerCollid = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
     }
 
-    void Update()
+        void Update()
     {
+        // 플레이어가 죽었는지 확인
+        PlayerMove pm = playerCollid.GetComponent<PlayerMove>();
+        if (pm != null && pm.isDead) return;
+
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            // 한 번만 발동하도록 flag 체크
             if (!isCollisionIgnored)
             {
                 IgnoreCollision();
-                playerCollid.GetComponent<PlayerMove>().PlatformDrop();
+                pm.PlatformDrop();
             }
         }
-
-        
     }
 
     

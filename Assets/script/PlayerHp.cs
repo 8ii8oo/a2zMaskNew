@@ -10,34 +10,44 @@ public class PlayerHp : MonoBehaviour
     public GameObject returnButton;
     public GameObject gmaeOverImage;
     private bool isDead = false;
+
+    private PlayerMove playerMove;
+
     
     void Start()
     {
-        // 초기화: 게임 오버 UI 비활성화
+        //게임 오버 UI 비활성화
         if(overUI != null) overUI.SetActive(false);
+        playerMove = GetComponent<PlayerMove>();
     }
 
-    // ⭐ 모든 공격(근접, 원거리)이 이 함수를 호출하여 데미지를 적용합니다.
+    
     public void TakeDamage(float damage)
     {
         if (isDead) return;
 
         hp -= damage;
         
-        // Debug.Log($"Player hit! Current HP: {hp}"); // HP 변화 확인용
+        // HP 변화 확인용
 
         if(hp <= 0)
         {
-            KillPlayer();
+            StartCoroutine(KillPlayer());
         }
     }
 
-    void KillPlayer()
+    IEnumerator KillPlayer()
     {
-        if (isDead) return;
-
         isDead = true;
+
+        if (playerMove != null)
+        {
+            playerMove.KillAni();
+        }
+
         Time.timeScale = 0.2f; 
+
+        yield return new WaitForSecondsRealtime(2f);
         
         if(overUI != null) overUI.SetActive(true);
         
