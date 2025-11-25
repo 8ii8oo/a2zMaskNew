@@ -329,4 +329,14 @@ public class PlayerMove : MonoBehaviour
 
         // BoxCast를 통해 지면 레이어와
     }
+
+    public void PlatformDrop()
+{
+    // 내려가기 직전 landing 재생하고
+    SetAnimationState("landing", false);
+
+    // 점프 카운트 초기화 (원하면)
+    isGround = false;
+}
+
 }

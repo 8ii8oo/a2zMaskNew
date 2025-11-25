@@ -1,27 +1,68 @@
 using UnityEngine;
+using Spine.Unity;
+
 
 public class colliderAtcive : MonoBehaviour
 {
-    Collider2D collid;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private SkeletonAnimation spinePlayer;
+
+    private BoxCollider2D collid;
+    private Collider2D playerCollid;
+    private bool isCollisionIgnored = false;
+    public bool isGround = true;
+
+
     void Start()
     {
-        Collider2D collid = gameObject.GetComponent<BoxCollider2D>();
-
+        collid = GetComponent<BoxCollider2D>();
+        playerCollid = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            collid.enabled = false;
-            Invoke("colliderAtcive", 1f);
+            // 한 번만 발동하도록 flag 체크
+            if (!isCollisionIgnored)
+            {
+                IgnoreCollision();
+                playerCollid.GetComponent<PlayerMove>().PlatformDrop();
+            }
+        }
+
+        
+    }
+
+    
+
+    void IgnoreCollision()
+    {
+        isCollisionIgnored = true;
+
+        // 플레이어와 이 플랫폼 충돌 무시
+        Physics2D.IgnoreCollision(playerCollid, collid, true);
+
+        // 0.3초 뒤 강제 복구 시도
+        Invoke(nameof(RestoreCollision), 0.3f);
+    }
+
+    // 플레이어가 아래로 내려갔을 때 충돌 복구
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!isCollisionIgnored) return;
+
+        if (other.CompareTag("Player"))
+        {
+            RestoreCollision();
         }
     }
 
-    void ColliderActive()
+    void RestoreCollision()
     {
-        collid.enabled = true;
+        if (!isCollisionIgnored) return; // 중복 복구 방지
+
+        Physics2D.IgnoreCollision(playerCollid, collid, false);
+        isCollisionIgnored = false;
     }
 }
+
