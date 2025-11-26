@@ -205,19 +205,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    /*void LateUpdate()
-    {
-        // 공중 상태이고, 대시/공격 중이 아닐 때만 하강 애니메이션 처리
-        if (!isGround && !dashing && !isAttack) 
-        {
-            Debug.Log("내가문제다");
-            // Y축 속도가 마이너스일 때 (하강 중)
-            if (rigid.linearVelocity.y < -0.1f) 
-            {
-                SetAnimationState("landing", true); // fall 애니메이션을 반복 (loop: true)
-            }
-        }
-    }*/
+
 
     void Jump()
     {
@@ -279,7 +267,6 @@ public class PlayerMove : MonoBehaviour
             if (rigid.linearVelocity.y < -0.1f)
             {
                 SetAnimationState("landing", true);
-                Debug.Log("난데?");
             }
            
         }
