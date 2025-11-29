@@ -46,7 +46,8 @@ public class EnemyArcher : MonoBehaviour
             spinePlayer.AnimationState.Complete += OnAnimComplete;
         }
 
-        InvokeRepeating(nameof(Think), 1f, thinkInterval);
+        int[] moves = { -1, 1 };
+        nextMove = moves[Random.Range(0, moves.Length)];
     }
 
     void Update()
@@ -129,12 +130,12 @@ public class EnemyArcher : MonoBehaviour
         }
     }
 
-    void Think()
+    /* void Think()
     {
         if (!isActiveAI || isStopping) return;
         int[] moves = { -1, 1 };
         nextMove = moves[Random.Range(0, moves.Length)];
-    }
+    }*/
 
     IEnumerator StopAndTurn()
     {

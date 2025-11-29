@@ -307,7 +307,7 @@ MonoBehaviour:
   spinePlayer: {fileID: 7110461688546416543}
   speed: 1
   nextMove: 1
-  detectRange: 6
+  detectRange: 5
   attackCooldown: 2
   arrowPrefab: {fileID: 2885468451738451776, guid: 94cbb896ffec3b04e8a3b20a29490292, type: 3}
   arrowSpeed: 10
