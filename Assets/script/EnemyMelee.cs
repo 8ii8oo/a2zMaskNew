@@ -7,8 +7,8 @@ using Spine;
 public class EnemyMelee : EnemyMove 
 {
     [Header("== 근접 공격 설정 ==")]
-    public float chaseRange = 6.0f;     // 플레이어 감지(추적) 범위
-    public float attackRange = 0.7f;    // 공격 가능 범위
+    public float chaseRange = 6.0f;  // 플레이어 감지(추적) 범위
+    public float attackRange = 0.7f; // 공격 가능 범위  
     public float attackCooldown = 1.5f; // 공격 쿨타임
     
     [Header("== 근접 피해 설정 ==")]
@@ -38,7 +38,7 @@ public class EnemyMelee : EnemyMove
         {
             damageObject.SetActive(false);
             // BoxCollider2D 오프셋 저장 로직 제거
-        }
+         }
     }
 
     void Update()
@@ -119,26 +119,25 @@ public class EnemyMelee : EnemyMove
         }
     }
     
-    // ⭐ 데미지 판정 오브젝트 활성화/비활성화 제어
-    IEnumerator ActivateDamage()
-    {
-        if (damageObject == null) yield break;
-        
-        damageObject.SetActive(true);
-        
-        yield return new WaitForSeconds(damageDuration);
-        
-        if (damageObject.activeSelf)
-        {
-            damageObject.SetActive(false);
-        }
-    }
+    //데미지 판정 오브젝트 활성화/비활성화 제어
+        IEnumerator ActivateDamage()
+    {
+         if (damageObject == null) yield break;
+
+          yield return new WaitForSeconds(0.5f);
+
+         damageObject.SetActive(true);
+
+         yield return new WaitForSeconds(damageDuration);
+
+         damageObject.SetActive(false);
+    }
 
     IEnumerator AttackDelay()
     {
         isCoolingDown = true; 
         yield return new WaitForSeconds(attackCooldown); 
-        isCoolingDown = false; 
+        isCoolingDown = false; 
     }
 
     protected void SetAnim(string animName, bool loop = true)

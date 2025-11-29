@@ -2,10 +2,24 @@ using System.Collections;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
+using NUnit.Framework;
 
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private SkeletonAnimation spinePlayer;
+
+    public float damageDuration = 0.5f; //데미지 판정 유지시간
+    public GameObject damageObject;
+    private bool isAttacking = false;
+    private bool isCoolingDown = false; 
+    private bool skinCooling = false; //q스킬
+    private float skinCooldownTime = 8f;
+    private bool skillCooling = false;
+    private float skillCooldownTime = 10f; //s스킬
+
+    public float attackCooldown = 1.5f; //공격 쿨타임
+
+
 
     [Header("이동 및 점프")]
     public float speed = 5f;
@@ -26,6 +40,10 @@ public class PlayerMove : MonoBehaviour
     public GameObject ImRed;
     public GameObject ImBlue;
     public GameObject ImBlack;
+
+    public GameObject QCool;
+    public GameObject SCool;
+
     bool isNormal = true;
     bool isRed = false;
     bool isBlue = false;
@@ -46,6 +64,9 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        SCool.SetActive(false);
+        QCool.SetActive(false);
+
         rigid = GetComponent<Rigidbody2D>();
         if (spinePlayer != null)
         {
@@ -97,7 +118,10 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) && !dashing && !isAttack && isGround)
         {
             isAttack = true;
+
             var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
+
+            StartCoroutine(ActivateDamage());
             // 공격 애니메이션 완료 시 isAttack 해제 및 상태 복귀
             track.Complete += (trackEntry) =>
             {
@@ -119,53 +143,14 @@ public class PlayerMove : MonoBehaviour
         }
 
         // 스킨 전환 (Q키)
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !dashing && !isAttack && !skinCooling)
         {
-            // 스킨/이미지 전환 로직 (이전 로직 유지)
-            if (isNormal)
-            {
-                isRed = true; isNormal = false;
-                if (ImRed != null) ImRed.SetActive(true);
-                if (ImNormal != null) ImNormal.SetActive(false);
-                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
-                {
-                    skeletonAnimation.skeleton.SetSkin("red");
-                    skeletonAnimation.skeleton.SetupPoseSlots();
-                }
-            }
-            else if (isRed)
-            {
-                isBlue = true; isRed = false;
-                if (ImBlue != null) ImBlue.SetActive(true);
-                if (ImRed != null) ImRed.SetActive(false);
-                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
-                {
-                    skeletonAnimation.skeleton.SetSkin("blue");
-                    skeletonAnimation.skeleton.SetupPoseSlots();
-                }
-            }
-            else if (isBlue)
-            {
-                isBlack = true; isBlue = false;
-                if (ImBlack != null) ImBlack.SetActive(true);
-                if (ImBlue != null) ImBlue.SetActive(false);
-                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
-                {
-                    skeletonAnimation.skeleton.SetSkin("black");
-                    skeletonAnimation.skeleton.SetupPoseSlots();
-                }
-            }
-            else
-            {
-                isNormal = true; isBlack = false;
-                if (ImNormal != null) ImNormal.SetActive(true);
-                if (ImBlack != null) ImBlack.SetActive(false);
-                if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
-                {
-                    skeletonAnimation.skeleton.SetSkin("normal");
-                    skeletonAnimation.skeleton.SetupPoseSlots();
-                }
-            }
+            QCool.SetActive(true);
+            StartCoroutine(SkinCooldown());
+            ChangeSkinCycle();
+            
+
+           
         }
 
         if (!dashing)
@@ -174,8 +159,15 @@ public class PlayerMove : MonoBehaviour
         }
 
         // 스킬 (S키)
-        if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround)
+        if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCooling)
         {
+            SCool.SetActive(true);
+
+            StartCoroutine(SkillCooldown()); 
+            StartCoroutine(ActivateDamage());
+
+            
+
             isAttack = true;
             Spine.TrackEntry track = null;
 
@@ -192,8 +184,16 @@ public class PlayerMove : MonoBehaviour
                     OnActionComplete(); // 메서드 호출로 상태 복귀
                 };
             }
+            
         }
     } // Update 종료
+    IEnumerator SkillCooldown()
+    {
+        skillCooling = true;
+        yield return new WaitForSeconds(skillCooldownTime);
+        skillCooling = false;
+        SCool.SetActive(false);
+    }
 
     void FixedUpdate()
     {
@@ -225,6 +225,47 @@ public class PlayerMove : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+        IEnumerator SkinCooldown() //q스킬쿨타임
+    {
+      skinCooling = true;
+       yield return new WaitForSeconds(skinCooldownTime);
+      skinCooling = false;
+      QCool.SetActive(false);
+    }
+
+    void ChangeSkinCycle() //가면변환
+{
+    if (isNormal)
+    {
+        isRed = true; isNormal = false;
+        ImRed?.SetActive(true);
+        ImNormal?.SetActive(false);
+        skeletonAnimation.skeleton.SetSkin("red");
+    }
+    else if (isRed)
+    {
+        isBlue = true; isRed = false;
+        ImBlue?.SetActive(true);
+        ImRed?.SetActive(false);
+        skeletonAnimation.skeleton.SetSkin("blue");
+    }
+    else if (isBlue)
+    {
+        isBlack = true; isBlue = false;
+        ImBlack?.SetActive(true);
+        ImBlue?.SetActive(false);
+        skeletonAnimation.skeleton.SetSkin("black");
+    }
+    else
+    {
+        isNormal = true; isBlack = false;
+        ImNormal?.SetActive(true);
+        ImBlack?.SetActive(false);
+        skeletonAnimation.skeleton.SetSkin("normal");
+    }
+
+    skeletonAnimation.skeleton.SetupPoseSlots();
+}
 
     // 착지 이벤트 핸들러
     void OnCollisionEnter2D(Collision2D collision)
@@ -372,5 +413,25 @@ public class PlayerMove : MonoBehaviour
             OnActionComplete(); // 애니메이션 상태 복귀
         }
     }
+
+    IEnumerator ActivateDamage()
+    {
+         if (damageObject == null) yield break;
+
+          yield return new WaitForSeconds(0.2f);
+
+         damageObject.SetActive(true);
+
+         yield return new WaitForSeconds(damageDuration);
+
+         damageObject.SetActive(false);
+    }
+    
+    IEnumerator AttackDelay()
+    {
+        isCoolingDown = true; 
+        yield return new WaitForSeconds(attackCooldown); 
+        isCoolingDown = false; 
+    }
 
 }

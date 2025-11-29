@@ -40,6 +40,11 @@ public class EnemyDamage : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void GetDamage()
+    {
+        
+    }
     
     // ⭐ 외부(EnemyArcher)에서 데미지 값을 설정할 수 있도록 public 함수 추가
     public void SetDamage(float damage)
