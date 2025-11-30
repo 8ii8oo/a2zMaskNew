@@ -30,6 +30,9 @@ public class EnemyArcher : EnemyMove
             SetAnim("idle");
             spinePlayer.AnimationState.Complete += OnAnimComplete;
         }
+
+        int[] moves = { -1, 1 };
+        nextMove = moves[Random.Range(0, moves.Length)];
     }
 
     void Update()

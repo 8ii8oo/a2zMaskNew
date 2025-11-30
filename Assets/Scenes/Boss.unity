@@ -998,11 +998,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinePlayer: {fileID: 323157464}
-  speed: 1
+  speed: 2
   nextMove: 1
   isActiveAI: 1
   chaseRange: 50
-  attackRange: 0.7
+  attackRange: 1.5
   attackCooldown: 1.5
   nomalDamageObj: {fileID: 870561442}
   skillDamageObj: {fileID: 549342987}

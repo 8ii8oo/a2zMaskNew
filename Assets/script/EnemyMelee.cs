@@ -3,7 +3,7 @@ using System.Collections;
 using Spine.Unity;
 using Spine; 
 
-// EnemyMove를 상속받아 이동/순찰/낭떠러지 체크 기능을 재사용합니다.
+// 이동 순찰 낭떠러지 체크 기능
 public class EnemyMelee : EnemyMove 
 {
   int attackCount = 0;
@@ -21,7 +21,7 @@ public class EnemyMelee : EnemyMove
     private bool isAttacking = false;
     private bool isCoolingDown = false; 
 
-    // ⭐ 콜라이더 오프셋 관련 변수 제거
+    // 콜라이더 오프셋 관련 변수 제거
 
     protected override void Awake()
     {
@@ -39,13 +39,14 @@ public class EnemyMelee : EnemyMove
         if (nomalDamageObj != null)
         {
             nomalDamageObj.SetActive(false);
-            // BoxCollider2D 오프셋 저장 로직 제거
+
          }
     }
 
     void Start()
     {
-        
+        int[] moves = { -1, 1 };
+        nextMove = moves[Random.Range(0, moves.Length)];
     }
 
     void Update()
@@ -79,7 +80,7 @@ public class EnemyMelee : EnemyMove
         }
     }
     
-    // ⭐ LookAtPlayer 함수: 몬스터 방향 및 데미지 오브젝트 로컬 위치 반전
+    //몬스터 방향 및 데미지 오브젝트 로컬 위치 반전
     void LookAtPlayer()
     {
         if (player == null || spinePlayer == null) return;
@@ -91,7 +92,7 @@ public class EnemyMelee : EnemyMove
         spinePlayer.skeleton.ScaleX = scaleX;
         nextMove = (int)s;
         
-        // ⭐ 데미지 판정 오브젝트의 로컬 위치를 몬스터 방향에 맞게 변경
+        // 데미지 판정 오브젝트의 로컬 위치를 몬스터 방향에 맞게 변경
         if (nomalDamageObj != null)
         {
             // 몬스터 방향(s)에 따라 로컬 X 위치를 0.5 또는 -0.5로 설정
