@@ -1,10 +1,91 @@
 fileFormatVersion: 2
-guid: 194909531db11aa4a88a867444198e5a
+guid: 18a39914cefe7e34cb33e3507c37a224
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5342064620654929745
-    second: redD_0
+      213: 1536380896892045753
+    second: GameClear_0
+  - first:
+      213: -8672679745229411933
+    second: GameClear_1
+  - first:
+      213: -2740045450851835429
+    second: GameClear_2
+  - first:
+      213: -8202373389506066892
+    second: GameClear_3
+  - first:
+      213: -6715530029818846562
+    second: GameClear_4
+  - first:
+      213: -1367529029447242540
+    second: GameClear_5
+  - first:
+      213: 1857704982188559067
+    second: GameClear_6
+  - first:
+      213: 729872997274838716
+    second: GameClear_7
+  - first:
+      213: -8669220552906134204
+    second: GameClear_8
+  - first:
+      213: 7566596683259352668
+    second: GameClear_9
+  - first:
+      213: -3644123288695234825
+    second: GameClear_10
+  - first:
+      213: 3426906193655149652
+    second: GameClear_11
+  - first:
+      213: 7989291447305784794
+    second: GameClear_12
+  - first:
+      213: 6323668775640471149
+    second: GameClear_13
+  - first:
+      213: -5384105472237655857
+    second: GameClear_14
+  - first:
+      213: 8206758123144940446
+    second: GameClear_15
+  - first:
+      213: 685573831945672569
+    second: GameClear_16
+  - first:
+      213: 2770559132530963177
+    second: GameClear_17
+  - first:
+      213: -469094774306422320
+    second: GameClear_18
+  - first:
+      213: -3156486944748242003
+    second: GameClear_19
+  - first:
+      213: -4771674143764070334
+    second: GameClear_20
+  - first:
+      213: 9156867952855912760
+    second: GameClear_21
+  - first:
+      213: -7425211682990429688
+    second: GameClear_22
+  - first:
+      213: 7176789431902217612
+    second: GameClear_23
+  - first:
+      213: -2741088826532723168
+    second: GameClear_24
+  - first:
+      213: 9196199425068230820
+    second: GameClear_25
+  - first:
+      213: -5553177482221124456
+    second: GameClear_26
+  - first:
+      213: 4302602214239529227
+    second: GameClear_27
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -84,32 +165,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -124,6 +179,32 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -152,23 +233,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: redD_0
+      name: GameClear_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 3
-        width: 108
-        height: 111
+        x: 5
+        y: 7
+        width: 1483
+        height: 927
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 157a1511873d22a40800000000000000
-      internalID: 5342064620654929745
+      spriteID: 1bec33b89aa5f6c4abcb81157b4bf662
+      internalID: -1448604207
       vertices: []
       indices: 
       edges: []
@@ -177,7 +258,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6824937259c7506469370042a9323ade
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +268,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      redD_0: 5342064620654929745
+      GameClear_0: -1448604207
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
