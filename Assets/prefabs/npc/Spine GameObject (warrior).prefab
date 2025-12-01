@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3895848997673944594}
   - component: {fileID: 6095036775117013298}
   - component: {fileID: 4745265617968432527}
-  - component: {fileID: 6363896917716730862}
   - component: {fileID: 7707287310580610645}
   - component: {fileID: 674936111870808807}
   - component: {fileID: 2184856437005638683}
@@ -113,8 +112,7 @@ MonoBehaviour:
   chaseRange: 6
   attackRange: 0.7
   attackCooldown: 1.5
-  nomalDamageObj: {fileID: 0}
-  skillDamageObj: {fileID: 0}
+  normalDamageObj: {fileID: 7142309914706415656}
   damageDuration: 0.5
 --- !u!114 &6095036775117013298
 MonoBehaviour:
@@ -198,22 +196,6 @@ MonoBehaviour:
   addNormalsDeprecated: 0
   calculateTangentsDeprecated: 0
   maskInteractionDeprecated: 0
---- !u!114 &6363896917716730862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2896308052824804778}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b992f3332d37eb44b72efab657cd7f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spinePlayer: {fileID: 4745265617968432527}
-  speed: 1
-  nextMove: 0
-  isActiveAI: 1
 --- !u!50 &7707287310580610645
 Rigidbody2D:
   serializedVersion: 5

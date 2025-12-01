@@ -5,11 +5,11 @@ using Spine;
 
 public class EnemyArcher : EnemyMove
 {
-    [Header("== Archer Settings ==")]
+    [Header("아처세팅")]
     public float detectRange = 6f;       // 플레이어 감지 범위
     public float attackCooldown = 2f;    // 공격 쿨타임
     
-    [Header("== Arrow Settings ==")]
+    [Header("화살세팅")]
     public GameObject arrowPrefab;
     public float arrowSpeed = 10f;
     public float arrowOffsetY = 0.5f;
@@ -42,7 +42,7 @@ public class EnemyArcher : EnemyMove
         float distX = Mathf.Abs(player.position.x - transform.position.x);
         float distY = Mathf.Abs(player.position.y - transform.position.y);
 
-        // Y 축 높이 차이가 심하면 이동만
+        // Y축 높이 차이가 심하면 이동만
         if (distY > 1.0f)
         {
             isActiveAI = true;
@@ -59,13 +59,13 @@ public class EnemyArcher : EnemyMove
         }
         else
         {
-            // EnemyMove 기본 이동/턴 로직 수행
+            //기본 이동/턴 로직 수행
             isActiveAI = true;
             LookAtPlayerMoveDirection();
         }
     }
 
-    // EnemyMove의 nextMove 방향 보정
+    // 방향 보정
     void LookAtPlayerMoveDirection()
     {
         if (player == null) return;
@@ -85,7 +85,7 @@ public class EnemyArcher : EnemyMove
         nextMove = (int)s;
     }
 
-    // ===== 공격 관련 =====
+    //공격 관련
 
     void Attack()
     {

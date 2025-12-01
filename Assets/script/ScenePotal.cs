@@ -20,6 +20,8 @@ public class ScenePotal : MonoBehaviour
     
     private Renderer portalRenderer; 
 
+    public GameObject[] currentEnemy;
+
 
     void Start()
     {
