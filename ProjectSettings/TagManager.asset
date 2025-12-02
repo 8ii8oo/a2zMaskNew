@@ -8,6 +8,7 @@ TagManager:
   - Object
   - Potal
   - Enemy
+  - playerAttack
   layers:
   - Default
   - TransparentFX

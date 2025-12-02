@@ -17,6 +17,21 @@ public class BossMelee : EnemyMelee
             skillDamageObj.SetActive(false);
     }
 
+    protected override void LookAtPlayer()
+    {
+
+        base.LookAtPlayer();
+
+        int s = nextMove;
+
+        if (skillDamageObj != null)
+        {
+            Vector3 p = skillDamageObj.transform.localPosition;
+            p.x = s * 1.4f; 
+            skillDamageObj.transform.localPosition = p;
+        }
+    }
+
     protected override void Attack()
     {
         if (isAttacking) return;

@@ -114,21 +114,41 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        // 일반 공격 (A키)
         if (Input.GetKeyDown(KeyCode.A) && !dashing && !isAttack && isGround)
-        {
-            isAttack = true;
+{
+    isAttack = true;
+    var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
 
-            var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
+    StartCoroutine(NormalAttackRoutine());
 
-            StartCoroutine(ActivateDamage());
-            // 공격 애니메이션 완료 시 isAttack 해제 및 상태 복귀
-            track.Complete += (trackEntry) =>
-            {
-                isAttack = false;
-                OnActionComplete(); // 메서드 호출로 상태 복귀
-            };
-        }
+    track.Complete += (t) =>
+    {
+        isAttack = false;
+        OnActionComplete();
+    };
+}
+
+if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCooling)
+{
+    SCool.SetActive(true);
+    StartCoroutine(SkillCooldown());
+    
+    isAttack = true;
+    Spine.TrackEntry track = null;
+
+    if (isNormal) track = spinePlayer.AnimationState.SetAnimation(0, "skill_normal", false);
+    else if (isRed) track = spinePlayer.AnimationState.SetAnimation(0, "skill_red", false);
+    else if (isBlue) track = spinePlayer.AnimationState.SetAnimation(0, "skill_blue", false);
+    else track = spinePlayer.AnimationState.SetAnimation(0, "skill_black", false);
+
+    StartCoroutine(SkillAttackRoutine());
+
+    track.Complete += (t) =>
+    {
+        isAttack = false;
+        OnActionComplete();
+    };
+}
 
         // 점프 (Space바)
         if (Input.GetKeyDown(KeyCode.Space) && currentJumpCount < maxJumpCount && !isAttack && !dashing)
@@ -158,34 +178,7 @@ public class PlayerMove : MonoBehaviour
             Flip();
         }
 
-        // 스킬 (S키)
-        if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCooling)
-        {
-            SCool.SetActive(true);
-
-            StartCoroutine(SkillCooldown()); 
-            StartCoroutine(ActivateDamage());
-
-            
-
-            isAttack = true;
-            Spine.TrackEntry track = null;
-
-            if (isNormal) { track = spinePlayer.AnimationState.SetAnimation(0, "skill_normal", false); }
-            else if (isRed) { track = spinePlayer.AnimationState.SetAnimation(0, "skill_red", false); }
-            else if (isBlue) { track = spinePlayer.AnimationState.SetAnimation(0, "skill_blue", false); }
-            else { track = spinePlayer.AnimationState.SetAnimation(0, "skill_black", false); }
-
-            if (track != null)
-            {
-                track.Complete += (trackEntry) =>
-                {
-                    isAttack = false;
-                    OnActionComplete(); // 메서드 호출로 상태 복귀
-                };
-            }
-            
-        }
+        
     } // Update 종료
     IEnumerator SkillCooldown()
     {
@@ -414,18 +407,53 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    IEnumerator ActivateDamage()
-    {
-         if (damageObject == null) yield break;
+    IEnumerator NormalAttackRoutine()
+{
+    if (damageObject == null) yield break;
 
-          yield return new WaitForSeconds(0.2f);
+    float baseDamage = 10f;
+    float finalDamage = baseDamage;
 
-         damageObject.SetActive(true);
+    if (isRed) finalDamage += 5f;
+    if (isBlue) finalDamage += 2f;
+    if (isBlack) finalDamage += 10f;
 
-         yield return new WaitForSeconds(damageDuration);
+    // 타격 타이밍 (애니메이션 0.2초 후)
+    yield return new WaitForSeconds(0.2f);
 
-         damageObject.SetActive(false);
-    }
+    damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
+    damageObject.SetActive(true);
+
+    yield return new WaitForSeconds(damageDuration);
+    damageObject.SetActive(false);
+}
+
+IEnumerator SkillAttackRoutine()
+{
+    if (damageObject == null) yield break;
+
+    float baseDamage = 25f;
+    float finalDamage = baseDamage;
+
+    if (isRed) finalDamage += 10f;
+    if (isBlue) finalDamage += 5f;
+    if (isBlack) finalDamage += 20f;
+
+    yield return new WaitForSeconds(0.25f); 
+
+    damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
+    damageObject.SetActive(true);
+
+    yield return new WaitForSeconds(damageDuration);
+    damageObject.SetActive(false);
+}
+
+
+
+
+
+    
+
     
     IEnumerator AttackDelay()
     {
@@ -433,5 +461,20 @@ public class PlayerMove : MonoBehaviour
         yield return new WaitForSeconds(attackCooldown); 
         isCoolingDown = false; 
     }
+
+public void SetDamageObjectActive(bool state, float damage)
+{
+    if (damageObject == null) return;
+    
+    // PlayerDamage 스크립트를 가져와서 데미지를 설정합니다.
+    PlayerDamage playerDamage = damageObject.GetComponent<PlayerDamage>();
+    if (playerDamage != null)
+    {
+        playerDamage.SetDamage(damage);
+    }
+    
+    damageObject.SetActive(state);
+}
+
 
 }
