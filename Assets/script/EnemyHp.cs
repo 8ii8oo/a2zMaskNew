@@ -18,6 +18,7 @@ public class EnemyHp : MonoBehaviour
 
     void Start()
     {
+        hpBar.enabled = false;
         Hp = EnemyMaxHp;
         // hpBar가 있다면 초기 Fill Amount 설정
         if (hpBar != null)
@@ -37,6 +38,7 @@ public class EnemyHp : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        hpBar.enabled = true;
         if (isDead) return;
 
         Hp -= damage;

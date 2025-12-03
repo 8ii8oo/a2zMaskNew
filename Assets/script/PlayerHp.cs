@@ -83,7 +83,7 @@ public class PlayerHp : MonoBehaviour
         // 시간 느리게
         Time.timeScale = 0.2f; 
 
-        // 플레이어 사망 애니메이션 재생 시간 대기 (Realtime 사용)
+        // 플레이어 사망 애니메이션 재생 시간 대기
         yield return new WaitForSecondsRealtime(2f);
         
         // 게임 오버 UI 활성화
