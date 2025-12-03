@@ -1551,6 +1551,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: portal
       objectReference: {fileID: 0}
+    - target: {fileID: 1689708046641567289, guid: 9150b9da53061ae4ab55d21fb8157c11, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4358532446944557228, guid: 9150b9da53061ae4ab55d21fb8157c11, type: 3}
       propertyPath: filter
       value: 
@@ -1559,6 +1563,10 @@ PrefabInstance:
       propertyPath: filterRD
       value: 
       objectReference: {fileID: 402823554}
+    - target: {fileID: 4358532446944557228, guid: 9150b9da53061ae4ab55d21fb8157c11, type: 3}
+      propertyPath: sceneName
+      value: Stage11
+      objectReference: {fileID: 0}
     - target: {fileID: 4358532446944557228, guid: 9150b9da53061ae4ab55d21fb8157c11, type: 3}
       propertyPath: spinePlayer
       value: 
