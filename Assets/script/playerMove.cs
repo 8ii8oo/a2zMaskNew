@@ -7,6 +7,7 @@ using NUnit.Framework;
 public class PlayerMove : MonoBehaviour
 {
     //제발좀
+    //진짜제발
     [SerializeField] private SkeletonAnimation spinePlayer;
 
     public float damageDuration = 0.5f; //데미지 판정 유지시간
