@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     //제발좀
     //진짜제발
     [SerializeField] private SkeletonAnimation spinePlayer;
+    
 
     public float damageDuration = 0.5f; //데미지 판정 유지시간
     public GameObject damageObject;
@@ -31,7 +32,7 @@ public class PlayerMove : MonoBehaviour
     public bool isGround = true;
 
     [Header("대시")]
-    public float dashPower = 24f;
+    public float dashPower = 15f;
     public float dashTime = 0.2f;
     public float dashingCooldown = 1f;
     bool canDash = true;
@@ -91,7 +92,7 @@ public class PlayerMove : MonoBehaviour
         
         // 이동 입력 (공격/대시 중에는 입력 무시)
         moveInput = 0f;
-        if (!isAttack && !dashing)
+        if ( !dashing)
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {

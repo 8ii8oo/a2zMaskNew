@@ -108,7 +108,6 @@ public class ScenePotal : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("점점커짐");
         float duration = 3f;
         float elapsedTime = 0f;
 

@@ -215,7 +215,7 @@ MonoBehaviour:
   jumpPower: 11
   currentJumpCount: 0
   isGround: 1
-  dashPower: 24
+  dashPower: 15
   dashTime: 0.2
   dashingCooldown: 1
   ImNormal: {fileID: 0}
