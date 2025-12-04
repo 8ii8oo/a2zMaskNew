@@ -22,7 +22,7 @@ public class PlayerHp : MonoBehaviour
     private bool isDead = false;
     private PlayerMove playerMove;
     public bool backHpHit = false;
-    public Image BackHpBar;
+
 
     
     void Start()
@@ -43,10 +43,7 @@ public class PlayerHp : MonoBehaviour
         {
             hpBar.fillAmount = Mathf.Lerp(hpBar.fillAmount, hp / MaxHp, Time.deltaTime * 5f);
         }
-        if(backHpHit)
-        {
-            BackHpBar.fillAmount = Mathf.Lerp(BackHpBar.fillAmount, hp / MaxHp, Time.deltaTime * 10f);
-        }
+        
     }
 
 

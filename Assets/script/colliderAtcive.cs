@@ -24,10 +24,8 @@ public class colliderAtcive : MonoBehaviour
     {
         if (playerMove == null || playerMove.isDead) return;
 
-        // 🔥🔥🔥 포탈 타는 중이면(PlayerMove.enabled == false) 드롭 입력 완전 차단
         if (!playerMove.enabled) return;
 
-        // ↓ + Space 드롭 입력 처리
         if (Input.GetKey(KeyCode.DownArrow))
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isCollisionIgnored) 
@@ -44,7 +42,6 @@ public class colliderAtcive : MonoBehaviour
         
         isCollisionIgnored = true;
 
-        // 공격/스킬/이동 막기
         playerMove.SetIsAttack(true); 
 
         Physics2D.IgnoreCollision(playerCollid, collid, true);

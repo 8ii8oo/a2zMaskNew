@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invulnerabilityTime: 0.2
-  EnemyMaxHp: 100
+  EnemyMaxHp: 50
   hpBar: {fileID: 575042848829171404}
 --- !u!1 &3903365377754359367
 GameObject:

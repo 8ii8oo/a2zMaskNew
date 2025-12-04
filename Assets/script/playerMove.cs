@@ -9,6 +9,8 @@ public class PlayerMove : MonoBehaviour
     //제발좀
     //진짜제발
     [SerializeField] private SkeletonAnimation spinePlayer;
+
+    public bool isPortal = false; //포탈
     
 
     public float damageDuration = 0.5f; //데미지 판정 유지시간
@@ -88,6 +90,12 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (isPortal)
+{
+    moveInput = 0f;
+    SetAnimationState("idle");
+    return;
+}
         if (isDead) return;
         
         // 이동 입력 (공격/대시 중에는 입력 무시)

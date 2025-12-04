@@ -54,7 +54,9 @@ public class ScenePotal : MonoBehaviour
                 isTransitioning = true;
                 if (spinePlayer != null && spinePlayer.AnimationState != null)
                 {
+                    
                     spinePlayer.AnimationState.SetAnimation(0, "idle", true);
+
                 }
                 StartCoroutine(LoadSceneDelay(playerObj));
             }
@@ -93,18 +95,18 @@ public class ScenePotal : MonoBehaviour
         }
 
 
-        Rigidbody2D playerRigid = PlayerToStop.GetComponent<Rigidbody2D>();
-        if (playerRigid != null)
-        {
-            playerRigid.simulated = false;
-            playerRigid.linearVelocity = Vector2.zero;
-        }
-
         PlayerMove playerMoveScript = PlayerToStop.GetComponent<PlayerMove>();
-        if (playerMoveScript != null)
-        {
-            playerMoveScript.enabled = false;
-        }
+if (playerMoveScript != null)
+{
+    playerMoveScript.isPortal = true;   // 🔥 포탈 상태 ON
+}
+
+Rigidbody2D playerRigid = PlayerToStop.GetComponent<Rigidbody2D>();
+if (playerRigid != null)
+{
+    playerRigid.linearVelocity = Vector2.zero;  // 이동만 멈춤
+    // simulated = false; 절대 쓰지 않기!!
+}
 
         yield return new WaitForSeconds(1f);
 
