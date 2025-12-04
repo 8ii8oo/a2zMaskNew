@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static bool GameIsPaused = false; //상태.  일시정지, 창 켜져잇는지 아닌지 확인
     static bool CTSA = false; //SA = SetActive, 컨트롤
     static bool OPSA = false; //옵션
+    //안된어ㅣ남어ㅏㅣㄴㅁ어ㅣㅏ머이ㅏ저인마어
+//dsajlkzdsadsadsa
 
     
 
