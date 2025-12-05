@@ -16,6 +16,8 @@ public class PlayerMove : MonoBehaviour
     public GameObject slashPrefab; // 인스펙터에서 참격 프리팹 연결
     public Transform firePoint; // 발사 위치 (플레이어 앞에 빈 오브젝트)
 
+    private bool attackSoundPlayed = false; //사운드 소리 한번만 들리게
+
 
     
 
@@ -131,10 +133,20 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A) && !dashing && !isAttack && isGround)
+       if (Input.GetKeyDown(KeyCode.A) && !dashing && !isAttack && isGround)
 {
     isAttack = true;
+    attackSoundPlayed = false; // 새 공격 시작 → 소리 초기화
+    AudioManager.instance.PlaySfx(AudioManager.Sfx.Attack);
+
     var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
+
+    // 사운드 한 번만 재생
+    if (!attackSoundPlayed)
+    {
+        
+        attackSoundPlayed = true;
+    }
 
     StartCoroutine(NormalAttackRoutine());
 
@@ -152,6 +164,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     
     isAttack = true;
     Spine.TrackEntry track = null;
+    
 
     if (isNormal) track = spinePlayer.AnimationState.SetAnimation(0, "skill_normal", false);
     else if (isRed) track = spinePlayer.AnimationState.SetAnimation(0, "skill_red", false);
@@ -170,12 +183,14 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         // 점프 (Space바)
         if (Input.GetKeyDown(KeyCode.Space) && currentJumpCount < maxJumpCount && !isAttack && !dashing)
         {
+           
             Jump();
         }
 
         // 대시 (LeftShift)
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isAttack)
         {
+            
             StartCoroutine(Dash());
         }
 
@@ -219,6 +234,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
     void Jump()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
         SetAnimationState("jump", false);
         rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, jumpPower);
         currentJumpCount++;
@@ -312,7 +328,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         }
     }
     
-    // ⭐ 공격/스킬/대시 완료 후 호출될 메서드
+    // 공격/스킬/대시 완료 후 호출될 메서드
     private void OnActionComplete()
     {
         // 지상에 있다면 idle/walk로 복귀
@@ -339,6 +355,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
     IEnumerator Dash()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
         canDash = false;
         dashing = true;
 
@@ -437,6 +454,8 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 {
     if (damageObject == null) yield break;
 
+    
+
     float baseDamage = 10f;
     float finalDamage = baseDamage;
 
@@ -467,13 +486,27 @@ IEnumerator SkillAttackRoutine()
 
     if(isNormal)
         {
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Skill);
             StartCoroutine(Dash());
         }
 
+        if (isRed)
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Skill);
+    }
+
     if (isBlue)
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Blue);
         FireSlash();
     }
+
+    if (isBlack)
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Skill);
+    }
+
+
 
     if (isBlack) finalDamage += 10f; 
     yield return new WaitForSeconds(0.15f); 

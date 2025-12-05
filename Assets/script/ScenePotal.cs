@@ -91,6 +91,7 @@ public class ScenePotal : MonoBehaviour
     {
         if (filter != null)
         {
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Potal);
             filter.gameObject.SetActive(true);
         }
 

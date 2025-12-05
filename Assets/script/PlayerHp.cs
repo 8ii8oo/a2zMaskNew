@@ -15,7 +15,6 @@ public class PlayerHp : MonoBehaviour
     public Image hpBar; 
     
     // 게임 오버 관련 UI 요소들
-    public GameObject overUI;
     public Image fadeImage;
     public GameObject returnButton;
     public GameObject gmaeOverImage;
@@ -43,8 +42,7 @@ public class PlayerHp : MonoBehaviour
     
         
         playerMove = GetComponent<PlayerMove>();
-        
-        if(overUI != null) overUI.SetActive(false);
+
         
     }
 
@@ -96,7 +94,7 @@ public class PlayerHp : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         
         // 게임 오버 UI 활성화
-        if(overUI != null) overUI.SetActive(true);
+
         
         // 페이드 아웃 코루틴 시작
         StartCoroutine(FadeToBlack());

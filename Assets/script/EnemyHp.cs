@@ -11,6 +11,7 @@ public class EnemyHp : MonoBehaviour
     private float Hp; // private 인스턴스 변수로 변경
 
     public Image hpBar;
+    public Image BackHpBar;
     bool isDead = false;
     
     // Start에서 Invoke("BackHpFun", 0.5f); 관련 코드는 제거했습니다.
@@ -18,13 +19,19 @@ public class EnemyHp : MonoBehaviour
 
     void Start()
     {
+        
         hpBar.enabled = false;
+        BackHpBar.enabled = false;
         Hp = EnemyMaxHp;
         // hpBar가 있다면 초기 Fill Amount 설정
         if (hpBar != null)
         {
             hpBar.fillAmount = 1f;
         }
+
+        
+
+        
     }
 
     void Update()
@@ -39,6 +46,7 @@ public class EnemyHp : MonoBehaviour
     public void TakeDamage(float damage)
     {
         hpBar.enabled = true;
+        BackHpBar.enabled = true;
         if (isDead) return;
 
         Hp -= damage;
@@ -55,9 +63,7 @@ public class EnemyHp : MonoBehaviour
 
     private void Die()
     {
-        // TODO: 사망 애니메이션 호출 및 물리 비활성화 로직 추가
-        
-        // 스크립트가 붙은 게임 오브젝트 전체를 파괴합니다.
-        Destroy(gameObject, 0.5f); // 0.5초 후 오브젝트 파괴 (사망 애니메이션 시간 고려)
+
+        Destroy(gameObject, 0.5f); 
     }
 }

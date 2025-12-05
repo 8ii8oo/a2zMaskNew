@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
             if (GameIsPaused)
             {
                 Resume();
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     void pasue()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         EscSet.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     void Resume()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         if (CTSA == true)
         {
             Ctrl.SetActive(false);
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour
 
     public void OnClickCtrl()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         Ctrl.SetActive(!Ctrl.activeSelf);
 
         CTSA = Ctrl.activeSelf;
@@ -70,6 +74,7 @@ public class GameManager : MonoBehaviour
 
     public void OnClickOption()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         Option.SetActive(!Option.activeSelf);
 
         OPSA = Option.activeSelf;
@@ -80,6 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void OnClickReturn()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         if (CTSA == true)
         {
             Ctrl.SetActive(false);
@@ -100,6 +106,7 @@ public class GameManager : MonoBehaviour
     
     public void OnClickTitle()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         Time.timeScale = 1f;
         SceneManager.LoadScene("title");
     }

@@ -38,6 +38,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5226714978861328010}
+  - {fileID: 5644203010653763973}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3936683727204526857
@@ -189,12 +190,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 100
   hpBar: {fileID: 0}
-  overUI: {fileID: 0}
   fadeImage: {fileID: 0}
   returnButton: {fileID: 0}
   gmaeOverImage: {fileID: 0}
   backHpHit: 0
-  BackHpBar: {fileID: 0}
 --- !u!114 &846704958591622142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +207,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinePlayer: {fileID: 2724506860710149158}
+  isPortal: 0
+  currentGroundTag: 
+  slashPrefab: {fileID: 0}
+  firePoint: {fileID: 5644203010653763973}
   damageDuration: 0.5
   damageObject: {fileID: 8128085163824893305}
   attackCooldown: 1.5
@@ -389,3 +392,34 @@ MonoBehaviour:
   damageAmount: 50
   autoLookAtPlayer: 0
   isProjectile: 0
+--- !u!1 &9142630645110111305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5644203010653763973}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5644203010653763973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9142630645110111305}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.31000137, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2506740842807945323}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
