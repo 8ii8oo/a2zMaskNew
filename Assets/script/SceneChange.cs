@@ -27,6 +27,7 @@ public class SceneChange : MonoBehaviour
 
     IEnumerator FadeOutAndLoad()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         isTransitioning = true;
         Panel.gameObject.SetActive(true);
 

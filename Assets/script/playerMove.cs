@@ -26,9 +26,9 @@ public class PlayerMove : MonoBehaviour
     private bool isAttacking = false;
     private bool isCoolingDown = false; 
     private bool skinCooling = false; //q스킬
-    private float skinCooldownTime = 2f;
+    private float skinCooldownTime = 8f;
     private bool skillCooling = false;
-    private float skillCooldownTime = 2f; //s스킬
+    private float skillCooldownTime = 10f; //s스킬
 
     public float attackCooldown = 1.5f; //공격 쿨타임
 
