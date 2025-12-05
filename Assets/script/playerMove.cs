@@ -11,6 +11,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private SkeletonAnimation spinePlayer;
 
     public bool isPortal = false; //포탈
+    public string currentGroundTag = "";
+
     
 
     public float damageDuration = 0.5f; //데미지 판정 유지시간
@@ -269,22 +271,31 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     }
 
     skeletonAnimation.skeleton.SetupPoseSlots();
-}
+} 
 
     // 착지 이벤트 핸들러
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("floor"))
+        currentGroundTag = collision.gameObject.tag;
+
+        if (collision.gameObject.CompareTag("floor") || collision.gameObject.CompareTag("DownGround") )
         {
             isAttack = true;
             currentJumpCount = 0;
             isGround = true;
-            // landing 애니메이션을 설정하고 완료 이벤트를 연결합니다.
+        
             var track = spinePlayer.AnimationState.SetAnimation(0, "landing", false);
             track.Complete += OnLandingComplete; // 메서드 연결
             isAttack = false;
         }
     }
+
+    void OnCollisionExit2D(Collision2D collision)
+{
+    if (collision.gameObject.tag == currentGroundTag)
+        currentGroundTag = "";
+}
+
     
 
     private void OnLandingComplete(TrackEntry trackEntry)
@@ -486,6 +497,7 @@ public void SetDamageObjectActive(bool state, float damage)
     
     damageObject.SetActive(state);
 }
+
 
 
 }

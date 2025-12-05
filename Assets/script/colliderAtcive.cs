@@ -3,14 +3,14 @@ using Spine.Unity;
 
 public class colliderAtcive : MonoBehaviour
 {
-    private EdgeCollider2D collid;
+    private Collider2D collid;
     private Collider2D playerCollid;
     private PlayerMove playerMove;
     private bool isCollisionIgnored = false;
 
     void Start()
     {
-        collid = GetComponent<EdgeCollider2D>();
+        collid = GetComponent<Collider2D>();
         
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -26,7 +26,12 @@ public class colliderAtcive : MonoBehaviour
 
         if (!playerMove.enabled) return;
 
-        if (Input.GetKey(KeyCode.DownArrow))
+
+        if (playerMove.currentGroundTag == "DownGround") return;
+
+
+
+        if (Input.GetKey(KeyCode.DownArrow) && !isCollisionIgnored)
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isCollisionIgnored) 
             {

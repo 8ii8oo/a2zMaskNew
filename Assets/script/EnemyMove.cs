@@ -52,7 +52,7 @@ public class EnemyMove : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector2.down, 1f, LayerMask.GetMask("Ground"));
 
         // 벽체크
-        RaycastHit2D wallHit = Physics2D.Raycast(rigid.position, new Vector2(nextMove, 0), 1f, LayerMask.GetMask("Ground"));
+        RaycastHit2D wallHit = Physics2D.Raycast(rigid.position, new Vector2(nextMove, 0), 1f, LayerMask.GetMask("Wall"));
         
 
 

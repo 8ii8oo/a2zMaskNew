@@ -9,6 +9,7 @@ TagManager:
   - Potal
   - Enemy
   - playerAttack
+  - DownGround
   layers:
   - Default
   - TransparentFX
