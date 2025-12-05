@@ -14,6 +14,7 @@ public class EnemyMove : MonoBehaviour
     protected string currentAnim = "";
 
     [HideInInspector] public bool isActiveAI = true;
+    
 
     protected virtual void Awake()
     {
@@ -50,10 +51,17 @@ public class EnemyMove : MonoBehaviour
         Vector2 frontVec = new Vector2(rigid.position.x + nextMove * 0.3f, rigid.position.y);
         RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector2.down, 1f, LayerMask.GetMask("Ground"));
 
-        if (!isStopping && rayHit.collider == null)
+        // 벽체크
+        RaycastHit2D wallHit = Physics2D.Raycast(rigid.position, new Vector2(nextMove, 0), 1f, LayerMask.GetMask("Ground"));
+        
+
+
+        if (!isStopping && (rayHit.collider == null || wallHit.collider != null))
         {
             StartCoroutine(StopAndTurn());
         }
+
+        
     }
 
     // 낭떠러지에서 멈춘 후 방향 반전
