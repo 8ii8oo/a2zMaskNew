@@ -3,6 +3,7 @@ using UnityEngine;
 using Spine;
 using Spine.Unity;
 using NUnit.Framework;
+using UnityEngine.Rendering;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class PlayerMove : MonoBehaviour
 
     public bool isPortal = false; //포탈
     public string currentGroundTag = "";
+    public GameObject slashPrefab; // 인스펙터에서 참격 프리팹 연결
+    public Transform firePoint; // 발사 위치 (플레이어 앞에 빈 오브젝트)
+
 
     
 
@@ -465,6 +469,12 @@ IEnumerator SkillAttackRoutine()
         {
             StartCoroutine(Dash());
         }
+
+    if (isBlue)
+    {
+        FireSlash();
+    }
+
     if (isBlack) finalDamage += 10f; 
     yield return new WaitForSeconds(0.15f); 
 
@@ -473,6 +483,28 @@ IEnumerator SkillAttackRoutine()
 
     yield return new WaitForSeconds(damageDuration);
     damageObject.SetActive(false);
+}
+
+
+
+void FireSlash()
+{
+    if (slashPrefab == null || firePoint == null) return;
+
+    Vector2 dir = isFacingRight ? Vector2.right : Vector2.left;
+    GameObject slash = Instantiate(slashPrefab, firePoint.position, Quaternion.identity);
+    slash.SetActive(true);
+
+    SpriteRenderer sr = slash.GetComponent<SpriteRenderer>();
+    sr.flipX = isFacingRight;
+
+    
+    
+    SlashProjectile proj = slash.GetComponent<SlashProjectile>();
+    if (proj != null)
+    {
+        proj.Init(dir, 20f); // 데미지 설정 가능
+    }
 }
 
 
