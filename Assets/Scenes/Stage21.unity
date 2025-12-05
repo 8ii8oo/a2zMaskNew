@@ -1671,6 +1671,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &655582774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 655582775}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &655582775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655582774}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 747087002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &659766909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2913,7 +2944,7 @@ GameObject:
   - component: {fileID: 929240530}
   - component: {fileID: 929240529}
   - component: {fileID: 929240533}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8601,7 +8632,7 @@ PrefabInstance:
     - target: {fileID: 846704958591622142, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: firePoint
       value: 
-      objectReference: {fileID: 1503900309}
+      objectReference: {fileID: 655582775}
     - target: {fileID: 846704958591622142, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: slashPrefab
       value: 
@@ -8609,7 +8640,7 @@ PrefabInstance:
     - target: {fileID: 846704958591622142, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: damageObject
       value: 
-      objectReference: {fileID: 4713406598570460232, guid: 44349773811a4db4f8ba0e9e4b864701, type: 3}
+      objectReference: {fileID: 1503900302}
     - target: {fileID: 949023184852346230, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: m_Name
       value: Spine GameObject (player)
@@ -8702,6 +8733,9 @@ PrefabInstance:
     - {fileID: 5493697869594492000, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2506740842807945323, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 655582775}
     - targetCorrespondingSourceObject: {fileID: 5226714978861328010, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       insertIndex: -1
       addedObject: {fileID: 44925026}
