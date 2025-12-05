@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 125440542}
   m_Layer: 6
   m_Name: BackGround
-  m_TagString: floor
+  m_TagString: DownGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -538,7 +538,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8798820601328781987, guid: c540b4bd125aeb340af35a5b62a5890a, type: 3}
+  m_Sprite: {fileID: 967394022722889188, guid: 559da2b1f6fae4643bc94bc0dbd64706, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHp : MonoBehaviour
 {
@@ -27,12 +28,23 @@ public class PlayerHp : MonoBehaviour
     
     void Start()
     {
-        hp = MaxHp; 
+
+            string currentScene = SceneManager.GetActiveScene().name;
+            if (currentScene == "Stage21" || currentScene == "Boss" || currentScene == "Stage11")
+        {
+            hp = MaxHp;
+        }
+
+        
+         if (hpBar != null)
+    {
+        hpBar.fillAmount = hp / MaxHp;
+    }
+    
         
         playerMove = GetComponent<PlayerMove>();
         
         if(overUI != null) overUI.SetActive(false);
-        
         
     }
 

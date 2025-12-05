@@ -361,7 +361,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         if (isDead && animName != "dead") return;
         if (spinePlayer == null) return;
 
-        // 현재 트랙의 애니메이션 이름을 안전하게 가져와 비교
+        // 현재 애니메이션 이름을 가져와 비교
         string currentAnim = spinePlayer.AnimationState.GetCurrent(0)?.Animation?.Name;
         if (currentAnim == animName) return;
 
@@ -436,9 +436,11 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     float baseDamage = 10f;
     float finalDamage = baseDamage;
 
-    if (isRed) finalDamage += 5f;
-    if (isBlue) finalDamage += 2f;
-    if (isBlack) finalDamage += 10f;
+    /*
+    if (isRed) finalDamage += 10f;
+    if (isBlue) finalDamage += 10f;
+    if (isBlack) finalDamage += 20f;
+    */
 
     // 타격 타이밍 (애니메이션 0.2초 후)
     yield return new WaitForSeconds(0.2f);
@@ -448,20 +450,23 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
     yield return new WaitForSeconds(damageDuration);
     damageObject.SetActive(false);
+
 }
 
 IEnumerator SkillAttackRoutine()
 {
+    
     if (damageObject == null) yield break;
 
-    float baseDamage = 25f;
+    float baseDamage = 20f;
     float finalDamage = baseDamage;
 
-    if (isRed) finalDamage += 10f;
-    if (isBlue) finalDamage += 5f;
-    if (isBlack) finalDamage += 20f;
-
-    yield return new WaitForSeconds(0.25f); 
+    if(isNormal)
+        {
+            StartCoroutine(Dash());
+        }
+    if (isBlack) finalDamage += 10f; 
+    yield return new WaitForSeconds(0.15f); 
 
     damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
     damageObject.SetActive(true);

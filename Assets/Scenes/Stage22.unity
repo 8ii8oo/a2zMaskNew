@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 125440542}
   m_Layer: 6
   m_Name: BackGround
-  m_TagString: floor
+  m_TagString: DownGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3785,7 +3785,7 @@ PrefabInstance:
       objectReference: {fileID: 2101574618307583902}
     - target: {fileID: 4358532446944557228, guid: 9150b9da53061ae4ab55d21fb8157c11, type: 3}
       propertyPath: sceneName
-      value: Stage22
+      value: Boss
       objectReference: {fileID: 0}
     - target: {fileID: 4358532446944557228, guid: 9150b9da53061ae4ab55d21fb8157c11, type: 3}
       propertyPath: spinePlayer
