@@ -454,6 +454,7 @@ MonoBehaviour:
   invulnerabilityTime: 0.2
   EnemyMaxHp: 100
   hpBar: {fileID: 7883844145493450992}
+  BackHpBar: {fileID: 8734316763868539544}
 --- !u!70 &536806374053528228
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

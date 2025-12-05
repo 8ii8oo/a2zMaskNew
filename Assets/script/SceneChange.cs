@@ -11,10 +11,16 @@ public class SceneChange : MonoBehaviour
     public GameObject Illu;
 
     private bool isTransitioning = false; // 중복방지 
-    private bool hasLoaded = false; 
+    private bool hasLoaded = false;
+
+    void Awake()
+    {
+         AudioManager.instance.PlayBgm(AudioManager.Bgm.Title);
+    }
 
     void Start()
     {
+       
         Time.timeScale = 1f;
         DontDestroyOnLoad(Panel.transform.root.gameObject);
     }

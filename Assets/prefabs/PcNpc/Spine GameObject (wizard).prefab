@@ -672,3 +672,4 @@ MonoBehaviour:
   invulnerabilityTime: 0.2
   EnemyMaxHp: 100
   hpBar: {fileID: 3571642337978896121}
+  BackHpBar: {fileID: 8412458250312625101}

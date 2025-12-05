@@ -313,6 +313,7 @@ MonoBehaviour:
   invulnerabilityTime: 0.2
   EnemyMaxHp: 50
   hpBar: {fileID: 575042848829171404}
+  BackHpBar: {fileID: 1588938054748757093}
 --- !u!1 &3903365377754359367
 GameObject:
   m_ObjectHideFlags: 0
