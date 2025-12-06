@@ -91,11 +91,13 @@ public class ScenePotal : MonoBehaviour
     {
         if (filter != null)
         {
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Potal);
+            
             filter.gameObject.SetActive(true);
+
+            
         }
 
-
+        Invoke("isPotalSound", 2.5f);
         PlayerMove playerMoveScript = PlayerToStop.GetComponent<PlayerMove>();
 if (playerMoveScript != null)
 {
@@ -120,6 +122,8 @@ if (playerRigid != null)
         float startScale = 0f;
         float targetScale = 50f;
 
+        
+
 
         while (elapsedTime < duration)
         {
@@ -143,6 +147,9 @@ if (playerRigid != null)
             filterRD.sharedMaterial.SetFloat(speedPropName, targetSpeed);
             filterRD.sharedMaterial.SetFloat(scalePropName, targetScale);
         }
+
+        
+        
 
         SceneManager.LoadScene(sceneName);
     }
@@ -212,4 +219,9 @@ if (playerRigid != null)
             Destroy(gameObject); 
         }
     } 
+
+    void isPotalSound()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Potal);
+    }
 }

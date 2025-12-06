@@ -1372,6 +1372,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
+--- !u!4 &289186986 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2506740842807945323, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
+  m_PrefabInstance: {fileID: 289186981}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &303391656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2386,7 +2391,7 @@ MonoBehaviour:
   FollowSpeed: 5
   JumpFollowSpeed: 8
   YOffset: 0
-  target: {fileID: 0}
+  target: {fileID: 289186986}
 --- !u!1 &534933480
 GameObject:
   m_ObjectHideFlags: 0

@@ -8096,7 +8096,7 @@ PrefabInstance:
     - target: {fileID: 6489283024268097237, guid: 672443b785f9ee643a0a4cf2b3f5d862, type: 3}
       propertyPath: 'sfxClips.Array.data[5]'
       value: 
-      objectReference: {fileID: 8300000, guid: 7ef242949fad40d4282cd1eb77300c78, type: 3}
+      objectReference: {fileID: 8300000, guid: 721ea677abd0f9e4e9a6f274804ca06b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

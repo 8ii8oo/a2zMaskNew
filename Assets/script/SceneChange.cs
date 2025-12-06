@@ -15,12 +15,12 @@ public class SceneChange : MonoBehaviour
 
     void Awake()
     {
-         AudioManager.instance.PlayBgm(AudioManager.Bgm.Title);
+        
     }
 
     void Start()
     {
-       
+        AudioManager.instance.PlayBgm(AudioManager.Bgm.Title);
         Time.timeScale = 1f;
         DontDestroyOnLoad(Panel.transform.root.gameObject);
     }
