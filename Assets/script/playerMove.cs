@@ -337,7 +337,18 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     // 착지 이벤트 핸들러
     void OnCollisionEnter2D(Collision2D collision)
     {
-        currentGroundTag = collision.gameObject.tag;
+        if (collision.collider.CompareTag("DownGround"))
+    {
+        currentGroundTag = "DownGround";
+    }
+    else if (collision.collider.CompareTag("floor"))
+    {
+        currentGroundTag = "floor";
+    }
+    else
+    {
+        currentGroundTag = collision.collider.tag;
+    }
 
         if (collision.gameObject.CompareTag("floor") || collision.gameObject.CompareTag("DownGround") )
         {
@@ -355,8 +366,11 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
     void OnCollisionExit2D(Collision2D collision)
 {
-    if (collision.gameObject.tag == currentGroundTag)
+    if (!string.IsNullOrEmpty(currentGroundTag))
+    {
+        if (collision.collider.CompareTag(currentGroundTag))
         currentGroundTag = "";
+        }
 }
 
     
@@ -616,6 +630,8 @@ public void SetDamageObjectActive(bool state, float damage)
     
     damageObject.SetActive(state);
 }
+
+
 
 
 
