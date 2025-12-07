@@ -175,6 +175,16 @@ if (playerRigid != null)
         }
 
         isTransitioning = false;
+        if (PlayerMove.instance != null)
+    {
+        PlayerMove.instance.isPortal = false;
+
+        if (PlayerMove.instance.rigid != null)
+        {
+             PlayerMove.instance.rigid.linearVelocity = Vector2.zero;
+        }
+    }
+    
         StartCoroutine(RestoreEffect());
 
 

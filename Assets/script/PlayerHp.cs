@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHp : MonoBehaviour
 {
+    public GameObject startPosition;
     // 최대 HP는 인스펙터에서 설정 가능
     public float MaxHp = 100f; 
     public static float hp = 100f;
@@ -30,18 +31,28 @@ public class PlayerHp : MonoBehaviour
     void Start()
     {
         
-
-            string currentScene = SceneManager.GetActiveScene().name;
-            if (currentScene == "Stage21" || currentScene == "Boss" || currentScene == "Stage11")
+        string currentScene = SceneManager.GetActiveScene().name;
+        
+        if (currentScene == "Stage21" || currentScene == "Boss" || currentScene == "Stage11")
         {
             hp = MaxHp;
         }
 
+        if(startPosition != null)
+        {
+              gameObject.transform.position = startPosition.transform.position;  
+        }
+        else
+    {
+        Debug.LogWarning("Player Start Position Object is not set in the Inspector.");
+    }
+        
+
         
          if (hpBar != null)
-    {
+        {
         hpBar.fillAmount = hp / MaxHp;
-    }
+        }
     
         
         playerMove = GetComponent<PlayerMove>();
@@ -65,6 +76,7 @@ public class PlayerHp : MonoBehaviour
         if (isDead) return;
 
         hp -= damage;
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Attack);
         Invoke("BackHpFun", 0.5f);
         
 
@@ -84,26 +96,21 @@ public class PlayerHp : MonoBehaviour
     {
         isDead = true;
 
-        // 플레이어 움직임 스크립트의 사망 애니메이션 호출
         if (playerMove != null)
         {
             playerMove.KillAni();
         }
 
-        // 시간 느리게
         Time.timeScale = 0.2f; 
 
-        // 플레이어 사망 애니메이션 재생 시간 대기
         yield return new WaitForSecondsRealtime(2f);
         
-        // 게임 오버 UI 활성화
 
         
-        // 페이드 아웃 코루틴 시작
         StartCoroutine(FadeToBlack());
     }
     
-    IEnumerator FadeToBlack()
+    IEnumerator FadeToBlack() //페이드아웃
     {
 
         yield return new WaitForSecondsRealtime(1.5f); 

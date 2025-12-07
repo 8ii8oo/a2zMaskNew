@@ -11,6 +11,7 @@ TagManager:
   - playerAttack
   - DownGround
   - Wall
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

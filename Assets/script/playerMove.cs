@@ -4,6 +4,8 @@ using Spine;
 using Spine.Unity;
 using NUnit.Framework;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerMove : MonoBehaviour
 {
@@ -72,7 +74,7 @@ public class PlayerMove : MonoBehaviour
 
     [Header("컴포넌트 및 상태")]
     public Rigidbody2D rigid;
-    public Collider2D groundCheckCollider; // 지면 체크용 콜라이더 (BoxCollider2D 권장)
+    public Collider2D groundCheckCollider;
     public LayerMask whatIsGround; // 지면 레이어 설정
     private float moveInput = 0f;
     private bool isFacingRight = true;
@@ -83,12 +85,34 @@ public class PlayerMove : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // 씬 이동에도 유지
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
+    void OnDestroy()
+{
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+}
+
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+
+    GameObject spawnPointObject = GameObject.FindGameObjectWithTag("SpawnPoint");
+
+    if (spawnPointObject != null)
+    {
+        transform.position = spawnPointObject.transform.position;
+    }
+    
+    
+
+    isPortal = false;
+}
+
     void Start()
     {
 
@@ -153,7 +177,7 @@ public class PlayerMove : MonoBehaviour
 {
     isAttack = true;
     attackSoundPlayed = false; // 새 공격 시작 → 소리 초기화
-    AudioManager.instance.PlaySfx(AudioManager.Sfx.Attack);
+    AudioManager.instance.PlaySfx(AudioManager.Sfx.Normal);
 
     var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
 
@@ -430,7 +454,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         {
             if (GroundBoxHit.collider.CompareTag("MovingPlatform") || GroundBoxHit.collider.CompareTag("OneWayPlatform"))
             {
-                // 플랫폼의 상단이 플레이어의 하단보다 약간 위에 있을 때만 isGround = true
+               
                 isGround = GroundBoxHit.collider.bounds.max.y <= boxCollider.bounds.min.y + 0.1f;
             }
             else
@@ -444,8 +468,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         }
     }
 
-    // 플랫폼 드롭 시작 시 호출되는 함수
-    public void PlatformDrop()
+    public void PlatformDrop() //하향점프
     {
         SetAnimationState("landing", true);
         isGround = false;
@@ -457,8 +480,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         SetAnimationState("dead", false);
     }
     
-    // 외부에서 isAttack 상태를 설정하는 메서드 (colliderAtcive.cs에서 사용됨)
-    public  void SetIsAttack(bool state)
+    public  void SetIsAttack(bool state) 
     {
         isAttack = state;
 
@@ -585,8 +607,7 @@ void FireSlash()
 public void SetDamageObjectActive(bool state, float damage)
 {
     if (damageObject == null) return;
-    
-    // PlayerDamage 스크립트를 가져와서 데미지를 설정합니다.
+
     PlayerDamage playerDamage = damageObject.GetComponent<PlayerDamage>();
     if (playerDamage != null)
     {
