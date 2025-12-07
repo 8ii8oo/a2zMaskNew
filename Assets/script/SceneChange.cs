@@ -20,7 +20,7 @@ public class SceneChange : MonoBehaviour
 
     void Start()
     {
-        AudioManager.instance.PlayBgm(AudioManager.Bgm.Title);
+        
         Time.timeScale = 1f;
         DontDestroyOnLoad(Panel.transform.root.gameObject);
     }

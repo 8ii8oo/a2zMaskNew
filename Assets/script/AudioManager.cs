@@ -90,22 +90,22 @@ public class AudioManager : MonoBehaviour
     }
 
      public void PlayBgm(Bgm bgm) 
+{
+    for (int i = 0; i < bgmPlayer.Length; i++)
     {
-        for(int index=0; index < bgmPlayer.Length; index++) 
-        { 
-        
-        int loopIndexBgm = (index + channelBGMIndex) % bgmPlayer.Length;
-          
-        if(bgmPlayer[loopIndexBgm].isPlaying)
-        continue;
-
-        channelBGMIndex = loopIndexBgm;
-        bgmPlayer[loopIndexBgm].clip = bgmClip[(int)bgm];
-        bgmPlayer[loopIndexBgm].Play(); 
-        break;
-
-        } 
+        bgmPlayer[i].Stop();
+        bgmPlayer[i].clip = null;
     }
+
+   
+    bgmPlayer[0].clip = bgmClip[(int)bgm];
+    bgmPlayer[0].volume = bgmVolume;
+    bgmPlayer[0].loop = true;
+    bgmPlayer[0].Play();
+
+    channelBGMIndex = 0; 
+}
+    
     
 
 
