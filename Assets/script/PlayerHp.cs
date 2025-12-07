@@ -26,6 +26,48 @@ public class PlayerHp : MonoBehaviour
     private PlayerMove playerMove;
     public bool backHpHit = false;
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitHpByScene(scene.name);
+
+        // HP바 갱신
+        if (hpBar != null)
+            hpBar.fillAmount = hp / MaxHp;
+
+        // 위치 초기화
+        if (startPosition != null)
+            transform.position = startPosition.transform.position;
+    }
+
+    void InitHpByScene(string sceneName)
+{
+    if (sceneName == "Stage21" || sceneName == "Boss")
+        {
+            hp += 30f;
+        }
+        else if (sceneName == "tutorial" || sceneName == "Stage11")
+        {
+            hp = MaxHp;
+        }
+        else if (sceneName == "Stage22" || sceneName == "Stage12")
+        {
+            hp += 10f;
+        }
+
+        hp = Mathf.Min(hp, MaxHp);
+}
+
+
 
     
     void Start()
@@ -33,19 +75,13 @@ public class PlayerHp : MonoBehaviour
         
         string currentScene = SceneManager.GetActiveScene().name;
         
-        if (currentScene == "Stage21" || currentScene == "Boss" || currentScene == "Stage11")
-        {
-            hp = MaxHp;
-        }
+        
 
         if(startPosition != null)
         {
               gameObject.transform.position = startPosition.transform.position;  
         }
-        else
-    {
-        Debug.LogWarning("Player Start Position Object is not set in the Inspector.");
-    }
+        
         
 
         
