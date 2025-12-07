@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public GameObject EscSet; //esc눌렀을때 뜨는 팝업창
     public GameObject Ctrl;
     public GameObject Option;
@@ -17,6 +18,16 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
+        if(instance == null)
+        {
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
