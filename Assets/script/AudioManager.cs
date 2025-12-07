@@ -23,7 +23,8 @@ public class AudioManager : MonoBehaviour
     AudioSource[] sfxPlayer;
     int channelSFXIndex;
 
-    public enum Sfx {Blue, Attack, Skill, Jump, button, Potal}
+    public enum Sfx {Blue, Attack, Skill, Jump, button, Potal, 
+    Red, Black, Normal, Mask}
 
     void Awake()
     {

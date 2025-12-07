@@ -670,6 +670,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invulnerabilityTime: 0.2
-  EnemyMaxHp: 100
+  EnemyMaxHp: 40
   hpBar: {fileID: 3571642337978896121}
   BackHpBar: {fileID: 8412458250312625101}

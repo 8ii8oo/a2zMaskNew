@@ -50,6 +50,8 @@ public class EnemyHp : MonoBehaviour
         if (isDead) return;
 
         Hp -= damage;
+
+        Debug.Log(Hp);
         
         if(Hp <= 0) 
         {

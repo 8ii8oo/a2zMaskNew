@@ -18,6 +18,8 @@ public class PlayerMove : MonoBehaviour
 
     private bool attackSoundPlayed = false; //사운드 소리 한번만 들리게
 
+    public static PlayerMove instance;
+
 
     
 
@@ -26,9 +28,9 @@ public class PlayerMove : MonoBehaviour
     private bool isAttacking = false;
     private bool isCoolingDown = false; 
     private bool skinCooling = false; //q스킬
-    private float skinCooldownTime = 8f;
+    public float skinCooldownTime = 8f;
     private bool skillCooling = false;
-    private float skillCooldownTime = 10f; //s스킬
+    public float skillCooldownTime = 10f; //s스킬
 
     public float attackCooldown = 1.5f; //공격 쿨타임
 
@@ -75,8 +77,22 @@ public class PlayerMove : MonoBehaviour
     private float moveInput = 0f;
     private bool isFacingRight = true;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 이동에도 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
+
+        
         SCool.SetActive(false);
         QCool.SetActive(false);
 
@@ -180,7 +196,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     };
 }
 
-        // 점프 (Space바)
+        // 점프
         if (Input.GetKeyDown(KeyCode.Space) && currentJumpCount < maxJumpCount && !isAttack && !dashing)
         {
            
@@ -190,7 +206,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         // 대시 (LeftShift)
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isAttack)
         {
-            
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
             StartCoroutine(Dash());
         }
 
@@ -254,6 +270,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         IEnumerator SkinCooldown() //q스킬쿨타임
     {
       skinCooling = true;
+      AudioManager.instance.PlaySfx(AudioManager.Sfx.Mask);
        yield return new WaitForSeconds(skinCooldownTime);
       skinCooling = false;
       QCool.SetActive(false);
@@ -308,6 +325,8 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
             track.Complete += OnLandingComplete; // 메서드 연결
             isAttack = false;
         }
+
+        
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -355,7 +374,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
     IEnumerator Dash()
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
+        
         canDash = false;
         dashing = true;
 
@@ -476,23 +495,23 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
 }
 
-IEnumerator SkillAttackRoutine()
+IEnumerator SkillAttackRoutine() //스킬
 {
     
     if (damageObject == null) yield break;
 
-    float baseDamage = 20f;
+    float baseDamage = 20f; //기본 스킬 데미지 (블루랑 노멀 기본 20 데미지)
     float finalDamage = baseDamage;
 
     if(isNormal)
         {
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Skill);
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Normal);
             StartCoroutine(Dash());
         }
 
         if (isRed)
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Skill);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Red);
     }
 
     if (isBlue)
@@ -503,16 +522,25 @@ IEnumerator SkillAttackRoutine()
 
     if (isBlack)
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Skill);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Black);
     }
 
 
-
-    if (isBlack) finalDamage += 10f; 
+    if (isRed) finalDamage += 10f; //화염 +10 데미지
+    
+     
     yield return new WaitForSeconds(0.15f); 
 
     damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
     damageObject.SetActive(true);
+    if (isBlack)
+    {
+        finalDamage += 20f; //블랙 +20 데미지 
+       
+        PlayerDamage pd = damageObject.GetComponent<PlayerDamage>();
+        if (pd != null)
+            pd.isBlackSkill = true;
+    }
 
     yield return new WaitForSeconds(damageDuration);
     damageObject.SetActive(false);

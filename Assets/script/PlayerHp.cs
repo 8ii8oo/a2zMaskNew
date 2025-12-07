@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+
 public class PlayerHp : MonoBehaviour
 {
     // 최대 HP는 인스펙터에서 설정 가능
@@ -27,6 +29,7 @@ public class PlayerHp : MonoBehaviour
     
     void Start()
     {
+        
 
             string currentScene = SceneManager.GetActiveScene().name;
             if (currentScene == "Stage21" || currentScene == "Boss" || currentScene == "Stage11")

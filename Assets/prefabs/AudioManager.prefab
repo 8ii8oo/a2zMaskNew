@@ -55,11 +55,15 @@ MonoBehaviour:
   bgmVolume: 0.2
   channelBGM: 16
   sfxClips:
-  - {fileID: 8300000, guid: 2c01cca7800df734684f9cbf6ba2fd29, type: 3}
+  - {fileID: 8300000, guid: 29df5d79b249c574a88a978580224916, type: 3}
   - {fileID: 8300000, guid: e2080db6eac148646af04f5c84b716ca, type: 3}
   - {fileID: 8300000, guid: 6d664146d6128644abd35283cd90077d, type: 3}
   - {fileID: 8300000, guid: 32a479e38999c8b47a3b3832500e62a2, type: 3}
   - {fileID: 8300000, guid: 3f0c4c69dd47bc74090983f14b7ca01a, type: 3}
   - {fileID: 8300000, guid: 721ea677abd0f9e4e9a6f274804ca06b, type: 3}
+  - {fileID: 8300000, guid: 66b9788d7cbc6824986ef86bfd3920e4, type: 3}
+  - {fileID: 8300000, guid: 9e784e57c4b0daa43aea007ecea7c51e, type: 3}
+  - {fileID: 8300000, guid: 09f5f15194768684cb0cf1290c292aa7, type: 3}
+  - {fileID: 8300000, guid: c9ae11a5ea578534a81d71c79bedfedc, type: 3}
   sfxVolume: 0.5
   channelSFX: 16

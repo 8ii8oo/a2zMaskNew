@@ -14,6 +14,21 @@ public class CameraMove : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public static CameraMove instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 이동에도 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     void LateUpdate()
     {

@@ -24,11 +24,14 @@ public class SlashProjectile : MonoBehaviour
     {
         if (collision.CompareTag("Enemy")) // 적 태그에 맞게 조정
         {
+            
+
             PlayerDamage enemyDamage = collision.GetComponent<PlayerDamage>();
             if (enemyDamage != null)
             {
                 enemyDamage.SetDamage(damage);
             }
         }
+        
     }
 }
