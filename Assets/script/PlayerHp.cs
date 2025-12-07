@@ -14,10 +14,9 @@ public class PlayerHp : MonoBehaviour
 
 
 
-    // 인스펙터에서 Fill Amount 타입의 Image 컴포넌트를 연결해야 합니다.
     public Image hpBar; 
     
-    // 게임 오버 관련 UI 요소들
+    // 게임 오버 관련 UI
     public Image fadeImage;
     public GameObject returnButton;
     public GameObject gmaeOverImage;

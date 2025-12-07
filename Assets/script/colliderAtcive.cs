@@ -24,13 +24,17 @@ public class colliderAtcive : MonoBehaviour
     {
         if (playerMove == null || playerMove.isDead || !playerMove.enabled) return;
 
-        // DownGround 위에 올라가 있을 때만 하향점프 허용
-        if (collid.CompareTag("DownGround") && playerMove.currentGroundTag == "DownGround")
+        if (collid.CompareTag("floor") && playerMove.currentGroundTag == "floor")
         {
-            if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.Space) && !isCollisionIgnored)
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+
+                if(Input.GetKeyDown(KeyCode.Space) && !isCollisionIgnored)
             {
                 IgnoreCollision();
                 playerMove.PlatformDrop();
+            }
+
             }
         }
     }

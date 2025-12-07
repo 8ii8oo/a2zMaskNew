@@ -66,7 +66,7 @@ public class PlayerMove : MonoBehaviour
     bool isBlue = false;
     bool isBlack = false;
 
-    bool isAttack; // 공격, 스킬, 플랫폼 드롭 시 True
+    bool isAttack; 
     public bool isDead = false;
 
     [Header("스킬")]
@@ -146,7 +146,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 }
         if (isDead) return;
         
-        // 이동 입력 (공격/대시 중에는 입력 무시)
+        // 이동 입력 (공격,대시 중에는 입력 무시)
         moveInput = 0f;
         if ( !dashing)
         {
@@ -176,7 +176,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
        if (Input.GetKeyDown(KeyCode.A) && !dashing && !isAttack && isGround)
 {
     isAttack = true;
-    attackSoundPlayed = false; // 새 공격 시작 → 소리 초기화
+    attackSoundPlayed = false; // 새 공격 시작
     AudioManager.instance.PlaySfx(AudioManager.Sfx.Normal);
 
     var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
@@ -227,14 +227,14 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
             Jump();
         }
 
-        // 대시 (LeftShift)
+        // 대쉬
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && !isAttack)
         {
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Jump);
             StartCoroutine(Dash());
         }
 
-        // 스킨 전환 (Q키)
+        // 스킨 전환 Q키
         if (Input.GetKeyDown(KeyCode.Q) && !dashing && !isAttack && !skinCooling)
         {
             QCool.SetActive(true);
@@ -264,7 +264,6 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     {
         if (!dashing)
         {
-            // Rigidbody2D.velocity 사용
             rigid.linearVelocity = new Vector2(moveInput * speed, rigid.linearVelocity.y);
             GroundCheck();
         }
@@ -439,14 +438,12 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         if (isDead && animName != "dead") return;
         if (spinePlayer == null) return;
 
-        // 현재 애니메이션 이름을 가져와 비교
         string currentAnim = spinePlayer.AnimationState.GetCurrent(0)?.Animation?.Name;
         if (currentAnim == animName) return;
 
         spinePlayer.AnimationState.SetAnimation(0, animName, loop);
     }
 
-    // GroundCheck() 함수 (이미지 로직 반영)
     void GroundCheck()
     {
         if (groundCheckCollider == null) return; 
@@ -498,7 +495,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     {
         isAttack = state;
 
-        // 공격 상태가 해제될 때 (state == false)
+        // 공격 상태가 해제될 때
         if (!isAttack)
         {
             OnActionComplete(); // 애니메이션 상태 복귀

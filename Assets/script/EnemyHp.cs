@@ -7,15 +7,13 @@ public class EnemyHp : MonoBehaviour
 
     private bool isInvulnerable = false; 
     public float invulnerabilityTime = 0.2f;
-    public float EnemyMaxHp = 100f; // 기본값 설정
-    private float Hp; // private 인스턴스 변수로 변경
+    public float EnemyMaxHp = 100f; 
+    private float Hp; 
 
     public Image hpBar;
     public Image BackHpBar;
     bool isDead = false;
     
-    // Start에서 Invoke("BackHpFun", 0.5f); 관련 코드는 제거했습니다.
-    // 해당 로직은 플레이어 HP의 데미지 후처리용으로 보입니다.
 
     void Start()
     {
@@ -23,7 +21,7 @@ public class EnemyHp : MonoBehaviour
         hpBar.enabled = false;
         BackHpBar.enabled = false;
         Hp = EnemyMaxHp;
-        // hpBar가 있다면 초기 Fill Amount 설정
+
         if (hpBar != null)
         {
             hpBar.fillAmount = 1f;
@@ -38,7 +36,7 @@ public class EnemyHp : MonoBehaviour
     {
         if (hpBar != null)
         {
-            // HP 바를 현재 HP 비율로 업데이트합니다.
+            // HP 바를 현재 HP 비율로 업데이트
             hpBar.fillAmount = Mathf.Lerp(hpBar.fillAmount, Hp / EnemyMaxHp, Time.deltaTime * 5f);
         }
     }
