@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEngine.UIElements;
-using Spine.Unity;
+using Spine.Unity; // Spine 애니메이션을 사용하지 않는다면 제거해도 무방합니다.
 
 public class ScenePotal : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class ScenePotal : MonoBehaviour
     
     private Renderer portalRenderer; 
 
-    public GameObject[] currentEnemy;
+
 
 
     void Start()
@@ -38,28 +37,21 @@ public class ScenePotal : MonoBehaviour
 
         if (filterRD != null)
         {
-            filterRD.sharedMaterial.SetFloat(speedPropName, 0f);
+         
+            filterRD.material.SetFloat(speedPropName, 0f);
             filterRD.material.SetFloat(scalePropName, 0f);
             
             filter.gameObject.SetActive(false); 
         }
-    }
 
-    void Update()
-    {
-        if (isPlayerInPortal && !isTransitioning)
+        if (portalRenderer != null)
         {
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                isTransitioning = true;
-                if (spinePlayer != null && spinePlayer.AnimationState != null)
-                {
-                    
-                    spinePlayer.AnimationState.SetAnimation(0, "idle", true);
-
-                }
-                StartCoroutine(LoadSceneDelay(playerObj));
-            }
+            portalRenderer.enabled = false;
+            
+           
+            Color initialColor = portalRenderer.material.color;
+            initialColor.a = 0f; 
+            portalRenderer.material.color = initialColor;
         }
     }
 
@@ -68,6 +60,59 @@ public class ScenePotal : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
 
+
+    void Update()
+    {
+    
+        if (!isTransitioning)
+        {
+            CheckEnemyAndTogglePortal();
+        }
+
+
+        if (isPlayerInPortal && !isTransitioning)
+        {
+            if (Input.GetKeyDown(KeyCode.D) && portalRenderer != null && portalRenderer.enabled) 
+            {
+                isTransitioning = true;
+                if (spinePlayer != null && spinePlayer.AnimationState != null)
+                {
+                    spinePlayer.AnimationState.SetAnimation(0, "idle", true);
+                }
+                StartCoroutine(LoadSceneDelay(playerObj));
+            }
+        }
+    }
+
+    void CheckEnemyAndTogglePortal()
+    {
+        if (portalRenderer == null) return;
+
+      
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); 
+
+        if (enemies.Length == 0)
+        {
+
+            if (!portalRenderer.enabled)
+            {
+                portalRenderer.enabled = true;
+        
+                StartCoroutine(PortalFadeIn(1.5f)); 
+            }
+        }
+        else
+        {
+          
+            if (portalRenderer.enabled)
+            {
+
+                portalRenderer.enabled = false;
+
+                StopCoroutine("PortalFadeIn"); 
+            }
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -91,40 +136,33 @@ public class ScenePotal : MonoBehaviour
     {
         if (filter != null)
         {
-            
             filter.gameObject.SetActive(true);
-
-            
         }
 
         Invoke("isPotalSound", 2.5f);
         PlayerMove playerMoveScript = PlayerToStop.GetComponent<PlayerMove>();
-if (playerMoveScript != null)
-{
-    playerMoveScript.isPortal = true;  
-}
+        if (playerMoveScript != null)
+        {
+            playerMoveScript.isPortal = true;  
+        }
 
-Rigidbody2D playerRigid = PlayerToStop.GetComponent<Rigidbody2D>();
-if (playerRigid != null)
-{
-    playerRigid.linearVelocity = Vector2.zero;  // 이동만 멈춤
-
-}
+        Rigidbody2D playerRigid = PlayerToStop.GetComponent<Rigidbody2D>();
+        if (playerRigid != null)
+        {
+            playerRigid.linearVelocity = Vector2.zero;
+        }
 
         yield return new WaitForSeconds(1f);
 
         float duration = 3f;
         float elapsedTime = 0f;
 
-
         float startSpeed = 0f;
         float targetSpeed = 3f;
         float startScale = 0f;
         float targetScale = 50f;
 
-        
-
-
+        // 필터 페이드 인
         while (elapsedTime < duration)
         {
             float t = elapsedTime / duration;
@@ -133,24 +171,20 @@ if (playerRigid != null)
 
             if (filterRD != null)
             {
-                filterRD.sharedMaterial.SetFloat(speedPropName, currentSpeed);
-                filterRD.sharedMaterial.SetFloat(scalePropName, currentScale);
+                filterRD.material.SetFloat(speedPropName, currentSpeed); 
+                filterRD.material.SetFloat(scalePropName, currentScale);
             }
 
             elapsedTime += Time.deltaTime;
             yield return null;
-
         }
 
         if (filterRD != null)
         {
-            filterRD.sharedMaterial.SetFloat(speedPropName, targetSpeed);
-            filterRD.sharedMaterial.SetFloat(scalePropName, targetScale);
+            filterRD.material.SetFloat(speedPropName, targetSpeed);
+            filterRD.material.SetFloat(scalePropName, targetScale);
         }
-
         
-        
-
         SceneManager.LoadScene(sceneName);
     }
 
@@ -176,58 +210,84 @@ if (playerRigid != null)
 
         isTransitioning = false;
         if (PlayerMove.instance != null)
-    {
-        PlayerMove.instance.isPortal = false;
-
-        if (PlayerMove.instance.rigid != null)
         {
-             PlayerMove.instance.rigid.linearVelocity = Vector2.zero;
+            PlayerMove.instance.isPortal = false;
+
+            if (PlayerMove.instance.rigid != null)
+            {
+                PlayerMove.instance.rigid.linearVelocity = Vector2.zero;
+            }
         }
-    }
-    
+        
         StartCoroutine(RestoreEffect());
 
+    }
+    
+    IEnumerator PortalFadeIn(float duration)
+    {
+        if (portalRenderer == null) yield break;
+        
+        float elapsedTime = 0f;
+        Color startColor = portalRenderer.material.color;
+        startColor.a = 0f; 
+        Color targetColor = startColor;
+        targetColor.a = 1f; 
+        
+        portalRenderer.material.color = startColor;
 
-        IEnumerator RestoreEffect()
+        while (elapsedTime < duration)
         {
-            if (filterRD == null || filter == null) yield break;
-            
-            filter.gameObject.SetActive(true);
+            float t = elapsedTime / duration;
+            Color currentColor = Color.Lerp(startColor, targetColor, t); 
+            portalRenderer.material.color = currentColor;
 
-            float duration = 3f;
-            float elapsedTime = 0f;
-
-            float startSpeed = 3f;
-            float targetSpeed = 0f;
-            float startScale = 50f;
-            float targetScale = 0f;
-
-            while (elapsedTime < duration)
-            {
-                float t = elapsedTime / duration;
-                float currentSpeed = Mathf.Lerp(startSpeed, targetSpeed, t);
-                float currentScale = Mathf.Lerp(startScale, targetScale, t);
-
-                if (filterRD != null)
-                {
-                    filterRD.sharedMaterial.SetFloat(speedPropName, currentSpeed);
-                    filterRD.sharedMaterial.SetFloat(scalePropName, currentScale);
-                }
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
-
-            }
-            
-
-            filterRD.sharedMaterial.SetFloat(speedPropName, targetSpeed); 
-            filterRD.sharedMaterial.SetFloat(scalePropName, targetScale); 
-            
-            filter.gameObject.SetActive(false); 
-
-            SceneManager.sceneLoaded -= OnSceneLoad;
-            Destroy(gameObject); 
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+        
+        portalRenderer.material.color = targetColor; 
+    }
+
+    IEnumerator RestoreEffect()
+    {
+        if (filterRD == null || filter == null) yield break;
+        
+        filter.gameObject.SetActive(true);
+
+        float duration = 3f;
+        float elapsedTime = 0f;
+
+        float startSpeed = 3f;
+        float targetSpeed = 0f;
+        float startScale = 50f;
+        float targetScale = 0f;
+
+        // 필터 페이드 아웃
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            float currentSpeed = Mathf.Lerp(startSpeed, targetSpeed, t);
+            float currentScale = Mathf.Lerp(startScale, targetScale, t);
+
+            if (filterRD != null)
+            {
+               
+                filterRD.sharedMaterial.SetFloat(speedPropName, currentSpeed);
+                filterRD.sharedMaterial.SetFloat(scalePropName, currentScale);
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+   
+        filterRD.sharedMaterial.SetFloat(speedPropName, targetSpeed); 
+        filterRD.sharedMaterial.SetFloat(scalePropName, targetScale); 
+        
+        filter.gameObject.SetActive(false); 
+        
+
+        SceneManager.sceneLoaded -= OnSceneLoad;
+        Destroy(gameObject); 
     } 
 
     void isPotalSound()

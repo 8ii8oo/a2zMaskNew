@@ -560,6 +560,7 @@ IEnumerator SkillAttackRoutine() //스킬
 
 
     if (isRed) finalDamage += 10f; //화염 +10 데미지
+    if (isBlack) finalDamage += 20f; //블랙 +20 데미지 
     
      
     yield return new WaitForSeconds(0.15f); 
@@ -567,9 +568,7 @@ IEnumerator SkillAttackRoutine() //스킬
     damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
     damageObject.SetActive(true);
     if (isBlack)
-    {
-        finalDamage += 20f; //블랙 +20 데미지 
-       
+    {  
         PlayerDamage pd = damageObject.GetComponent<PlayerDamage>();
         if (pd != null)
             pd.isBlackSkill = true;
