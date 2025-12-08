@@ -59,11 +59,12 @@ public class EnemyArcher : EnemyMove
         }
         else
         {
-            //기본 이동/턴 로직 수행
+            //기본 이동턴 로직 
             isActiveAI = true;
             LookAtPlayerMoveDirection();
         }
     }
+    //dkldjsa
 
     // 방향 보정
     void LookAtPlayerMoveDirection()
