@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c70e523412b6b499e1f45687b33a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 2724506860710149158}
   startPosition: {fileID: 7125456158775367861, guid: e56f1220c9a83c54fb1b5d161d7c9c32, type: 3}
   MaxHp: 100
   hpBar: {fileID: 0}
@@ -212,6 +213,7 @@ MonoBehaviour:
   currentGroundTag: 
   slashPrefab: {fileID: 0}
   firePoint: {fileID: 5644203010653763973}
+  isDropping: 0
   damageDuration: 0.5
   damageObject: {fileID: 8128085163824893305}
   skinCooldownTime: 8

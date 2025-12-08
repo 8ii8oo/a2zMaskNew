@@ -4985,6 +4985,10 @@ PrefabInstance:
       propertyPath: startPosition
       value: 
       objectReference: {fileID: 7125456158775367861, guid: e56f1220c9a83c54fb1b5d161d7c9c32, type: 3}
+    - target: {fileID: 7171775848011660440, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
+      propertyPath: skeletonAnimation
+      value: 
+      objectReference: {fileID: 1968086157}
     - target: {fileID: 8128085163824893305, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -5061,6 +5065,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 10
   isBlackSkill: 0
+--- !u!114 &1968086157 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2724506860710149158, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
+  m_PrefabInstance: {fileID: 1968086144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &799507643167611833
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,15 +2,23 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Spine.Unity;
+using Spine;
+
 
 
 
 public class PlayerHp : MonoBehaviour
 {
+    public SkeletonAnimation skeletonAnimation;
+
+    public Skeleton skeleton;
     public GameObject startPosition;
     // 최대 HP는 인스펙터에서 설정 가능
     public float MaxHp = 100f; 
     public static float hp = 100f;
+
+    private SpriteRenderer sr;
 
 
 
@@ -71,6 +79,8 @@ public class PlayerHp : MonoBehaviour
     
     void Start()
     {
+
+        skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
         
         string currentScene = SceneManager.GetActiveScene().name;
         
@@ -111,6 +121,7 @@ public class PlayerHp : MonoBehaviour
         if (isDead) return;
 
         hp -= damage;
+        StartCoroutine(DamageEffect());
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Attack);
         Invoke("BackHpFun", 0.5f);
         
@@ -178,5 +189,18 @@ public class PlayerHp : MonoBehaviour
         
 
         Time.timeScale = 0f;
+    }
+
+    IEnumerator DamageEffect()
+    {
+
+        for(int i = 0; i < 2; i++)
+        {
+           
+            skeletonAnimation.skeleton.SetColor(Color.red);
+            yield return new WaitForSeconds(0.2f);
+            skeletonAnimation.skeleton.SetColor(Color.white);
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
