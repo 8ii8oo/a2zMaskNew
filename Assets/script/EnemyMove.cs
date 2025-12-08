@@ -9,7 +9,7 @@ public class EnemyMove : MonoBehaviour
 
     [Header("== 이동 설정 ==")]
     public float speed = 1f;
-    public int nextMove = 1;         // 1: 오른쪽, -1: 왼쪽
+    public int nextMove = 1;     
     protected bool isStopping = false;
     protected string currentAnim = "";
 
@@ -27,7 +27,7 @@ public class EnemyMove : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (!isActiveAI) return;     // 자식 AI(공격 등) 활성화 시 이동 중단
+        if (!isActiveAI) return;  
 
         if (!isStopping)
         {
@@ -77,7 +77,7 @@ public class EnemyMove : MonoBehaviour
         isStopping = false;
     }
 
-    // 애니메이션 헬퍼
+    // 애니메이션
     protected void SetAnim(string animName, bool loop = true)
     {
         if (!spinePlayer) return;

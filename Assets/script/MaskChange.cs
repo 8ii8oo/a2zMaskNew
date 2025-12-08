@@ -1,11 +1,10 @@
 using UnityEngine;
 using Spine.Unity;
-// 🚨 추가된 부분: Spine 핵심 런타임 접근을 위함 🚨
 using Spine; 
 
 public class MaskChange : MonoBehaviour
 {
-    // 유니티 인스펙터에 할당 (필수)
+   
     public SkeletonGraphic skeletonGraphic;
 
     private const string SLOT_NAME = "black_mask";
@@ -34,8 +33,6 @@ public class MaskChange : MonoBehaviour
             return;
         }
 
-        // 1. 슬롯 찾기
-        // Spine.Slot 클래스는 using Spine; 덕분에 접근 가능
         Spine.Slot slot = skeletonGraphic.Skeleton.FindSlot(SLOT_NAME);
 
         
@@ -55,6 +52,5 @@ public class MaskChange : MonoBehaviour
     {
         SetMaskAttachment(BLACK_MASK_ATTACHMENT);
     }
-    
-    // SetCharacterSkin 함수는 생략했습니다.
+
 }

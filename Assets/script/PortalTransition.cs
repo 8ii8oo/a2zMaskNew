@@ -22,7 +22,7 @@ public class PortalTransition : MonoBehaviour
     {
         if (instance != null) return;
 
-        // Resources/PortalTransition.prefab 에 있다고 가정
+  
         GameObject obj = Instantiate(Resources.Load<GameObject>("Portal"));
         instance = obj.GetComponent<PortalTransition>();
 

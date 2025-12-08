@@ -511,11 +511,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     float baseDamage = 10f;
     float finalDamage = baseDamage;
 
-    /*
-    if (isRed) finalDamage += 10f;
-    if (isBlue) finalDamage += 10f;
-    if (isBlack) finalDamage += 20f;
-    */
+   
 
     // 타격 타이밍 (애니메이션 0.2초 후)
     yield return new WaitForSeconds(0.2f);

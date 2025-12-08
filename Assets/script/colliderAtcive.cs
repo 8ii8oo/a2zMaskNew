@@ -3,7 +3,7 @@ using Spine.Unity;
 
 public class colliderAtcive : MonoBehaviour
 {
-    private Collider2D collid; 
+    private Collider2D collid;
     private Collider2D playerCollid;
     private PlayerMove playerMove;
     private bool isCollisionIgnored = false;
@@ -16,25 +16,27 @@ public class colliderAtcive : MonoBehaviour
         if (playerObj != null)
         {
             playerCollid = playerObj.GetComponent<Collider2D>();
-            playerMove = playerObj.GetComponent<PlayerMove>();
+            playerMove = playerObj.GetComponent<PlayerMove>(); 
         }
     }
 
     void Update()
     {
-        if (playerMove == null || playerMove.isDead || !playerMove.enabled) return;
+        if (playerMove == null || playerMove.isDead) return;
 
-        if (collid.CompareTag("floor") && playerMove.currentGroundTag == "floor")
+        if (!playerMove.enabled) return;
+
+
+        if (playerMove.currentGroundTag == "DownGround") return;
+
+
+
+        if (Input.GetKey(KeyCode.DownArrow) && !isCollisionIgnored)
         {
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-
-                if(Input.GetKeyDown(KeyCode.Space) && !isCollisionIgnored)
+            if (Input.GetKeyDown(KeyCode.Space) && !isCollisionIgnored) 
             {
                 IgnoreCollision();
-                playerMove.PlatformDrop();
-            }
-
+                playerMove.PlatformDrop(); 
             }
         }
     }
@@ -43,20 +45,34 @@ public class colliderAtcive : MonoBehaviour
     {
         if (playerMove == null) return;
 
-        Physics2D.IgnoreCollision(playerCollid, collid, true);
-
         isCollisionIgnored = true;
 
-        // 0.3초 동안은 무조건 충돌 OFF 유지 → 안전하게 아래로 통과 가능
-        CancelInvoke(nameof(RestoreCollision));
+        playerMove.SetIsAttack(true); 
+
+        Physics2D.IgnoreCollision(playerCollid, collid, true);
+
         Invoke(nameof(RestoreCollision), 0.3f);
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!isCollisionIgnored) return;
+        if (other.CompareTag("Player"))
+        {
+            RestoreCollision();
+        }
     }
 
     void RestoreCollision()
     {
         if (!isCollisionIgnored) return;
+        if (playerMove == null) return;
 
         Physics2D.IgnoreCollision(playerCollid, collid, false);
         isCollisionIgnored = false;
+
+        playerMove.SetIsAttack(false);
+
+        CancelInvoke(nameof(RestoreCollision));
     }
 }

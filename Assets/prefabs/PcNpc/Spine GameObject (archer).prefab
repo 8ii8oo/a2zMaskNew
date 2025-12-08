@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinePlayer: {fileID: 4072355287196717916}
-  speed: 1
+  speed: 1.3
   nextMove: 1
   isActiveAI: 1
   detectRange: 5

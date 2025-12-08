@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using Spine.Unity; // Spine 애니메이션을 사용하지 않는다면 제거해도 무방합니다.
+using Spine.Unity; 
 
 public class ScenePotal : MonoBehaviour
 {

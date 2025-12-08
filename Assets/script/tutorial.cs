@@ -22,13 +22,11 @@ public class tutorial : MonoBehaviour
 
     void Start()
     {
-        // 모든 오브젝트 비활성화
         foreach (var obj in tutorialObjects)
         {
             obj.SetActive(false);
         }
 
-        // 첫 번째 오브젝트 활성화 + 페이드 인
         ActivateObject(currentIndex);
     }
 
@@ -45,14 +43,14 @@ public class tutorial : MonoBehaviour
             rightArrow = true;
         }
 
-        // 첫 번째 단계는 좌우 입력 둘 다 필요
+
         if (currentIndex == 0 && leftArrow && rightArrow)
         {
             leftArrow = rightArrow = false;
             StartCoroutine(SwitchToNextObject());
         }
 
-        // 나머지 단계는 스페이스 바로 넘어감
+     
         if (currentIndex == 1 && Input.GetKeyDown(KeyCode.LeftShift) && !isFading)
         {
             StartCoroutine(SwitchToNextObject());
@@ -114,16 +112,12 @@ public class tutorial : MonoBehaviour
     {
         isFading = true;
 
-        // 현재 오브젝트 페이드 아웃
         yield return StartCoroutine(FadeOut(currentRenderer));
 
-        // 현재 오브젝트 비활성화
         tutorialObjects[currentIndex].SetActive(false);
 
-        // 인덱스 증가
         currentIndex++;
 
-        // 다음 오브젝트가 있다면 페이드 인
         if (currentIndex < tutorialObjects.Length)
         {
             ActivateObject(currentIndex);

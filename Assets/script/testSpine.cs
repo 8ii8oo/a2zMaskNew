@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class testSpine : MonoBehaviour
 {
-    [SerializeField] private SkeletonAnimation spinePlayer; // 스파인 애니메이션
+    [SerializeField] private SkeletonAnimation spinePlayer;
     private bool bReady = false;
     private int nEXP = 0;
     private int nLevel = 0;
@@ -11,7 +11,7 @@ public class testSpine : MonoBehaviour
 
     private void Start()
     {
-        //spinePlayer.AnimationState.SetAnimation(0, "skill", false);
+      
         spinePlayer.AnimationState.AddAnimation(0, "attack", true, 0f);
 
         spinePlayer.AnimationState.End += (entry) =>
@@ -35,13 +35,9 @@ public class testSpine : MonoBehaviour
             return;
         }
 
-        // 플레이어 레벨에 맞는 테이블 데이터 가져오기
-       
-        
-
-        // 0번트랙, shoot 애니메이션, 반복재생 안함
+    
         spinePlayer.AnimationState.SetAnimation(0, "attack", false);
-        // 애니메이션이 끝난 후 다시 idle 애니메이션 재생
+
         spinePlayer.AnimationState.AddAnimation(0, "attack", true, 0f);
     }
 
@@ -53,9 +49,9 @@ public class testSpine : MonoBehaviour
         }
 
 
-            // 0번트랙, jump 애니메이션, 반복재생 안함
+     
             spinePlayer.AnimationState.SetAnimation(0, "attack", false);
-            // 애니메이션이 끝난 후 다시 idle 애니메이션 재생
+          
             spinePlayer.AnimationState.AddAnimation(0, "attack", true, 0f);
     
     }

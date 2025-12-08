@@ -217,7 +217,7 @@ MonoBehaviour:
   skinCooldownTime: 8
   skillCooldownTime: 10
   attackCooldown: 1.5
-  speed: 5
+  speed: 4
   jumpPower: 11
   currentJumpCount: 0
   isGround: 1
