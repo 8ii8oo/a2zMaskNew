@@ -19,6 +19,8 @@ public class ScenePotal : MonoBehaviour
     
     private Renderer portalRenderer; 
 
+    
+
 
 
 

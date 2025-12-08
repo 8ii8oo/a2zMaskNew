@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     int channelSFXIndex;
 
     public enum Sfx {Blue, Attack, Skill, Jump, button, Potal, 
-    Red, Black, Normal, Mask}
+    Red, Black, Normal, Mask, EnemyHit}
 
     void Awake()
     {

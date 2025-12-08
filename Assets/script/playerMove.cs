@@ -15,20 +15,37 @@ public class PlayerMove : MonoBehaviour
 
     public bool isPortal = false; //포탈
     public string currentGroundTag = "";
-    public GameObject slashPrefab; // 인스펙터에서 참격 프리팹 연결
-    public Transform firePoint; // 발사 위치 (플레이어 앞에 빈 오브젝트)
+    public GameObject slashPrefab; 
+    public Transform firePoint; // 발사 위치
 
     private bool attackSoundPlayed = false; //사운드 소리 한번만 들리게
 
+    public bool isDropping = false;
+
+
     public static PlayerMove instance;
 
+    private Collider2D _playerCollid;
+
+   
+    public Collider2D PlayerCollider 
+    {
+        get 
+        {
+            if (_playerCollid == null)
+            {
+                _playerCollid = GetComponent<Collider2D>();
+            }
+            return _playerCollid;
+        }
+    }
 
     
 
     public float damageDuration = 0.5f; //데미지 판정 유지시간
     public GameObject damageObject;
     private bool isAttacking = false;
-    private bool isCoolingDown = false; 
+    private bool isCoolingDown = false; 
     private bool skinCooling = false; //q스킬
     public float skinCooldownTime = 8f;
     private bool skillCooling = false;
@@ -86,6 +103,7 @@ public class PlayerMove : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject); // 씬 이동에도 유지
             SceneManager.sceneLoaded += OnSceneLoaded;
+            _playerCollid = GetComponent<Collider2D>(); 
         }
         else
         {
@@ -177,7 +195,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 {
     isAttack = true;
     attackSoundPlayed = false; // 새 공격 시작
-    AudioManager.instance.PlaySfx(AudioManager.Sfx.Normal);
+
 
     var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
 
@@ -242,7 +260,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
             ChangeSkinCycle();
             
 
-           
+            
         }
 
         if (!dashing)
@@ -294,7 +312,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     {
       skinCooling = true;
       AudioManager.instance.PlaySfx(AudioManager.Sfx.Mask);
-       yield return new WaitForSeconds(skinCooldownTime);
+        yield return new WaitForSeconds(skinCooldownTime);
       skinCooling = false;
       QCool.SetActive(false);
     }
@@ -376,7 +394,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
     private void OnLandingComplete(TrackEntry trackEntry)
     {
-        // landing 애니메이션 완료 후 바로 다음 애니메이션으로 전환
+       
         if (!dashing && !isAttack) 
         {
             if (moveInput != 0f) SetAnimationState("walk");
@@ -384,30 +402,25 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         }
     }
     
-    // 공격/스킬/대시 완료 후 호출될 메서드
+    // 공격/스킬/대시 완료 후
     private void OnActionComplete()
     {
-        // 지상에 있다면 idle/walk로 복귀
         if (isGround && !dashing)
         {
             if (moveInput != 0) SetAnimationState("walk");
             else SetAnimationState("idle");
         }
-        // 공중이라면 fall 애니메이션으로 복귀
+        // 공중이라면 fall 애니메이션
         else if (!isGround && !dashing)
         {
             if (rigid.linearVelocity.y < -0.1f)
             {
                 SetAnimationState("landing", true);
             }
-           
+            
         }
     }
 
-    void playerAttack()
-    {
-        // mask.SetActive(!mask.activeSelf);
-    }
 
     IEnumerator Dash()
     {
@@ -425,7 +438,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
         rigid.gravityScale = originalGravity;
 
-        OnActionComplete(); // 대시 완료 후 애니메이션 상태 복귀
+        OnActionComplete(); 
 
         dashing = false;
 
@@ -465,7 +478,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         {
             if (GroundBoxHit.collider.CompareTag("MovingPlatform") || GroundBoxHit.collider.CompareTag("OneWayPlatform"))
             {
-               
+                
                 isGround = GroundBoxHit.collider.bounds.max.y <= boxCollider.bounds.min.y + 0.1f;
             }
             else
@@ -483,6 +496,11 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     {
         SetAnimationState("landing", true);
         isGround = false;
+
+        if (rigid != null)
+    {
+        rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, -5f); // 속도는 조절 가능
+    }
     }
 
     public void KillAni()
@@ -491,7 +509,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         SetAnimationState("dead", false);
     }
     
-    public  void SetIsAttack(bool state) 
+    public  void SetIsAttack(bool state) 
     {
         isAttack = state;
 
@@ -511,7 +529,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     float baseDamage = 10f;
     float finalDamage = baseDamage;
 
-   
+    
 
     // 타격 타이밍 (애니메이션 0.2초 후)
     yield return new WaitForSeconds(0.2f);
@@ -558,13 +576,13 @@ IEnumerator SkillAttackRoutine() //스킬
     if (isRed) finalDamage += 10f; //화염 +10 데미지
     if (isBlack) finalDamage += 20f; //블랙 +20 데미지 
     
-     
+      
     yield return new WaitForSeconds(0.15f); 
 
     damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
     damageObject.SetActive(true);
     if (isBlack)
-    {  
+    {  
         PlayerDamage pd = damageObject.GetComponent<PlayerDamage>();
         if (pd != null)
             pd.isBlackSkill = true;
@@ -603,12 +621,12 @@ void FireSlash()
     
 
     
-    IEnumerator AttackDelay()
-    {
-        isCoolingDown = true; 
-        yield return new WaitForSeconds(attackCooldown); 
-        isCoolingDown = false; 
-    }
+    IEnumerator AttackDelay()
+    {
+        isCoolingDown = true; 
+        yield return new WaitForSeconds(attackCooldown); 
+        isCoolingDown = false; 
+    }
 
 public void SetDamageObjectActive(bool state, float damage)
 {

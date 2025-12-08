@@ -1,6 +1,6 @@
 // EnemyHp.cs
 using UnityEngine;
-using UnityEngine.UI; // UnityEngine.UI 추가
+using UnityEngine.UI;
 
 public class EnemyHp : MonoBehaviour
 {
@@ -47,6 +47,7 @@ public class EnemyHp : MonoBehaviour
         BackHpBar.enabled = true;
         if (isDead) return;
 
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.EnemyHit);
         Hp -= damage;
 
         Debug.Log(Hp);

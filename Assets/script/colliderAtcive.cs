@@ -21,38 +21,34 @@ public class colliderAtcive : MonoBehaviour
     }
 
     void Update()
+{
+    if (playerMove == null || playerMove.isDead) return;
+
+    if (!playerMove.enabled) return;
+
+    if (playerMove.currentGroundTag == "DownGround") return;
+
+    if (playerMove.currentGroundTag == "floor" && !isCollisionIgnored)
     {
-        if (playerMove == null || playerMove.isDead) return;
-
-        if (!playerMove.enabled) return;
-
-
-        if (playerMove.currentGroundTag == "DownGround") return;
-
-
-
-        if (Input.GetKey(KeyCode.DownArrow) && !isCollisionIgnored)
+        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !isCollisionIgnored) 
-            {
-                IgnoreCollision();
-                playerMove.PlatformDrop(); 
-            }
+            IgnoreCollision();
+            playerMove.PlatformDrop();
         }
     }
+}
+
 
     void IgnoreCollision()
-    {
-        if (playerMove == null) return;
+{
+    isCollisionIgnored = true;
+    playerMove.isDropping = true;
 
-        isCollisionIgnored = true;
+    Physics2D.IgnoreCollision(playerCollid, collid, true);
 
-        playerMove.SetIsAttack(true); 
+    Invoke(nameof(RestoreCollision), 0.3f);
+}
 
-        Physics2D.IgnoreCollision(playerCollid, collid, true);
-
-        Invoke(nameof(RestoreCollision), 0.3f);
-    }
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -64,15 +60,16 @@ public class colliderAtcive : MonoBehaviour
     }
 
     void RestoreCollision()
-    {
-        if (!isCollisionIgnored) return;
-        if (playerMove == null) return;
+{
+    if (!isCollisionIgnored) return;
+    if (playerMove == null) return;
 
-        Physics2D.IgnoreCollision(playerCollid, collid, false);
-        isCollisionIgnored = false;
+    Physics2D.IgnoreCollision(playerCollid, collid, false);
+    isCollisionIgnored = false;
 
-        playerMove.SetIsAttack(false);
+    playerMove.isDropping = false;
 
-        CancelInvoke(nameof(RestoreCollision));
-    }
+    CancelInvoke(nameof(RestoreCollision));
+}
+
 }
