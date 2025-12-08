@@ -53,22 +53,21 @@ public class tutorial : MonoBehaviour
         }
 
         // 나머지 단계는 스페이스 바로 넘어감
-        if (currentIndex == 1 && Input.GetKeyDown(KeyCode.Space) && !isFading)
+        if (currentIndex == 1 && Input.GetKeyDown(KeyCode.LeftShift) && !isFading)
+        {
+            StartCoroutine(SwitchToNextObject());
+        }
+        if (currentIndex == 2 && Input.GetKeyDown(KeyCode.Space) && !isFading)
         {
             StartCoroutine(SwitchToNextObject());
         }
 
-        if (currentIndex == 2 && Input.GetKey(KeyCode.DownArrow) && !isFading)
+        if (currentIndex == 3 && Input.GetKey(KeyCode.DownArrow) && !isFading)
         {
             if(Input.GetKeyDown(KeyCode.Space) && !isFading)
             {
                 StartCoroutine(SwitchToNextObject());
             }
-        }
-
-        if (currentIndex == 3 && Input.GetKeyDown(KeyCode.LeftShift) && !isFading)
-        {
-            StartCoroutine(SwitchToNextObject());
         }
 
         if (currentIndex == 4 && Input.GetKeyDown(KeyCode.Q) && !isFading)
