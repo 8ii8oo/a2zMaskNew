@@ -3452,13 +3452,14 @@ PrefabInstance:
     - target: {fileID: 8338569744506369777, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: Panel
       value: 
-      objectReference: {fileID: 455735540}
+      objectReference: {fileID: 0}
     - target: {fileID: 8735054185197113201, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1211570742}
     m_RemovedComponents:
     - {fileID: 1869512632608374416, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
+    - {fileID: 8338569744506369777, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5762687478845535255, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
     - {fileID: 7028283771344298222, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}

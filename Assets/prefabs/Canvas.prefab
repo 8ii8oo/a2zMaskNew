@@ -168,7 +168,6 @@ GameObject:
   - component: {fileID: 1750103693312195870}
   - component: {fileID: 2134499056571611006}
   - component: {fileID: 6551822811347268966}
-  - component: {fileID: 8338569744506369777}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -276,21 +275,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   QCool: {fileID: 7463041978586779830}
   SCool: {fileID: 1825269860376637318}
---- !u!114 &8338569744506369777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618641310714815530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 171b8befaabee06489b35b25529da64f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Panel: {fileID: 999195955518675570}
-  fadeDuration: 1
-  Illu: {fileID: 0}
 --- !u!1 &646625476032999022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1968,7 +1952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3743772988339369333
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3130,7 +3114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3879318853585264483
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3200,6 +3184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171b8befaabee06489b35b25529da64f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneName: 
   Panel: {fileID: 999195955518675570}
   fadeDuration: 1
   Illu: {fileID: 0}

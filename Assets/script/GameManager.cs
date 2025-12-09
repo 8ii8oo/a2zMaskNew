@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     //안된어ㅣ남어ㅏㅣㄴㅁ어ㅣㅏ머이ㅏ저인마어
 //dsajlkzdsadsadsa
 
-    
+
 
 
     void Start()
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     
 
         
-        
+
         if(instance == null)
         {
         instance = this;
@@ -74,6 +74,14 @@ public class GameManager : MonoBehaviour
     {
         Option.SetActive(false);
         OPSA = false;
+
+
+
+
+
+
+
+
     }
    
     EscSet.SetActive(false);
@@ -122,7 +130,7 @@ public class GameManager : MonoBehaviour
             Resume();
         }
     }
-    
+
     public void OnClickRePlay(string sceneName)
 {
     AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
@@ -136,6 +144,8 @@ public class GameManager : MonoBehaviour
     public void OnClickExit()
     {
         Application.Quit();
+
+
     }
-     
+
 }

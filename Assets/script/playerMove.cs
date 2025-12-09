@@ -98,6 +98,7 @@ public class PlayerMove : MonoBehaviour
 
     void Awake()
     {
+        
         if (instance == null)
         {
             instance = this;
@@ -554,6 +555,9 @@ IEnumerator SkillAttackRoutine() //스킬
         {
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Normal);
             StartCoroutine(Dash());
+            damageObject.SetActive(true);
+            yield return new WaitForSeconds(damageDuration);
+            damageObject.SetActive(false);
         }
 
         if (isRed)
@@ -579,6 +583,8 @@ IEnumerator SkillAttackRoutine() //스킬
       
     yield return new WaitForSeconds(0.15f); 
 
+    if(!isNormal)
+    {
     damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
     damageObject.SetActive(true);
     if (isBlack)
@@ -590,6 +596,7 @@ IEnumerator SkillAttackRoutine() //스킬
 
     yield return new WaitForSeconds(damageDuration);
     damageObject.SetActive(false);
+    }
 }
 
 
