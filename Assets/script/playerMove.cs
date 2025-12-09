@@ -119,15 +119,14 @@ public class PlayerMove : MonoBehaviour
 
 private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 {
-
     GameObject spawnPointObject = GameObject.FindGameObjectWithTag("SpawnPoint");
 
     if (spawnPointObject != null)
-    {
         transform.position = spawnPointObject.transform.position;
-    }
-    
-    
+
+   
+    spinePlayer = GetComponentInChildren<SkeletonAnimation>();
+    skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
     isPortal = false;
 }
@@ -647,6 +646,8 @@ public void SetDamageObjectActive(bool state, float damage)
     
     damageObject.SetActive(state);
 }
+
+
 
 
 }

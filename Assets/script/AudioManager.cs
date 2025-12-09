@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -38,6 +39,8 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
 
     }
 
@@ -104,6 +107,28 @@ public class AudioManager : MonoBehaviour
     bgmPlayer[0].Play();
 
     channelBGMIndex = 0; 
+}
+
+    public void SetBgmVolume(float volume)
+{
+    Debug.Log("SetBgmVolume Called: " + volume);
+    bgmVolume = volume; 
+    for (int i = 0; i < bgmPlayer.Length; i++)
+    {
+        bgmPlayer[i].volume = volume;
+    }
+}
+
+    public void SetSfxVolume(float volume)
+{
+        
+
+    sfxVolume = volume;
+    for (int i = 0; i < sfxPlayer.Length; i++)
+    {
+        sfxPlayer[i].volume = volume;
+        Debug.Log(volume);
+    }
 }
     
     
