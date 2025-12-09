@@ -641,4 +641,5 @@ public void SetDamageObjectActive(bool state, float damage)
     damageObject.SetActive(state);
 }
 
+
 }

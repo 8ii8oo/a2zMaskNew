@@ -16,7 +16,7 @@ public class PlayerHp : MonoBehaviour
     public GameObject startPosition;
     // 최대 HP는 인스펙터에서 설정 가능
     public float MaxHp = 100f; 
-    public static float hp = 100f;
+    public  float hp = 100f;
 
     private SpriteRenderer sr;
 
@@ -27,7 +27,7 @@ public class PlayerHp : MonoBehaviour
     // 게임 오버 관련 UI
     public Image fadeImage;
     public GameObject returnButton;
-    public GameObject gmaeOverImage;
+
     
     private bool isDead = false;
     private PlayerMove playerMove;
@@ -79,6 +79,7 @@ public class PlayerHp : MonoBehaviour
     
     void Start()
     {
+         fadeImage.gameObject.SetActive(false);
 
         skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
         

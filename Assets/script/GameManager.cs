@@ -4,12 +4,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public SceneChange sceneChange;
     public GameObject EscSet; //esc눌렀을때 뜨는 팝업창
     public GameObject Ctrl;
     public GameObject Option;
     public static bool GameIsPaused = false; //상태.  일시정지, 창 켜져잇는지 아닌지 확인
     static bool CTSA = false; //SA = SetActive, 컨트롤
     static bool OPSA = false; //옵션
+    bool isTutorial;
     //안된어ㅣ남어ㅏㅣㄴㅁ어ㅣㅏ머이ㅏ저인마어
 //dsajlkzdsadsadsa
 
@@ -18,6 +20,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+    
+
+        
         
         if(instance == null)
         {
@@ -55,25 +60,28 @@ public class GameManager : MonoBehaviour
         GameIsPaused = true;
     }
 
-    void Resume()
+   void Resume()
+{
+    AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
+   
+    if (CTSA)
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
-        if (CTSA == true)
-        {
-            Ctrl.SetActive(false);
-            CTSA = false;
-            return;
-        }
-        if(OPSA == true)
-        {
-            Option.SetActive(false);
-            OPSA = false;
-            return;
-        }
-        EscSet.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
+        Ctrl.SetActive(false);
+        CTSA = false;
     }
+
+    if (OPSA)
+    {
+        Option.SetActive(false);
+        OPSA = false;
+    }
+   
+    EscSet.SetActive(false);
+
+    Time.timeScale = 1f;
+    GameIsPaused = false;
+}
+
 
     public void OnClickCtrl()
     {
@@ -115,11 +123,19 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public void OnClickTitle()
+    public void OnClickRePlay(string sceneName)
+{
+    AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
+    Time.timeScale = 1f;
+ AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+ 
+    //StartCoroutine(sceneChange.FadeOutAndLoad(sceneName));
+}
+
+
+    public void OnClickExit()
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("title");
+        Application.Quit();
     }
      
 }
