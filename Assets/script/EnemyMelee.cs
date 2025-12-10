@@ -129,4 +129,13 @@ public class EnemyMelee : EnemyMove
         if (spinePlayer != null)
             spinePlayer.AnimationState.Complete -= OnAnimComplete;
     }
+
+    public void PlayDeathAnimation()
+{
+    if (spinePlayer != null)
+    {
+        SetAnim("dead", false);
+        
+    }
+}
 }

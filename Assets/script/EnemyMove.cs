@@ -14,7 +14,7 @@ public class EnemyMove : MonoBehaviour
     protected string currentAnim = "";
 
     [HideInInspector] public bool isActiveAI = true;
-    
+    [HideInInspector] public bool isDead = false;
 
     protected virtual void Awake()
     {
@@ -28,6 +28,7 @@ public class EnemyMove : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         if (!isActiveAI) return;  
+        if(isDead) return;
 
         if (!isStopping)
         {
@@ -79,13 +80,16 @@ public class EnemyMove : MonoBehaviour
 
     // 애니메이션
     protected void SetAnim(string animName, bool loop = true)
-    {
-        if (!spinePlayer) return;
+{
+    if (!spinePlayer) return;
 
-        if (spinePlayer.AnimationName != animName)
-        {
-            spinePlayer.AnimationState.SetAnimation(0, animName, loop);
-            currentAnim = animName;
-        }
+    if (currentAnim == "dead") return;
+
+    if (spinePlayer.AnimationName != animName)
+    {
+        spinePlayer.AnimationState.SetAnimation(0, animName, loop);
+        currentAnim = animName;
     }
+}
+
 }

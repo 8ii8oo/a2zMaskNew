@@ -159,15 +159,21 @@ void OnDisable()
     SceneManager.sceneLoaded -= OnSceneLoaded;
 }
 
-void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 {
-    // 현재 씬 이름 저장
-    lastSceneName = scene.name;
+   
+    if (scene.name != "Title")
+    {
+        if (gameObject != null && !gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
 }
 
 private void ClearGameOverUI()
 {
-    // PlayerHp를 찾아서 fadeImage를 꺼준다
     PlayerHp hp = FindObjectOfType<PlayerHp>();
 
     if (hp != null && hp.fadeImage != null)

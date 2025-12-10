@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 
+
 public class PlayerMove : MonoBehaviour
 {
     //제발좀
@@ -26,6 +27,7 @@ public class PlayerMove : MonoBehaviour
     public static PlayerMove instance;
 
     private Collider2D _playerCollid;
+    
 
    
     public Collider2D PlayerCollider 
@@ -119,6 +121,18 @@ public class PlayerMove : MonoBehaviour
 
 private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 {
+    // 씬 이름 확인
+    if (scene.name == "Title")
+    {
+        gameObject.SetActive(false); // 타이틀에서는 꺼짐
+        return;
+    }
+    else
+    {
+        gameObject.SetActive(true); // 그 외의 씬에서는 켜짐
+    }
+
+    // 나머지 초기화 코드 유지
     GameObject spawnPointObject = GameObject.FindGameObjectWithTag("SpawnPoint");
 
     if (spawnPointObject != null)
@@ -127,7 +141,6 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     spinePlayer = GetComponentInChildren<SkeletonAnimation>();
     skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
-    // 🔥 이동/행동 관련 상태 초기화
     isPortal = false;
     isAttack = false;
     dashing = false;
@@ -560,6 +573,7 @@ IEnumerator SkillAttackRoutine() //스킬
         {
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Normal);
             StartCoroutine(Dash());
+            damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage); 
             damageObject.SetActive(true);
             yield return new WaitForSeconds(damageDuration);
             damageObject.SetActive(false);
@@ -573,7 +587,9 @@ IEnumerator SkillAttackRoutine() //스킬
     if (isBlue)
     {
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Blue);
-        FireSlash();
+        Invoke("FireSlash", 0.5f);
+        
+        yield break;
     }
 
     if (isBlack)
@@ -586,12 +602,13 @@ IEnumerator SkillAttackRoutine() //스킬
     if (isBlack) finalDamage += 20f; //블랙 +20 데미지 
     
       
-    yield return new WaitForSeconds(0.15f); 
+   yield return new WaitForSeconds(0.15f);
 
-    if(!isNormal)
-    {
+if (!isNormal && !isBlue) 
+{
     damageObject.GetComponent<PlayerDamage>().SetDamage(finalDamage);
     damageObject.SetActive(true);
+
     if (isBlack)
     {  
         PlayerDamage pd = damageObject.GetComponent<PlayerDamage>();
@@ -601,7 +618,7 @@ IEnumerator SkillAttackRoutine() //스킬
 
     yield return new WaitForSeconds(damageDuration);
     damageObject.SetActive(false);
-    }
+}
 }
 
 

@@ -100,14 +100,19 @@ public class AudioManager : MonoBehaviour
         bgmPlayer[i].clip = null;
     }
 
-   
     bgmPlayer[0].clip = bgmClip[(int)bgm];
     bgmPlayer[0].volume = bgmVolume;
-    bgmPlayer[0].loop = true;
+
+    if (bgm == Bgm.GameClear)
+        bgmPlayer[0].loop = false;
+    else
+        bgmPlayer[0].loop = true;
+
     bgmPlayer[0].Play();
 
     channelBGMIndex = 0; 
 }
+
 
     public void SetBgmVolume(float volume)
 {
@@ -124,7 +129,6 @@ public class AudioManager : MonoBehaviour
     for (int i = 0; i < sfxPlayer.Length; i++)
     {
         sfxPlayer[i].volume = volume;
-       
     }
 }
     

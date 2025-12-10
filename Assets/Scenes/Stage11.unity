@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3944416759363195603, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4297952714635527704, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: m_Pivot.x
@@ -1889,6 +1889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a62dac2192f793418588e85d04aa905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OverImage: {fileID: 0}
   sceneChange: {fileID: 0}
   EscSet: {fileID: 0}
   Ctrl: {fileID: 0}
