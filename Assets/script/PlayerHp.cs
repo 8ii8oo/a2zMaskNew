@@ -19,6 +19,7 @@ public class PlayerHp : MonoBehaviour
     public  float hp = 100f;
 
     private SpriteRenderer sr;
+    
 
 
 
@@ -54,6 +55,8 @@ public class PlayerHp : MonoBehaviour
         // 위치 초기화
         if (startPosition != null)
             transform.position = startPosition.transform.position;
+
+            isDead = false;
     }
 
     void InitHpByScene(string sceneName)

@@ -1,8 +1,11 @@
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject OverImage;
     public static GameManager instance;
     public SceneChange sceneChange;
     public GameObject EscSet; //esc눌렀을때 뜨는 팝업창
@@ -12,9 +15,7 @@ public class GameManager : MonoBehaviour
     static bool CTSA = false; //SA = SetActive, 컨트롤
     static bool OPSA = false; //옵션
     bool isTutorial;
-    //안된어ㅣ남어ㅏㅣㄴㅁ어ㅣㅏ머이ㅏ저인마어
-//dsajlkzdsadsadsa
-
+    public static string lastSceneName = "";
 
 
 
@@ -74,14 +75,6 @@ public class GameManager : MonoBehaviour
     {
         Option.SetActive(false);
         OPSA = false;
-
-
-
-
-
-
-
-
     }
    
     EscSet.SetActive(false);
@@ -135,9 +128,17 @@ public class GameManager : MonoBehaviour
 {
     AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
     Time.timeScale = 1f;
- AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
- 
-    //StartCoroutine(sceneChange.FadeOutAndLoad(sceneName));
+
+    ClearGameOverUI();
+
+    string nextScene = "Stage11"; // 기본값
+
+    if (lastSceneName == "tutorial")
+    {
+        nextScene = "tutorial"; // 튜토리얼에서 죽었으면 튜토리얼로
+    }
+
+    SceneManager.LoadScene(nextScene);
 }
 
 
@@ -147,5 +148,37 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+    void OnEnable()
+{
+    SceneManager.sceneLoaded += OnSceneLoaded;
+}
+
+void OnDisable()
+{
+    SceneManager.sceneLoaded -= OnSceneLoaded;
+}
+
+void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    // 현재 씬 이름 저장
+    lastSceneName = scene.name;
+}
+
+private void ClearGameOverUI()
+{
+    // PlayerHp를 찾아서 fadeImage를 꺼준다
+    PlayerHp hp = FindObjectOfType<PlayerHp>();
+
+    if (hp != null && hp.fadeImage != null)
+    {
+        hp.fadeImage.gameObject.SetActive(false);
+    }
+
+    if (OverImage != null)
+    {
+        OverImage.gameObject.SetActive(false);
+    }
+}
 
 }

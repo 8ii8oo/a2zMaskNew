@@ -111,7 +111,6 @@ public class AudioManager : MonoBehaviour
 
     public void SetBgmVolume(float volume)
 {
-    Debug.Log("SetBgmVolume Called: " + volume);
     bgmVolume = volume; 
     for (int i = 0; i < bgmPlayer.Length; i++)
     {
@@ -120,14 +119,12 @@ public class AudioManager : MonoBehaviour
 }
 
     public void SetSfxVolume(float volume)
-{
-        
-
+{  
     sfxVolume = volume;
     for (int i = 0; i < sfxPlayer.Length; i++)
     {
         sfxPlayer[i].volume = volume;
-        Debug.Log(volume);
+       
     }
 }
     

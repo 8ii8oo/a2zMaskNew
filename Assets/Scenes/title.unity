@@ -175,7 +175,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3918110449992988434, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
   m_PrefabInstance: {fileID: 502997142}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1236904087}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -707,15 +707,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5046031579665567900, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5046031579665567900, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5046031579665567900, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 538504381}
+    - target: {fileID: 5046031579665567900, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickRePlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046031579665567900, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046031579665567900, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: tutorial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046031579665567900, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5111598407922327999, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
       propertyPath: m_AnchorMax.x
@@ -874,6 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a62dac2192f793418588e85d04aa905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OverImage: {fileID: 1236904087}
   sceneChange: {fileID: 0}
   EscSet: {fileID: 502997145}
   Ctrl: {fileID: 502997144}
@@ -947,6 +964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spine GameObject (player)
       objectReference: {fileID: 0}
+    - target: {fileID: 949023184852346230, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2506740842807945323, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.75
@@ -1002,6 +1023,10 @@ PrefabInstance:
     - target: {fileID: 6360077345425406275, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7171775848011660440, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
+      propertyPath: hp
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7171775848011660440, guid: 4322e3cbc5c930c4dbae3b427e4d5206, type: 3}
       propertyPath: hpBar
@@ -1281,6 +1306,11 @@ MonoBehaviour:
 --- !u!1 &1148413070 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7552700364156639563, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
+  m_PrefabInstance: {fileID: 502997142}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1236904087 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3944416759363195603, guid: 01b07a6ac944d434bb0694f49e7abf19, type: 3}
   m_PrefabInstance: {fileID: 502997142}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1353512926

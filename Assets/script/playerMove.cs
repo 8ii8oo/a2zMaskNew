@@ -124,12 +124,18 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     if (spawnPointObject != null)
         transform.position = spawnPointObject.transform.position;
 
-   
     spinePlayer = GetComponentInChildren<SkeletonAnimation>();
     skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
+    // 🔥 이동/행동 관련 상태 초기화
     isPortal = false;
+    isAttack = false;
+    dashing = false;
+    canDash = true;
+    moveInput = 0;
+    isDead = false;
 }
+
 
     void Start()
     {
