@@ -229,33 +229,39 @@ public class ScenePotal : MonoBehaviour
     }
     
     IEnumerator PortalFadeIn(float duration)
+{
+    if (portalRenderer == null) yield break;
+
+    isFade = true;
+
+   
+    tutorial tut = FindObjectOfType<tutorial>(); 
+    if(tut != null)
     {
-        if (portalRenderer == null) yield break;
-        isFade = true;
-        
-        float elapsedTime = 0f;
-        Color startColor = portalRenderer.material.color;
-        startColor.a = 0f; 
-        Color targetColor = startColor;
-        targetColor.a = 1f; 
-        
-        portalRenderer.material.color = startColor;
-
-        while (elapsedTime < duration)
-        {
-            float t = elapsedTime / duration;
-            Color currentColor = Color.Lerp(startColor, targetColor, t); 
-            portalRenderer.material.color = currentColor;
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(1f);
-       isFade = false;
-        
-        portalRenderer.material.color = targetColor; 
+        tut.StartPotalTutorial();
     }
+
+    float elapsedTime = 0f;
+    Color startColor = portalRenderer.material.color;
+    startColor.a = 0f; 
+    Color targetColor = startColor;
+    targetColor.a = 1f; 
+
+    portalRenderer.material.color = startColor;
+
+    while (elapsedTime < duration)
+    {
+        float t = elapsedTime / duration;
+        Color currentColor = Color.Lerp(startColor, targetColor, t); 
+        portalRenderer.material.color = currentColor;
+
+        elapsedTime += Time.deltaTime;
+        yield return null;
+    }
+
+    portalRenderer.material.color = targetColor; 
+    isFade = false;
+}
 
     IEnumerator RestoreEffect()
     {
@@ -293,6 +299,7 @@ public class ScenePotal : MonoBehaviour
         filterRD.sharedMaterial.SetFloat(scalePropName, targetScale); 
         
         filter.gameObject.SetActive(false); 
+        isFade = false;
         
 
         SceneManager.sceneLoaded -= OnSceneLoad;

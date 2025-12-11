@@ -84,7 +84,7 @@ public class tutorial : MonoBehaviour
         }
 
 
-
+/*
          objectsWithTag = GameObject.FindGameObjectsWithTag(targetTag);
          if(objectsWithTag.Length == 1 && !isPotalTutorialActive)
         {
@@ -93,6 +93,7 @@ public class tutorial : MonoBehaviour
             StartCoroutine(FadeIn(PotalRenderer));
             isPotalTutorialActive = true;
         }
+        */
 
     }
 
@@ -137,6 +138,26 @@ public class tutorial : MonoBehaviour
         }
         SetAlpha(sr, 1f);
     }
+
+    public void StartPotalTutorial()
+{
+    if(isPotalTutorialActive) return;
+    
+    if (currentIndex < tutorialObjects.Length)
+    {
+        tutorialObjects[currentIndex].SetActive(false);
+    }
+    
+
+    SpriteRenderer PotalRenderer = PotalTutorial.GetComponent<SpriteRenderer>();
+    if (PotalRenderer != null)
+    {
+        PotalTutorial.SetActive(true);
+        SetAlpha(PotalRenderer, 0f);
+        StartCoroutine(FadeIn(PotalRenderer));
+        isPotalTutorialActive = true;
+    }
+}
 
     IEnumerator FadeOut(SpriteRenderer sr)
     {
