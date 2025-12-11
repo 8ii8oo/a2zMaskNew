@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 3480997879353307487}
   - component: {fileID: 8961910833072738277}
   - component: {fileID: 7342768966918529938}
+  - component: {fileID: 5584539400192610916}
   m_Layer: 5
   m_Name: optionPopup
   m_TagString: Untagged
@@ -155,6 +156,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5584539400192610916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253937437417131400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a721eca29ff97b54d86dd1461dcb25cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmSlider: {fileID: 5176411061132454222}
+  sfxSlider: {fileID: 4873210605347324074}
 --- !u!1 &618641310714815530
 GameObject:
   m_ObjectHideFlags: 0
@@ -3213,6 +3228,7 @@ MonoBehaviour:
   Panel: {fileID: 999195955518675570}
   fadeDuration: 1
   Illu: {fileID: 0}
+  isFade: 0
 --- !u!1 &6675113673102680694
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,14 +34,37 @@ public class AudioManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
         Init();
+
+         LoadSetting();
         }
         else
         {
             Destroy(gameObject);
         }
 
+    }
 
+    public void LoadSetting()
+    {
+        if (PlayerPrefs.HasKey("BGMVolume"))
+    {
+        bgmVolume = PlayerPrefs.GetFloat("BGMVolume");
+        SetBgmVolume(bgmVolume);
+    }
 
+    if (PlayerPrefs.HasKey("SFXVolume"))
+    {
+        sfxVolume = PlayerPrefs.GetFloat("SFXVolume");
+        SetSfxVolume(sfxVolume);
+    }
+    }
+
+    public void SaveSetting()
+    {
+        PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
+        PlayerPrefs.Save();
+        
     }
 
     void Init()
@@ -121,6 +144,8 @@ public class AudioManager : MonoBehaviour
     {
         bgmPlayer[i].volume = volume;
     }
+
+    SaveSetting();
 }
 
     public void SetSfxVolume(float volume)
@@ -130,6 +155,8 @@ public class AudioManager : MonoBehaviour
     {
         sfxPlayer[i].volume = volume;
     }
+
+    SaveSetting();
 }
     
     

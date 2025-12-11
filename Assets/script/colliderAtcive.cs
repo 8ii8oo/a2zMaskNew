@@ -24,6 +24,11 @@ public class colliderAtcive : MonoBehaviour
 {
     if (playerMove == null || playerMove.isDead) return;
 
+
+
+
+
+
     if (!playerMove.enabled) return;
 
     if (playerMove.currentGroundTag == "DownGround") return;
@@ -34,9 +39,15 @@ public class colliderAtcive : MonoBehaviour
         {
             IgnoreCollision();
             playerMove.PlatformDrop();
+            
+
+
         }
     }
 }
+
+
+
 
 
     void IgnoreCollision()
@@ -48,6 +59,8 @@ public class colliderAtcive : MonoBehaviour
 
     Invoke(nameof(RestoreCollision), 0.3f);
 }
+
+
 
 
     private void OnTriggerExit2D(Collider2D other)
@@ -70,6 +83,7 @@ public class colliderAtcive : MonoBehaviour
     playerMove.isDropping = false;
 
     CancelInvoke(nameof(RestoreCollision));
+
 }
 
 }

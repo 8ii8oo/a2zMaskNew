@@ -14,6 +14,9 @@ public class PlayerMove : MonoBehaviour
     //진짜제발
     [SerializeField] private SkeletonAnimation spinePlayer;
 
+    private bool cachedFacingRight;
+    private Vector3 cachedFirePointPosition; //블루 스킬 위치저장   
+
     public bool isPortal = false; //포탈
     public string currentGroundTag = "";
     public GameObject slashPrefab; 
@@ -518,7 +521,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
         if (rigid != null)
     {
-        rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, -5f); // 속도는 조절 가능
+        rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, -2f); // 속도는 조절 가능
     }
     }
 
@@ -587,6 +590,10 @@ IEnumerator SkillAttackRoutine() //스킬
     if (isBlue)
     {
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Blue);
+
+        cachedFacingRight = isFacingRight;
+        cachedFirePointPosition = firePoint.position;
+
         Invoke("FireSlash", 0.5f);
         
         yield break;
@@ -625,21 +632,20 @@ if (!isNormal && !isBlue)
 
 void FireSlash()
 {
-    if (slashPrefab == null || firePoint == null) return;
+    if (slashPrefab == null) return;
 
-    Vector2 dir = isFacingRight ? Vector2.right : Vector2.left;
-    GameObject slash = Instantiate(slashPrefab, firePoint.position, Quaternion.identity);
+    //저장된 방향과 위치 사용
+    Vector2 dir = cachedFacingRight ? Vector2.right : Vector2.left;
+    GameObject slash = Instantiate(slashPrefab, cachedFirePointPosition, Quaternion.identity);
     slash.SetActive(true);
 
     SpriteRenderer sr = slash.GetComponent<SpriteRenderer>();
-    sr.flipX = isFacingRight;
+    sr.flipX = cachedFacingRight; //방향 뒤집기
 
-    
-    
     SlashProjectile proj = slash.GetComponent<SlashProjectile>();
     if (proj != null)
     {
-        proj.Init(dir, 20f); // 데미지 설정 가능
+        proj.Init(dir, 20f); // 데미지 설정
     }
 }
 
