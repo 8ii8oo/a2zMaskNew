@@ -107,7 +107,7 @@ public class EnemyMelee : EnemyMove
 
     protected IEnumerator ActivateDamage()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.4f);
 
         if (normalDamageObj != null)
         {

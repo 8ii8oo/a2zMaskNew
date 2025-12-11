@@ -274,7 +274,7 @@ public class ScenePotal : MonoBehaviour
 
         float startSpeed = 3f;
         float targetSpeed = 0f;
-        float startScale = 50f;
+        float startScale = 30f;
         float targetScale = 0f;
 
         // 필터 페이드 아웃

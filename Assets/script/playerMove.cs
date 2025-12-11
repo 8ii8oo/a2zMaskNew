@@ -10,8 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
-    //제발좀
-    //진짜제발
     [SerializeField] private SkeletonAnimation spinePlayer;
 
     private bool cachedFacingRight;
@@ -30,6 +28,7 @@ public class PlayerMove : MonoBehaviour
     public static PlayerMove instance;
 
     private Collider2D _playerCollid;
+    SceneManager sceneManager;
     
 
    
@@ -675,6 +674,25 @@ public void SetDamageObjectActive(bool state, float damage)
     
     damageObject.SetActive(state);
 }
+
+public void ResetSkinToNormal()
+    {
+        isNormal = true;
+        isRed = false;
+        isBlue = false;
+        isBlack = false;
+
+        if(ImNormal != null) ImNormal.SetActive(true);
+        if (ImRed != null) ImRed.SetActive(false);
+        if (ImBlue != null) ImBlue.SetActive(false);
+        if (ImBlack != null) ImBlack.SetActive(false);
+
+         if (skeletonAnimation != null && skeletonAnimation.skeleton != null)
+    {
+        skeletonAnimation.skeleton.SetSkin("normal");
+        skeletonAnimation.skeleton.SetupPoseSlots();
+    }
+    }
 
 
 

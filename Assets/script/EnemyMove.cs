@@ -12,6 +12,7 @@ public class EnemyMove : MonoBehaviour
     public int nextMove = 1;     
     protected bool isStopping = false;
     protected string currentAnim = "";
+    
 
     [HideInInspector] public bool isActiveAI = true;
     [HideInInspector] public bool isDead = false;

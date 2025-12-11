@@ -12,6 +12,7 @@ TagManager:
   - DownGround
   - Wall
   - SpawnPoint
+  - GameClearPanel
   layers:
   - Default
   - TransparentFX

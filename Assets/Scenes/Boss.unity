@@ -630,7 +630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &643455619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a62dac2192f793418588e85d04aa905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameClearPanel: {fileID: 0}
   OverImage: {fileID: 0}
   sceneChange: {fileID: 0}
   EscSet: {fileID: 0}
@@ -756,7 +757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &865376375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1689,7 +1690,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9010430315467516050, guid: 3c93db8636d478747a88968caa5bcc70, type: 3}
+      - m_Target: {fileID: 6212431680036303740, guid: 826887412d6389740a46f3bc28c7017c, type: 3}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnClickExit
         m_Mode: 1
@@ -2047,10 +2048,10 @@ GameObject:
   - component: {fileID: 1805784146}
   - component: {fileID: 1805784145}
   - component: {fileID: 1805784144}
-  - component: {fileID: 1805784143}
-  - component: {fileID: 1805784142}
   - component: {fileID: 1805784149}
   - component: {fileID: 1805784141}
+  - component: {fileID: 1805784143}
+  - component: {fileID: 1805784142}
   - component: {fileID: 1805784148}
   - component: {fileID: 1805784150}
   m_Layer: 9
@@ -2317,7 +2318,6 @@ MonoBehaviour:
   Hp: 0
   hpBar: {fileID: 1674088536}
   BackHpBar: {fileID: 1130624005}
-  clearPanel: {fileID: 2052927111}
   isBoss: 1
   playerHp: {fileID: 15100028}
 --- !u!70 &1805784150
@@ -2612,16 +2612,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9010430315467516050, guid: 3c93db8636d478747a88968caa5bcc70, type: 3}
+      - m_Target: {fileID: 6212431680036303740, guid: 826887412d6389740a46f3bc28c7017c, type: 3}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnClickRePlay
-        m_Mode: 5
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Stage11
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2000221255

@@ -1,10 +1,12 @@
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject gameClearPanel;
     public GameObject OverImage;
     public static GameManager instance;
     public SceneChange sceneChange;
@@ -17,7 +19,21 @@ public class GameManager : MonoBehaviour
     static bool OPSA = false; //옵션
     bool isTutorial;
     public static string lastSceneName = "";
-    
+
+    void Awake()
+{
+    if(instance == null)
+    {
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+    else
+    {
+        Destroy(gameObject);
+        return;
+    }
+}
+
 
 
 
@@ -26,16 +42,6 @@ public class GameManager : MonoBehaviour
     
 
         
-
-        if(instance == null)
-        {
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     // Update is called once per frame
@@ -145,21 +151,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnClickRePlay(string sceneName)
+
+    public void OnClickRePlay()
 {
+
+     gameObject.SetActive(true);
+
     AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
     Time.timeScale = 1f;
 
-    ClearGameOverUI();
+    string nextScene = GameManager.lastSceneName == "tutorial" ? "tutorial" : "Stage11";
 
-    string nextScene = "Stage11"; // 기본값
-
-    if (lastSceneName == "tutorial")
+    if (sceneChange != null)
+{
+    sceneChange.sceneName = nextScene;
+    sceneChange.StartCoroutine(sceneChange.FadeThenClearUIAndLoad(this));
+}
+    else
     {
-        nextScene = "tutorial"; // 튜토리얼에서 죽었으면 튜토리얼로
+        SceneManager.LoadScene(nextScene);
+        StartCoroutine(ResetPlayerSkinAfterSceneLoad());
     }
+}
 
-    SceneManager.LoadScene(nextScene);
+
+
+
+
+IEnumerator ResetPlayerSkinAfterSceneLoad() //노멀스킬로 초기화
+{
+    yield return new WaitForSeconds(0.1f); // 씬이 로드 시간
+
+    PlayerMove player = FindObjectOfType<PlayerMove>();
+    if (player != null)
+    {
+        player.ResetSkinToNormal();
+    }
 }
 
 
@@ -180,9 +207,21 @@ void OnDisable()
     SceneManager.sceneLoaded -= OnSceneLoaded;
 }
 
+
 private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 {
-   
+     if (gameClearPanel != null)
+    {
+        var cg = gameClearPanel.GetComponent<CanvasGroup>();
+        if (cg != null)
+        {
+            cg.alpha = 0f;
+            cg.interactable = false;
+            cg.blocksRaycasts = false;
+        }
+
+        gameClearPanel.SetActive(false);  
+    }
     if (scene.name != "Title")
     {
         if (gameObject != null && !gameObject.activeSelf)
@@ -193,9 +232,22 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 
     scenePotal = FindObjectOfType<ScenePotal>();
 
+    if (scene.name == "Stage11" || scene.name == "tutorial")
+    {
+        PlayerMove player = FindObjectOfType<PlayerMove>();
+        if (player != null)
+        {
+            player.ResetSkinToNormal();
+
+            // 위치 초기화
+            GameObject spawn = GameObject.FindWithTag("SpawnPoint");
+            if (spawn != null)
+                player.transform.position = spawn.transform.position;
+        }
+    }
 }
 
-private void ClearGameOverUI()
+public void ClearGameOverUI()
 {
     PlayerHp hp = FindObjectOfType<PlayerHp>();
 

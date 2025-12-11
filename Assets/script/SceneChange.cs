@@ -76,6 +76,9 @@ public class SceneChange : MonoBehaviour
             yield return null;
         }
 
+        if (Illu != null)
+        Destroy(Illu);
+
         Panel.gameObject.SetActive(false);
         
     }
@@ -87,6 +90,56 @@ public class SceneChange : MonoBehaviour
             StartCoroutine(FadeOutAndLoad());
         }
     }
+
+    public IEnumerator FadeOutAndLoad_PreFadeOnly()
+{
+    isFade = true;
+    isTransitioning = true;
+
+    Panel.gameObject.SetActive(true);
+
+    Color alpha = Panel.color;
+    float time = 0f;
+
+    while (alpha.a < 1f)
+    {
+        time += Time.deltaTime / fadeDuration;
+        alpha.a = Mathf.Lerp(0, 1, time);
+        Panel.color = alpha;
+        yield return null;
+    }
+
+    yield return new WaitForSeconds(0.3f); // 약간의 여유
+}
+
+public IEnumerator FadeOutAndLoad_Continue()
+{
+    yield return new WaitForSeconds(0.2f); // 약간의 지연
+
+    AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+    async.completed += (_) =>
+    {
+        StartCoroutine(FadeIn());
+        hasLoaded = true;
+    };
+
+    yield return new WaitForSeconds(1f);
+    isFade = false;
+}
+public IEnumerator FadeThenClearUIAndLoad(GameManager gm)
+{
+    // 1) 패널 먼저 어둡게
+    yield return StartCoroutine(FadeOutAndLoad_PreFadeOnly());
+
+    // 2) GameOver UI 제거 (GameManager 함수 호출)
+    gm.ClearGameOverUI();
+
+    // 3) 씬 로드 계속
+    yield return StartCoroutine(FadeOutAndLoad_Continue());
+}
+
+
+
 
 }
 

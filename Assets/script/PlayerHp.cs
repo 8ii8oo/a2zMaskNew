@@ -19,6 +19,8 @@ public class PlayerHp : MonoBehaviour
     public  float hp = 100f;
 
     private SpriteRenderer sr;
+
+    
     
 
 
@@ -143,22 +145,23 @@ public class PlayerHp : MonoBehaviour
     }
 
     IEnumerator KillPlayer()
+{
+    isDead = true;
+
+    if (playerMove != null)
     {
-        isDead = true;
-
-        if (playerMove != null)
-        {
-            playerMove.KillAni();
-        }
-
-        Time.timeScale = 0.2f; 
-
-        yield return new WaitForSecondsRealtime(2f);
-        
-
-        
-        StartCoroutine(FadeToBlack());
+        playerMove.KillAni();
     }
+
+    // 현재 씬 이름 저장
+    GameManager.lastSceneName = SceneManager.GetActiveScene().name;
+
+    Time.timeScale = 0.2f; 
+    yield return new WaitForSecondsRealtime(2f);
+    
+    StartCoroutine(FadeToBlack());
+}
+
     
     IEnumerator FadeToBlack() //페이드아웃
     {
