@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject OverImage;
     public static GameManager instance;
     public SceneChange sceneChange;
+     ScenePotal scenePotal;
     public GameObject EscSet; //esc눌렀을때 뜨는 팝업창
     public GameObject Ctrl;
     public GameObject Option;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     static bool OPSA = false; //옵션
     bool isTutorial;
     public static string lastSceneName = "";
+    
 
 
 
@@ -38,20 +40,39 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+{
+    
+    if (Input.GetKeyDown(KeyCode.Escape))
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // 씬 전환 중 체크
+        bool isSceneChanging = sceneChange != null && sceneChange.isFade;
+
+        // 포탈 전환 중 체크
+        bool isPortalFading = false;
+        GameObject portalObj = GameObject.FindWithTag("Potal"); // 정확히 'Portal'
+        if (portalObj != null)
         {
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
-            if (GameIsPaused)
+            ScenePotal potal = portalObj.GetComponent<ScenePotal>();
+            if (potal != null && potal.isFade)
             {
-                Resume();
-            }
-            else
-            {
-                pasue();
+                isPortalFading = true;
             }
         }
+
+        // 전환 중이면 ESC 무시
+        if (isSceneChanging || isPortalFading)
+            return;
+
+        // ESC 작동
+        if (GameIsPaused)
+            Resume();
+        else
+            pasue();
     }
+
+    
+}
+
 
     void pasue()
     {
@@ -169,6 +190,8 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
             gameObject.SetActive(true);
         }
     }
+
+    scenePotal = FindObjectOfType<ScenePotal>();
 
 }
 

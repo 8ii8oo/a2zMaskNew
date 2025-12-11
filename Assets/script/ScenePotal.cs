@@ -18,6 +18,7 @@ public class ScenePotal : MonoBehaviour
     private string scalePropName = "_scale";
     
     private Renderer portalRenderer; 
+    public bool isFade = false;
 
     
 
@@ -76,6 +77,7 @@ public class ScenePotal : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.D) && portalRenderer != null && portalRenderer.enabled) 
             {
+                isFade = true;
                 isTransitioning = true;
                 if (spinePlayer != null && spinePlayer.AnimationState != null)
                 {
@@ -138,6 +140,7 @@ public class ScenePotal : MonoBehaviour
     {
         if (filter != null)
         {
+            isFade = true;
             filter.gameObject.SetActive(true);
         }
 
@@ -228,6 +231,7 @@ public class ScenePotal : MonoBehaviour
     IEnumerator PortalFadeIn(float duration)
     {
         if (portalRenderer == null) yield break;
+        isFade = true;
         
         float elapsedTime = 0f;
         Color startColor = portalRenderer.material.color;
@@ -246,6 +250,9 @@ public class ScenePotal : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        yield return new WaitForSeconds(1f);
+       isFade = false;
         
         portalRenderer.material.color = targetColor; 
     }

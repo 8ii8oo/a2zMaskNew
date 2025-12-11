@@ -12,6 +12,7 @@ public class SceneChange : MonoBehaviour
 
     private bool isTransitioning = false; // 중복방지 
     private bool hasLoaded = false;
+    public bool isFade;
 
     void Awake()
     {
@@ -27,6 +28,8 @@ public class SceneChange : MonoBehaviour
 
     public IEnumerator FadeOutAndLoad()
     {
+        isFade = true;
+       
         AudioManager.instance.PlaySfx(AudioManager.Sfx.button);
         isTransitioning = true;
         Panel.gameObject.SetActive(true);
@@ -49,13 +52,18 @@ public class SceneChange : MonoBehaviour
         {
             StartCoroutine(FadeIn());
             hasLoaded = true;
+
+            
         };
+        yield return new WaitForSeconds(1f);
+            isFade = false;
 
         yield return null;
     }
 
     IEnumerator FadeIn()
     {
+        
         Color alpha = Panel.color;
         float time = 0f;
 
@@ -69,6 +77,7 @@ public class SceneChange : MonoBehaviour
         }
 
         Panel.gameObject.SetActive(false);
+        
     }
 
     void Update()
