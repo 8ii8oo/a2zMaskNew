@@ -14,36 +14,41 @@ public class EnemyHp : MonoBehaviour
     public Image BackHpBar;
     bool isDead = false;
 
-    private GameObject clearPanel; // 페이드 대상 패널
+    private GameObject clearPanel;
     public bool isBoss = false;
 
     private CanvasGroup clearGroup;
     public GameObject playerHp;
 
     void Start()
-{
-    clearPanel = GameManager.instance.gameClearPanel;
-    clearGroup = clearPanel?.GetComponent<CanvasGroup>();
-
-    hpBar.enabled = false;
-    BackHpBar.enabled = false;
-    Hp = EnemyMaxHp;
-
-    if (isBoss)
     {
-        if (clearGroup != null)
+     
+        if (GameManager.instance != null && GameManager.instance.gameClearPanel != null)
         {
-            clearGroup.alpha = 0f;
-            clearGroup.interactable = false;
-            clearGroup.blocksRaycasts = false;
+            clearPanel = GameManager.instance.gameClearPanel;
+            clearGroup = clearPanel.GetComponent<CanvasGroup>();
+
+            if (isBoss)
+            {
+                if (clearGroup != null)
+                {
+                    clearGroup.alpha = 0f;
+                    clearGroup.interactable = false;
+                    clearGroup.blocksRaycasts = false;
+                }
+
+                clearPanel.SetActive(false);
+            }
         }
+        
 
-        clearPanel.SetActive(false); 
+        if (hpBar != null) hpBar.enabled = false;
+        if (BackHpBar != null) BackHpBar.enabled = false;
+        Hp = EnemyMaxHp;
+
+        if (hpBar != null)
+            hpBar.fillAmount = 1f;
     }
-
-    if (hpBar != null)
-        hpBar.fillAmount = 1f;
-}
 
     void Update()
     {
@@ -55,21 +60,13 @@ public class EnemyHp : MonoBehaviour
                 Time.deltaTime * 5f
             );
         }
-
-        
     }
 
     public void TakeDamage(float damage)
     {
-        hpBar.enabled = true;
-        if(BackHpBar == null)
-        {
-            return;
-        }
-        else
-       {
-         BackHpBar.enabled = true;
-       }
+        if (hpBar != null) hpBar.enabled = true;
+        if (BackHpBar == null) return;
+        else BackHpBar.enabled = true;
 
         if (isDead) return;
 
@@ -87,9 +84,9 @@ public class EnemyHp : MonoBehaviour
 
     private void Die()
     {
-        
-        Destroy(BackHpBar);
-        if(BackHpBar == null)return;
+        if (BackHpBar != null)
+            Destroy(BackHpBar);
+
         var move = GetComponent<EnemyMove>();
         if (move != null)
             move.isDead = true;
@@ -103,15 +100,12 @@ public class EnemyHp : MonoBehaviour
             Destroy(gameObject, 0.5f);
         }
 
-        Destroy(playerHp);
         if (playerHp != null)
-    playerHp.SetActive(false);
-    
-
+        {
+            Destroy(playerHp);
+            playerHp.SetActive(false);
+        }
     }
-
-
-    
 
     IEnumerator BossDeathSequence()
     {
@@ -124,14 +118,14 @@ public class EnemyHp : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
 
-        if (clearGroup != null)
+        if (clearPanel != null)
         {
             clearPanel.SetActive(true);
-            StartCoroutine(FadeInCanvasGroup(clearGroup));
-        }
-        else if (clearPanel != null)
-        {
-            clearPanel.SetActive(true);
+
+            if (clearGroup != null)
+            {
+                StartCoroutine(FadeInCanvasGroup(clearGroup));
+            }
         }
     }
 
@@ -152,6 +146,4 @@ public class EnemyHp : MonoBehaviour
         group.interactable = true;
         group.blocksRaycasts = true;
     }
-
-    
 }

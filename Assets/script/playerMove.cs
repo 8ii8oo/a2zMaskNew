@@ -300,13 +300,15 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     }
 
     void FixedUpdate()
+{
+    if (!dashing)
     {
-        if (!dashing)
-        {
-            rigid.linearVelocity = new Vector2(moveInput * speed, rigid.linearVelocity.y);
+        rigid.linearVelocity = new Vector2(moveInput * speed, rigid.linearVelocity.y);
+
+        if (!isDropping)   
             GroundCheck();
-        }
     }
+}
 
 
 
@@ -372,35 +374,28 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     skeletonAnimation.skeleton.SetupPoseSlots();
 } 
 
-    // 착지 이벤트 핸들러
+   
     void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("DownGround"))
-    {
-        currentGroundTag = "DownGround";
-    }
-    else if (collision.collider.CompareTag("floor"))
-    {
-        currentGroundTag = "floor";
-    }
-    else
-    {
-        currentGroundTag = collision.collider.tag;
-    }
+{
+    
+    if (isDropping) return;
 
-        if (collision.gameObject.CompareTag("floor") || collision.gameObject.CompareTag("DownGround") )
-        {
-            isAttack = true;
-            currentJumpCount = 0;
-            isGround = true;
-        
-            var track = spinePlayer.AnimationState.SetAnimation(0, "landing", false);
-            track.Complete += OnLandingComplete; // 메서드 연결
-            isAttack = false;
-        }
+    if (!collision.collider.CompareTag("floor") &&
+        !collision.collider.CompareTag("DownGround"))
+        return;
 
-        
-    }
+    
+    if (collision.contacts[0].normal.y < 0.5f) return;
+
+    currentGroundTag = collision.collider.tag;
+
+    currentJumpCount = 0;
+    isGround = true;
+
+    var track = spinePlayer.AnimationState.SetAnimation(0, "landing", false);
+    track.Complete += OnLandingComplete;
+}
+
 
     void OnCollisionExit2D(Collision2D collision)
 {
@@ -410,6 +405,23 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
         currentGroundTag = "";
         }
 }
+
+void OnCollisionStay2D(Collision2D collision)
+{
+    if (!isDropping) return;
+
+    if (collision.collider.CompareTag("floor") ||
+        collision.collider.CompareTag("DownGround"))
+    {
+        if (collision.contacts[0].normal.y >= 0.5f)
+        {
+            isDropping = false;
+            currentJumpCount = 0;
+            isGround = true;
+        }
+    }
+}
+
 
     
 
@@ -479,49 +491,61 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
     }
 
     void GroundCheck()
+{
+
+    if (isDropping)
     {
-        if (groundCheckCollider == null) return; 
+        isGround = false;
+        return;
+    }
 
-        BoxCollider2D boxCollider = groundCheckCollider as BoxCollider2D;
-        if (boxCollider == null)
+    if (groundCheckCollider == null) return;
+
+    BoxCollider2D boxCollider = groundCheckCollider as BoxCollider2D;
+    if (boxCollider == null)
+    {
+        isGround = false;
+        return;
+    }
+
+    Vector2 origin = boxCollider.bounds.center;
+    Vector2 size = boxCollider.bounds.size;
+    float checkDistance = 0.2f;
+
+    RaycastHit2D GroundBoxHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, checkDistance, whatIsGround);
+
+    if (GroundBoxHit)
+    {
+        if (GroundBoxHit.collider.CompareTag("floor") || GroundBoxHit.collider.CompareTag("OneWayPlatform"))
         {
-            isGround = false; 
-            return;
-        }
+            bool isReallyGrounded = GroundBoxHit.collider.bounds.max.y <= boxCollider.bounds.min.y + 0.1f;
 
-        Vector2 origin = boxCollider.bounds.center;
-        Vector2 size = boxCollider.bounds.size;
-        float checkDistance = 0.2f;
-
-        RaycastHit2D GroundBoxHit = Physics2D.BoxCast(origin, size, 0f, Vector2.down, checkDistance, whatIsGround);
-
-        if (GroundBoxHit)
-        {
-            if (GroundBoxHit.collider.CompareTag("MovingPlatform") || GroundBoxHit.collider.CompareTag("OneWayPlatform"))
+            if (isReallyGrounded)
             {
                 
-                isGround = GroundBoxHit.collider.bounds.max.y <= boxCollider.bounds.min.y + 0.1f;
-            }
-            else
-            {
-                isGround = true; 
+
+                isGround = true;
             }
         }
         else
         {
-            isGround = false;
+            isGround = true;
         }
     }
+    else
+    {
+        isGround = false;
+    }
+}
+
 
     public void PlatformDrop() //하향점프
     {
         SetAnimationState("landing", true);
+        isDropping = true;
         isGround = false;
 
-        if (rigid != null)
-    {
-        rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, -2f); // 속도는 조절 가능
-    }
+        rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, -2f);
     }
 
     public void KillAni()
