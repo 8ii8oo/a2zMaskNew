@@ -55,7 +55,8 @@ public class PlayerMove : MonoBehaviour
     private bool skillCooling = false;
     public float skillCooldownTime = 10f; //s스킬
 
-    public float attackCooldown = 0.5f; //공격 쿨타임
+     public float attackCooldown = 0.5f; //공격 쿨타임
+
 
 
 
@@ -390,6 +391,8 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 
     currentGroundTag = collision.collider.tag;
 
+    isDropping = false;
+    isAttack = false; 
     currentJumpCount = 0;
     isGround = true;
 
@@ -545,6 +548,12 @@ void OnCollisionStay2D(Collision2D collision)
         SetAnimationState("landing", true);
         isDropping = true;
         isGround = false;
+
+        if (isAttack)
+    {
+        isAttack = false;
+        OnActionComplete(); 
+    }
 
         rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, -2f);
     }
