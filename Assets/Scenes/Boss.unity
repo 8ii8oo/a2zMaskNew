@@ -2036,6 +2036,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1750356094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1750356095}
+  m_Layer: 9
+  m_Name: BossSpawnEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1750356095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750356094}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1805784147}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805784140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,9 +2114,8 @@ MonoBehaviour:
   attackCooldown: 0.5
   normalDamageObj: {fileID: 1916463369}
   damageDuration: 0.4
-  enemyPortalPrefab: {fileID: 0}
-  spawnYOffset: 0.9
   enemySpawn: {fileID: 8496501620560189829, guid: 1af9b321ae38faa44b1ba498f1193c8b, type: 3}
+  spawnYOffset: 0.9
   skillDamageObj: {fileID: 543724192}
   hitsBeforeSkill: 3
 --- !u!50 &1805784142
@@ -2265,6 +2295,7 @@ Transform:
   m_Children:
   - {fileID: 1916463372}
   - {fileID: 543724195}
+  - {fileID: 1750356095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1805784148
@@ -2316,6 +2347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428fb6761bab509499c34e767949768f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySpawn: {fileID: 8496501620560189829, guid: 1af9b321ae38faa44b1ba498f1193c8b, type: 3}
+  spawnYOffset: 0.9
+  spawnedEnemyParent: {fileID: 1750356095}
   invulnerabilityTime: 0.2
   EnemyMaxHp: 200
   Hp: 0

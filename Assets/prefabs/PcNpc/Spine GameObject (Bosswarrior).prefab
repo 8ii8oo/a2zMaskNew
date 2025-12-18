@@ -195,6 +195,8 @@ GameObject:
   - component: {fileID: 7820762559504500297}
   - component: {fileID: 5578315769736916251}
   - component: {fileID: 536806374053528228}
+  - component: {fileID: 3202193230781141922}
+  - component: {fileID: 62762165900017727}
   m_Layer: 9
   m_Name: Spine GameObject (Bosswarrior)
   m_TagString: Enemy
@@ -452,11 +454,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428fb6761bab509499c34e767949768f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySpawn: {fileID: 0}
+  spawnYOffset: 0.9
+  spawnedEnemyParent: {fileID: 0}
   invulnerabilityTime: 0.2
   EnemyMaxHp: 70
   Hp: 0
   hpBar: {fileID: 7883844145493450992}
   BackHpBar: {fileID: 8734316763868539544}
+  isDead: 0
   isBoss: 0
   playerHp: {fileID: 0}
 --- !u!70 &536806374053528228
@@ -496,6 +502,30 @@ CapsuleCollider2D:
   m_Offset: {x: 0.07, y: 1.6}
   m_Size: {x: 2.33, y: 3.23}
   m_Direction: 0
+--- !u!114 &3202193230781141922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622672941425365435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696feb2549941c46aae27bc32218a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &62762165900017727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622672941425365435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696feb2549941c46aae27bc32218a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5933647606436909049
 GameObject:
   m_ObjectHideFlags: 0

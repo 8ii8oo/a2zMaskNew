@@ -81,19 +81,13 @@ public class BossMelee : EnemyMelee
             yield return new WaitForSeconds(damageDuration + 0.5f);
             skillDamageObj.SetActive(false);
         }
-
-       
+        /*
         if (skillCount != 0 && skillCount % 2 == 0)
         {
             SpawnEnemy();
         }
+        */
     }
 
-    private void SpawnEnemy()
-    {
-        if (enemySpawn == null) return;
-
-        Vector3 enemySpawnPos = transform.position + Vector3.up * spawnYOffset;
-        Instantiate(enemySpawn, enemySpawnPos, Quaternion.identity);
-    }
+    
 }

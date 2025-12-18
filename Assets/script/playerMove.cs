@@ -55,7 +55,7 @@ public class PlayerMove : MonoBehaviour
     private bool skillCooling = false;
     public float skillCooldownTime = 10f; //s스킬
 
-    public float attackCooldown = 1.5f; //공격 쿨타임
+    public float attackCooldown = 0.5f; //공격 쿨타임
 
 
 
@@ -219,6 +219,7 @@ private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 
 
     var track = spinePlayer.AnimationState.SetAnimation(0, "attack", false);
+    track.TimeScale = 1.3f;
 
     // 사운드 한 번만 재생
     if (!attackSoundPlayed)

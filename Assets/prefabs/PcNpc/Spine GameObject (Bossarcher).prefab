@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2273754672601549554}
   - component: {fileID: 8858597006911764825}
   - component: {fileID: 996265594091254357}
+  - component: {fileID: 6642225880750313731}
   m_Layer: 9
   m_Name: Spine GameObject (Bossarcher)
   m_TagString: Enemy
@@ -311,13 +312,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428fb6761bab509499c34e767949768f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySpawn: {fileID: 0}
+  spawnYOffset: 0.9
+  spawnedEnemyParent: {fileID: 0}
   invulnerabilityTime: 0.2
   EnemyMaxHp: 50
   Hp: 0
   hpBar: {fileID: 575042848829171404}
   BackHpBar: {fileID: 1588938054748757093}
+  isDead: 0
   isBoss: 0
   playerHp: {fileID: 0}
+--- !u!114 &6642225880750313731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2599597052592328346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696feb2549941c46aae27bc32218a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3903365377754359367
 GameObject:
   m_ObjectHideFlags: 0

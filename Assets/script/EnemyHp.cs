@@ -5,6 +5,10 @@ using System.Collections;
 
 public class EnemyHp : MonoBehaviour
 {
+    [SerializeField] private GameObject enemySpawn; 
+    [SerializeField] private float spawnYOffset = 0.9f;
+    [SerializeField] private Transform spawnedEnemyParent;
+
     private bool isInvulnerable = false;
     public float invulnerabilityTime = 0.2f;
     public float EnemyMaxHp = 100f;
@@ -12,17 +16,18 @@ public class EnemyHp : MonoBehaviour
 
     public Image hpBar;
     public Image BackHpBar;
-    bool isDead = false;
+    public bool isDead = false;
 
     private GameObject clearPanel;
     public bool isBoss = false;
 
     private CanvasGroup clearGroup;
     public GameObject playerHp;
+    private bool hasEnemySpawnHp = false;
 
     void Start()
     {
-     
+    
         if (GameManager.instance != null && GameManager.instance.gameClearPanel != null)
         {
             clearPanel = GameManager.instance.gameClearPanel;
@@ -60,6 +65,8 @@ public class EnemyHp : MonoBehaviour
                 Time.deltaTime * 5f
             );
         }
+
+        
     }
 
     public void TakeDamage(float damage)
@@ -72,7 +79,15 @@ public class EnemyHp : MonoBehaviour
 
         AudioManager.instance.PlaySfx(AudioManager.Sfx.EnemyHit);
 
+        float preHp = Hp;
         Hp -= damage;
+
+
+        if(isBoss && !hasEnemySpawnHp && preHp > EnemyMaxHp * 0.5f && Hp <= EnemyMaxHp * 0.5f)
+        {
+            hasEnemySpawnHp = true;
+            SpawnEnemy();
+        }
 
         if (Hp <= 0)
         {
@@ -83,29 +98,25 @@ public class EnemyHp : MonoBehaviour
     }
 
     private void Die()
+{
+    if (BackHpBar != null)
+        Destroy(BackHpBar);
+
+    if (isBoss && spawnedEnemyParent != null)
     {
-        if (BackHpBar != null)
-            Destroy(BackHpBar);
-
-        var move = GetComponent<EnemyMove>();
-        if (move != null)
-            move.isDead = true;
-
-        if (isBoss)
-        {
-            StartCoroutine(BossDeathSequence());
-        }
-        else
-        {
-            Destroy(gameObject, 0.5f);
-        }
-
-        if (playerHp != null)
-        {
-            Destroy(playerHp);
-            playerHp.SetActive(false);
-        }
+        Destroy(spawnedEnemyParent.gameObject);
     }
+
+    var move = GetComponent<EnemyMove>();
+    if (move != null)
+        move.isDead = true;
+
+    if (isBoss)
+        StartCoroutine(BossDeathSequence());
+    else
+        Destroy(gameObject, 0.5f);
+}
+
 
     IEnumerator BossDeathSequence()
     {
@@ -146,4 +157,18 @@ public class EnemyHp : MonoBehaviour
         group.interactable = true;
         group.blocksRaycasts = true;
     }
+
+    private void SpawnEnemy()
+{
+    if (enemySpawn == null) return;
+
+    Vector3 enemySpawnPos = transform.position + Vector3.up * spawnYOffset;
+    GameObject enemy = Instantiate(enemySpawn, enemySpawnPos, Quaternion.identity);
+
+    if (spawnedEnemyParent != null)
+        enemy.transform.SetParent(spawnedEnemyParent);
+}
+
+
+    
 }

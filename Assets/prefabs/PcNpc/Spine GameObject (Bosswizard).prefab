@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: 154246708016966292}
   - component: {fileID: 5228157330422442935}
   - component: {fileID: 4640266641817370686}
+  - component: {fileID: 1026824868003394082}
   m_Layer: 9
   m_Name: Spine GameObject (Bosswizard)
   m_TagString: Enemy
@@ -670,10 +671,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428fb6761bab509499c34e767949768f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemySpawn: {fileID: 0}
+  spawnYOffset: 0.9
+  spawnedEnemyParent: {fileID: 0}
   invulnerabilityTime: 0.2
   EnemyMaxHp: 40
   Hp: 0
   hpBar: {fileID: 3571642337978896121}
   BackHpBar: {fileID: 8412458250312625101}
+  isDead: 0
   isBoss: 0
   playerHp: {fileID: 0}
+--- !u!114 &1026824868003394082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8645042066309753410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9696feb2549941c46aae27bc32218a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

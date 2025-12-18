@@ -32,8 +32,9 @@ public class EnemyPotal : MonoBehaviour
     {
         GameObject[] spawnOrder = 
         {
-            archerPrefab,
             warriorPrefab,
+            warriorPrefab,
+            archerPrefab,
             wizardPrefab
         };
 
