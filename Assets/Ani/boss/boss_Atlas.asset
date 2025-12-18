@@ -1,20 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: boss_Atlas
-  m_EditorClassIdentifier: 
-  serializedMaterialOverrides: []
-  textureLoadingMode: 0
-  onDemandTextureLoader: {fileID: 0}
-  atlasFile: {fileID: 4900000, guid: 18c3eb41082234143b68973f6369c3b9, type: 3}
-  materials:
-  - {fileID: 2100000, guid: ce9ad67941f52ef419b5aed9efab9d62, type: 2}
+version https://git-lfs.github.com/spec/v1
+oid sha256:076af04de471cc3ee9afa44c0d2118d795fce4c1ff072cb44d70ec5225be0b8f
+size 658

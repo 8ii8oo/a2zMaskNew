@@ -38,7 +38,8 @@ public class AudioSettingUI : MonoBehaviour
         AudioManager.instance.SetBgmVolume(value);
         bgmInput.text = Mathf.RoundToInt(value * 100).ToString("00");
     }
-
+//d
+//dkj
     void OnBgmInput(string text)
     {
         if (!int.TryParse(text, out int value))
