@@ -1,7 +1,7 @@
 using UnityEngine;
 using Spine.Unity;
 
-public class colliderAtcive : MonoBehaviour
+public class ColliderAtcive : MonoBehaviour
 {
     private Collider2D collid;
     private Collider2D playerCollid;

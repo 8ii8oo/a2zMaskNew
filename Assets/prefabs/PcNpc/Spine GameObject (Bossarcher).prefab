@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8858597006911764825}
   - component: {fileID: 996265594091254357}
   m_Layer: 9
-  m_Name: Spine GameObject (archer)
+  m_Name: Spine GameObject (Bossarcher)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   nextMove: 1
   isActiveAI: 1
   isDead: 0
-  detectRange: 5
+  detectRange: 100
   attackCooldown: 2
   arrowPrefab: {fileID: 2885468451738451776, guid: 94cbb896ffec3b04e8a3b20a29490292, type: 3}
   arrowSpeed: 10

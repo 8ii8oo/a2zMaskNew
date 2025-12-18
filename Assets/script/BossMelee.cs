@@ -3,11 +3,16 @@ using System.Collections;
 
 public class BossMelee : EnemyMelee
 {
-    [Header("보스 전용 공격 ")]
-    public GameObject skillDamageObj;
-    public int hitsBeforeSkill = 4;
+    [Header("보스 전용")]
+    [SerializeField] private GameObject enemySpawn; 
+    [SerializeField] private float spawnYOffset = 0.9f;
 
-    private int attackCount = 0;
+    [Header("보스 전용 공격")]
+    public GameObject skillDamageObj;
+    public int hitsBeforeSkill = 4;   // 일반공격 후 스킬
+
+    private int normalAttackCount = 0; 
+    private int skillCount = 0;      
 
     protected override void Awake()
     {
@@ -19,7 +24,6 @@ public class BossMelee : EnemyMelee
 
     protected override void LookAtPlayer()
     {
-
         base.LookAtPlayer();
 
         int s = nextMove;
@@ -27,7 +31,7 @@ public class BossMelee : EnemyMelee
         if (skillDamageObj != null)
         {
             Vector3 p = skillDamageObj.transform.localPosition;
-            p.x = s * 1.4f; 
+            p.x = s * 1.4f;
             skillDamageObj.transform.localPosition = p;
         }
     }
@@ -36,11 +40,12 @@ public class BossMelee : EnemyMelee
     {
         if (isAttacking) return;
 
-        attackCount++;
+        normalAttackCount++;
 
-        if (attackCount >= hitsBeforeSkill)
+      
+        if (normalAttackCount >= hitsBeforeSkill)
         {
-            attackCount = 0;
+            normalAttackCount = 0;
             SkillAttack();
         }
         else
@@ -60,6 +65,9 @@ public class BossMelee : EnemyMelee
     {
         isAttacking = true;
         SetAnim("skill", false);
+
+        skillCount++;
+
         StartCoroutine(ActivateSkillDamage());
     }
 
@@ -73,5 +81,19 @@ public class BossMelee : EnemyMelee
             yield return new WaitForSeconds(damageDuration + 0.5f);
             skillDamageObj.SetActive(false);
         }
+
+       
+        if (skillCount != 0 && skillCount % 2 == 0)
+        {
+            SpawnEnemy();
+        }
+    }
+
+    private void SpawnEnemy()
+    {
+        if (enemySpawn == null) return;
+
+        Vector3 enemySpawnPos = transform.position + Vector3.up * spawnYOffset;
+        Instantiate(enemySpawn, enemySpawnPos, Quaternion.identity);
     }
 }

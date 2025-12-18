@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 5578315769736916251}
   - component: {fileID: 536806374053528228}
   m_Layer: 9
-  m_Name: Spine GameObject (warrior)
+  m_Name: Spine GameObject (Bosswarrior)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,7 +371,7 @@ MonoBehaviour:
   nextMove: 1
   isActiveAI: 1
   isDead: 0
-  chaseRange: 6
+  chaseRange: 100
   attackRange: 0.7
   attackCooldown: 1.5
   normalDamageObj: {fileID: 7796514046030512362}
