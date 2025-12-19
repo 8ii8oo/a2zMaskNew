@@ -4,8 +4,7 @@ using System.Collections;
 public class BossMelee : EnemyMelee
 {
     [Header("보스 전용")]
-    [SerializeField] private GameObject enemySpawn; 
-    [SerializeField] private float spawnYOffset = 0.9f;
+    
 
     [Header("보스 전용 공격")]
     public GameObject skillDamageObj;

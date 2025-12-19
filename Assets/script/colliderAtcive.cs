@@ -35,7 +35,7 @@ public class ColliderAtcive : MonoBehaviour
 
     if (playerMove.currentGroundTag == "floor" && !isCollisionIgnored)
     {
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKeyDown(KeyCode.Space) )
         {
             IgnoreCollision();
             playerMove.PlatformDrop();

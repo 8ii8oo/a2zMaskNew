@@ -12,6 +12,8 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private SkeletonAnimation spinePlayer;
 
+    public bool jumpBlocked = false;
+
     private bool cachedFacingRight;
     private Vector3 cachedFirePointPosition; //블루 스킬 위치저장   
 
@@ -262,7 +264,7 @@ if (Input.GetKeyDown(KeyCode.S) && !dashing && !isAttack && isGround && !skillCo
 }
 
         // 점프
-        if (Input.GetKeyDown(KeyCode.Space) && currentJumpCount < maxJumpCount && !isAttack && !dashing)
+        if (Input.GetKeyDown(KeyCode.Space) && currentJumpCount < maxJumpCount && !isAttack && !dashing && !jumpBlocked)
         {
 
             Jump();
@@ -556,7 +558,17 @@ void OnCollisionStay2D(Collision2D collision)
     }
 
         rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, -2f);
+        StartCoroutine(BlockJumpForSeconds(0.5f));
+
     }
+    
+    IEnumerator BlockJumpForSeconds(float duration)
+{
+    jumpBlocked = true;
+    yield return new WaitForSeconds(duration);
+    jumpBlocked = false;
+}
+
 
     public void KillAni()
     {
