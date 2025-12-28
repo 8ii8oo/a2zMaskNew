@@ -7,11 +7,13 @@ public class EnemyDamage : MonoBehaviour
     public bool autoLookAtPlayer = false;
     private Transform player;
     public bool isProjectile = false; 
+    //ddd
 
     void Start()
     {
         if (autoLookAtPlayer)
-        {
+        { 
+            
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
             player = playerObj.transform;
